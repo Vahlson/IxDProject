@@ -7,21 +7,18 @@ public class BoardManager : MonoBehaviour
     private int _zOffset;
     private int _xOffset;
     private string[] _directions = { "Left", "Right", "Forward" };
-    // Start is called before the first frame update
-    GameObject passed;
-    GameObject player;
-    animationStateController p;
+    private GameObject passed;
+    private Player player;
 
     void Start()
     {
-        p = GameObject.FindObjectOfType<animationStateController>();
-        player=p.gameObject;
-        //passed = gameobject.find start.
+        // passed = GameObject.FindGameObjectWithTag("Start");
+        player = GameObject.FindObjectOfType<Player>();
         for (int i = 0; i < _platforms.Length; i++)
         {
             GameObject g = Instantiate(_platforms[i], transform.position, Quaternion.Euler(0, 0, 0));
             g.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-            test(g.GetComponentInChildren<DirectionHitBox>().gameObject);
+            placeWaypoint(g.GetComponent<Waypoint>().gameObject);
         }
 
     }
@@ -33,12 +30,12 @@ public class BoardManager : MonoBehaviour
         if (passed != null)
         {
             passed.transform.position = transform.position;
-            test(passed.GetComponentInChildren<DirectionHitBox>().gameObject);
+            placeWaypoint(passed.GetComponent<Waypoint>().gameObject);
         }
         passed = platform;
 
     }
-    private void test(GameObject gameobject)
+    private void placeWaypoint(GameObject gameobject)
     {
         gameobject.tag = _directions[Random.Range(0, _directions.Length)];
         Quaternion tempRotation = Quaternion.Euler(transform.rotation.eulerAngles.x,
@@ -70,11 +67,10 @@ public class BoardManager : MonoBehaviour
             {
                 this.transform.rotation = tempRotation;
                 this.transform.position = tempPosition;
-                test(gameobject);
+                placeWaypoint(gameobject);
                 return;
             }
         }
-        print("next pos will be:" + this.transform);
-        print(gameObject.transform);
+        player.waypoints.Enqueue(gameobject.transform);
     }
 }
