@@ -7,8 +7,8 @@ public class Player : MonoBehaviour
     float velocity = 5.0f;
     public float acceleration = .2f;
     int velocityHash;
-    public Queue<Transform> waypoints = new Queue<Transform>();
-    Transform targetWayPoint;
+    // public Queue<Transform> waypoints = new Queue<Transform>();
+    public Transform targetWayPoint;
     private BoardManager _boardManager;
 
 
@@ -23,10 +23,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         _animator.SetFloat(velocityHash, velocity);
-        if (targetWayPoint == null && waypoints.Count > 0)
-        {
-            targetWayPoint = waypoints.Dequeue();
-        }
+        // if (targetWayPoint == null) && waypoints.Count > 0)
+        // {
+        //     targetWayPoint = waypoints.Dequeue();
+        // }
         if (targetWayPoint != null)
         {
             moveToWaypoint();
@@ -39,10 +39,10 @@ public class Player : MonoBehaviour
     {
         transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.position - transform.position, velocity * Time.deltaTime, 0.0f);
         transform.position = Vector3.MoveTowards(transform.position, targetWayPoint.position, velocity * Time.deltaTime);
-        if (transform.position == targetWayPoint.position && waypoints.Count > 0)
+        if (transform.position == targetWayPoint.position)// && waypoints.Count > 0)
         {
             _boardManager.RecyclePlatform(targetWayPoint.root.gameObject);
-            targetWayPoint = waypoints.Dequeue();
+            // targetWayPoint = waypoints.Dequeue();
         }
 
     }

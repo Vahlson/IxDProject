@@ -1,46 +1,81 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class BoardManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject[] _platforms;
-    private int _zOffset;
-    private int _xOffset;
-    private string[] _directions = { "Left", "Right", "Forward" };
+    GameObject[] platformTypes;
+    private Queue<GameObject> _platforms = new Queue<GameObject>();
     private GameObject passed;
     private Player player;
+    private GameObject current;
 
     void Start()
     {
+        Tile prev = null;
         player = GameObject.FindObjectOfType<Player>();
-        for (int i = 0; i < _platforms.Length; i++)
+        for (int i = 0; i < platformTypes.Length; i++)
         {
-            GameObject g = Instantiate(_platforms[i], transform.position, Quaternion.Euler(0, 0, 0));
-            g.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-            if (i == 0)
+            Tile last = Instantiate(platformTypes[i], transform.position, transform.rotation).GetComponent<Tile>();
+            print(last.gameObject.name);
+            foreach (var element in last.GetComponentsInChildren<MeshRenderer>())
             {
-                placeWaypoint(g.GetComponent<Waypoint>().gameObject, "Forward");
+                Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+                element.material.color = c;
             }
-            else
+
+
+            switch (last.gameObject.tag)
             {
-                placeWaypoint(g.GetComponent<Waypoint>().gameObject, _directions[Random.Range(0, _directions.Length)]);
+                case "Left":
+                    transform.Rotate(new Vector3(0, -90, 0));
+                    // replace with object size.
+                    transform.position += transform.forward * 30;
+                    break;
+                case "Right":
+                    transform.Rotate(new Vector3(0, 90, 0));
+                    transform.position += transform.forward * 30;
+                    break;
+                case "Forward":
+                    transform.Rotate(new Vector3(0, 0, 0));
+                    transform.position += transform.forward * 30;
+                    break;
             }
+            if (prev != null)
+            {
+                prev.addNext(last);
+            }
+            _platforms.Enqueue(last.gameObject);
+            prev = last;
         }
+        current = _platforms.Dequeue();
+        player.targetWayPoint = current.GetComponent<Tile>().start[1].transform;
 
     }
+    void Update()
+    {
+        if (player.transform.position == player.targetWayPoint.transform.position)
+        {
+            // _platforms.Enqueue(current);
+            // current = _platforms.Dequeue();
+            player.targetWayPoint = player.targetWayPoint.gameObject.GetComponent<Waypoint>().next.transform;
 
+        }
+    }
 
     public void RecyclePlatform(GameObject platform)
     {
 
-        if (passed != null)
-        {
-            passed.transform.position = transform.position;
-            placeWaypoint(passed.GetComponent<Waypoint>().gameObject, _directions[Random.Range(0, _directions.Length)]);
-        }
+        // if (passed != null)
+        // {
+        //     passed.transform.position = transform.position;
+        //     placeWaypoint(passed.GetComponent<Waypoint>().gameObject, _directions[Random.Range(0, _directions.Length)]);
+        // }
         passed = platform;
 
     }
+
     private void placeWaypoint(GameObject gameobject, string tag)
     {
         gameobject.tag = tag;
@@ -49,33 +84,17 @@ public class BoardManager : MonoBehaviour
           transform.rotation.eulerAngles.z);
         Vector3 tempPosition = transform.position;
 
-        switch (gameobject.tag)
-        {
-            case "Left":
-                transform.Rotate(new Vector3(0, -90, 0));
-                // replace with object size.
-                transform.position += transform.forward * 10;
-                break;
-            case "Right":
-                transform.Rotate(new Vector3(0, 90, 0));
-                transform.position += transform.forward * 10;
-                break;
-            case "Forward":
-                transform.Rotate(new Vector3(0, 0, 0));
-                transform.position += transform.forward * 10;
-                break;
 
-        }
         foreach (var item in _platforms)
         {
             if (item.transform.position == this.transform.position)
             {
                 this.transform.rotation = tempRotation;
                 this.transform.position = tempPosition;
-                placeWaypoint(gameobject, _directions[Random.Range(0, _directions.Length)]);
+                // placeWaypoint(gameobject, _directions[Random.Range(0, _directions.Length)]);
                 return;
             }
         }
-        player.waypoints.Enqueue(gameobject.transform);
+        // player.waypoints.Enqueue(gameobject.transform);
     }
 }
