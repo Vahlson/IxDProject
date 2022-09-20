@@ -12,13 +12,19 @@ public class BoardManager : MonoBehaviour
 
     void Start()
     {
-        // passed = GameObject.FindGameObjectWithTag("Start");
         player = GameObject.FindObjectOfType<Player>();
         for (int i = 0; i < _platforms.Length; i++)
         {
             GameObject g = Instantiate(_platforms[i], transform.position, Quaternion.Euler(0, 0, 0));
             g.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-            placeWaypoint(g.GetComponent<Waypoint>().gameObject);
+            if (i == 0)
+            {
+                placeWaypoint(g.GetComponent<Waypoint>().gameObject, "Forward");
+            }
+            else
+            {
+                placeWaypoint(g.GetComponent<Waypoint>().gameObject, _directions[Random.Range(0, _directions.Length)]);
+            }
         }
 
     }
@@ -30,19 +36,18 @@ public class BoardManager : MonoBehaviour
         if (passed != null)
         {
             passed.transform.position = transform.position;
-            placeWaypoint(passed.GetComponent<Waypoint>().gameObject);
+            placeWaypoint(passed.GetComponent<Waypoint>().gameObject, _directions[Random.Range(0, _directions.Length)]);
         }
         passed = platform;
 
     }
-    private void placeWaypoint(GameObject gameobject)
+    private void placeWaypoint(GameObject gameobject, string tag)
     {
-        gameobject.tag = _directions[Random.Range(0, _directions.Length)];
+        gameobject.tag = tag;
         Quaternion tempRotation = Quaternion.Euler(transform.rotation.eulerAngles.x,
          transform.rotation.eulerAngles.y,
           transform.rotation.eulerAngles.z);
         Vector3 tempPosition = transform.position;
-
 
         switch (gameobject.tag)
         {
@@ -67,7 +72,7 @@ public class BoardManager : MonoBehaviour
             {
                 this.transform.rotation = tempRotation;
                 this.transform.position = tempPosition;
-                placeWaypoint(gameobject);
+                placeWaypoint(gameobject, _directions[Random.Range(0, _directions.Length)]);
                 return;
             }
         }

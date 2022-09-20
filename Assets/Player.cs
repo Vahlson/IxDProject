@@ -6,7 +6,6 @@ public class Player : MonoBehaviour
     private Animator _animator;
     float velocity = 5.0f;
     public float acceleration = .2f;
-    public float deceleration = 0.5f;
     int velocityHash;
     public Queue<Transform> waypoints = new Queue<Transform>();
     Transform targetWayPoint;
