@@ -13,7 +13,8 @@ class Tile : MonoBehaviour
             {
                 if (waypoint.CompareTag(item.tag))
                 {
-                    waypoint.GetComponent<Waypoint>().next = item;
+                    Waypoint wp = waypoint.GetComponent<Waypoint>();
+                    wp.setNext(item);
                 }
             }
         }

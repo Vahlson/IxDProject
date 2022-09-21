@@ -5,96 +5,110 @@ using System.Collections.Generic;
 public class BoardManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] platformTypes;
-    private Queue<GameObject> _platforms = new Queue<GameObject>();
-    private GameObject passed;
+    private List<GameObject> leftTiles;
+    [SerializeField]
+    private List<GameObject> rightTiles;
+    [SerializeField]
+    private List<GameObject> forwardTiles;
+    [SerializeField]
+    private GameObject _start;
+    private List<GameObject> _platforms = new List<GameObject>();
     private Player player;
-    private GameObject current;
+    // private GameObject current;
+    private string[] _directions = { "Left", "Right", "Forward" };
+    private Tile _endTile = null;
+    private Tile _secondLastTile = null;
+    private GameObject _passedTile = null;
 
     void Start()
     {
-        Tile prev = null;
         player = GameObject.FindObjectOfType<Player>();
-        for (int i = 0; i < platformTypes.Length; i++)
+        initStartTile();
+        for (int i = 0; i < 4; i++)
         {
-            Tile last = Instantiate(platformTypes[i], transform.position, transform.rotation).GetComponent<Tile>();
-            print(last.gameObject.name);
-            foreach (var element in last.GetComponentsInChildren<MeshRenderer>())
-            {
-                Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-                element.material.color = c;
-            }
-
-
-            switch (last.gameObject.tag)
-            {
-                case "Left":
-                    transform.Rotate(new Vector3(0, -90, 0));
-                    // replace with object size.
-                    transform.position += transform.forward * 30;
-                    break;
-                case "Right":
-                    transform.Rotate(new Vector3(0, 90, 0));
-                    transform.position += transform.forward * 30;
-                    break;
-                case "Forward":
-                    transform.Rotate(new Vector3(0, 0, 0));
-                    transform.position += transform.forward * 30;
-                    break;
-            }
-            if (prev != null)
-            {
-                prev.addNext(last);
-            }
-            _platforms.Enqueue(last.gameObject);
-            prev = last;
+            getRandomTile();
         }
-        current = _platforms.Dequeue();
-        player.targetWayPoint = current.GetComponent<Tile>().start[1].transform;
-
     }
     void Update()
     {
-        if (player.transform.position == player.targetWayPoint.transform.position)
+        if (player.targetWayPoint != null && player.transform.position == player.targetWayPoint.transform.position)
         {
-            // _platforms.Enqueue(current);
-            // current = _platforms.Dequeue();
-            player.targetWayPoint = player.targetWayPoint.gameObject.GetComponent<Waypoint>().next.transform;
+            Waypoint wp = player.targetWayPoint.gameObject.GetComponent<Waypoint>();
+            if (wp.isEnd)
+            {
+                _platforms.Remove(_passedTile);
+                Destroy(_passedTile);
+                getRandomTile();
+                _passedTile = _platforms[0];
+            }
+            player.targetWayPoint = wp.next.transform;
 
         }
     }
-
-    public void RecyclePlatform(GameObject platform)
+    private void initStartTile()
     {
-
-        // if (passed != null)
-        // {
-        //     passed.transform.position = transform.position;
-        //     placeWaypoint(passed.GetComponent<Waypoint>().gameObject, _directions[Random.Range(0, _directions.Length)]);
-        // }
-        passed = platform;
+        GameObject startTile = Instantiate(_start, transform.position, transform.rotation);
+        transform.Rotate(new Vector3(0, 0, 0));
+        transform.position += transform.forward * 30;
+        _secondLastTile = startTile.GetComponent<Tile>();
+        _platforms.Add(startTile);
+        _passedTile = _platforms[0];
+        player.targetWayPoint = _passedTile.GetComponent<Tile>().start[1].transform;
 
     }
 
-    private void placeWaypoint(GameObject gameobject, string tag)
+    private void getRandomTile()
     {
-        gameobject.tag = tag;
+        string tag = _directions[Random.Range(0, _directions.Length)];
         Quaternion tempRotation = Quaternion.Euler(transform.rotation.eulerAngles.x,
-         transform.rotation.eulerAngles.y,
-          transform.rotation.eulerAngles.z);
+ transform.rotation.eulerAngles.y,
+  transform.rotation.eulerAngles.z);
         Vector3 tempPosition = transform.position;
+        GameObject prefab = null;
+        // randomize a direction and randomize which of the available tiles for that direction to be used.
+        switch (tag)
+        {
+            case "Left":
+                transform.Rotate(new Vector3(0, -90, 0));
+                transform.position += transform.forward * 30;
+                prefab = leftTiles[Random.Range(0, leftTiles.Count)];
+                break;
+            case "Right":
+                transform.Rotate(new Vector3(0, 90, 0));
+                transform.position += transform.forward * 30;
+                prefab = rightTiles[Random.Range(0, rightTiles.Count)];
+                break;
+            case "Forward":
+                transform.position += transform.forward * 30;
+                prefab = forwardTiles[Random.Range(0, forwardTiles.Count)];
+                break;
 
-
+        }
+        // ensures that no two platforms are spawned at the same location.
         foreach (var item in _platforms)
         {
-            if (item.transform.position == this.transform.position)
+            // if position is already taken, get new random tile.
+            if (Vector3.Distance(item.transform.position, transform.position) < 1)
             {
                 this.transform.rotation = tempRotation;
                 this.transform.position = tempPosition;
-                // placeWaypoint(gameobject, _directions[Random.Range(0, _directions.Length)]);
+                getRandomTile();
                 return;
             }
         }
-        // player.waypoints.Enqueue(gameobject.transform);
+        _endTile = Instantiate(prefab, tempPosition, tempRotation).GetComponent<Tile>();
+        Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        foreach (var element in _endTile.GetComponentsInChildren<MeshRenderer>())
+        {
+            element.material.color = c;
+        }
+        //set next waypoint for ends of tile
+        _secondLastTile.addNext(_endTile);
+        //to keep track of all tiles
+        _platforms.Add(_endTile.gameObject);
+        //to remember tile to set next waypoints for
+        _secondLastTile = _endTile;
+        return;
+
     }
 }

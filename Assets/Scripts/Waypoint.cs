@@ -3,15 +3,22 @@ using UnityEngine;
 public class Waypoint : MonoBehaviour
 {
     [SerializeField]
-    GameObject left;
+    public GameObject left;
     [SerializeField]
-    GameObject right;
+    public GameObject right;
     [SerializeField]
     public GameObject next;
+    public bool isEnd = false;
 
+    public void setNext(GameObject waypoint)
+    {
+        // isEnd = true;
+        next = waypoint;
 
+    }
     void Start()
     {
+
     }
     void Update()
     {

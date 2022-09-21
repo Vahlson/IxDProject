@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9618f8c67d7d6de40b73d506d1ce031f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 0.1
+  acceleration: 1
   targetWayPoint: {fileID: 0}
 --- !u!1 &673396404
 GameObject:
@@ -591,7 +591,7 @@ GameObject:
   - component: {fileID: 843813232}
   - component: {fileID: 843813231}
   m_Layer: 0
-  m_Name: BoardManager
+  m_Name: TileManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -609,10 +609,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb17268ecc3df0a46bdcd27ce087a444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformTypes:
-  - {fileID: 4963814754868165353, guid: 28e8fc5ed76958a47ad3843b43e562aa, type: 3}
+  leftTiles:
   - {fileID: 4963814754868165353, guid: 78efd156e5319f748950436936daa1e3, type: 3}
+  rightTiles:
   - {fileID: 4963814754868165353, guid: dee67cd905963744dbac23949aa148ba, type: 3}
+  forwardTiles:
+  - {fileID: 4963814754868165353, guid: 28e8fc5ed76958a47ad3843b43e562aa, type: 3}
+  _start: {fileID: 4963814754868165353, guid: ca338a7c3f1d3b641b669ff4c4b18860, type: 3}
 --- !u!4 &843813232
 Transform:
   m_ObjectHideFlags: 0
