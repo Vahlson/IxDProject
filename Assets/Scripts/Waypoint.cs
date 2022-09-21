@@ -12,9 +12,7 @@ public class Waypoint : MonoBehaviour
 
     public void setNext(GameObject waypoint)
     {
-        // isEnd = true;
         next = waypoint;
-
     }
     void Start()
     {
@@ -23,4 +21,14 @@ public class Waypoint : MonoBehaviour
     void Update()
     {
     }
+    public Transform getLeftMove()
+    {
+        return this.left == null ? null : this.left.transform;
+
+    }
+    public Transform getRightMove()
+    {
+        return this.right == null ? null : this.right.transform;
+    }
+
 }

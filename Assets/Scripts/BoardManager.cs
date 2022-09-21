@@ -14,7 +14,6 @@ public class BoardManager : MonoBehaviour
     private GameObject _start;
     private List<GameObject> _platforms = new List<GameObject>();
     private Player player;
-    // private GameObject current;
     private string[] _directions = { "Left", "Right", "Forward" };
     private Tile _endTile = null;
     private Tile _secondLastTile = null;
@@ -42,7 +41,6 @@ public class BoardManager : MonoBehaviour
                 _passedTile = _platforms[0];
             }
             player.targetWayPoint = wp.next.transform;
-
         }
     }
     private void initStartTile()
@@ -61,8 +59,8 @@ public class BoardManager : MonoBehaviour
     {
         string tag = _directions[Random.Range(0, _directions.Length)];
         Quaternion tempRotation = Quaternion.Euler(transform.rotation.eulerAngles.x,
- transform.rotation.eulerAngles.y,
-  transform.rotation.eulerAngles.z);
+    transform.rotation.eulerAngles.y,
+    transform.rotation.eulerAngles.z);
         Vector3 tempPosition = transform.position;
         GameObject prefab = null;
         // randomize a direction and randomize which of the available tiles for that direction to be used.

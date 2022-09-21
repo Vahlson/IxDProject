@@ -23,11 +23,40 @@ public class Player : MonoBehaviour
         {
             moveToWaypoint();
         }
+        if (Input.GetKeyUp("d"))
+        {
+            moveRight();
+        }
+        if (Input.GetKeyUp("a"))
+        {
+            moveLeft();
+
+        }
+
+
         velocity += Time.deltaTime * acceleration;
     }
     private void moveToWaypoint()
     {
         transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.position - transform.position, velocity * Time.deltaTime, 0.0f);
         transform.position = Vector3.MoveTowards(transform.position, targetWayPoint.position, velocity * Time.deltaTime);
+    }
+    private void moveLeft()
+    {
+        Transform move = targetWayPoint.GetComponent<Waypoint>().getLeftMove();
+        if (move != null)
+        {
+            targetWayPoint = move;
+            transform.position += transform.right * -10;
+        }
+    }
+    private void moveRight()
+    {
+        Transform move = targetWayPoint.GetComponent<Waypoint>().getRightMove();
+        if (move != null)
+        {
+            targetWayPoint = move;
+            transform.position += transform.right * 10;
+        }
     }
 }
