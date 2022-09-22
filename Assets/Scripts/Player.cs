@@ -61,4 +61,5 @@ public class Player : MonoBehaviour
     {
         return transform.position == targetWayPoint.transform.position;
     }
+    
 }
