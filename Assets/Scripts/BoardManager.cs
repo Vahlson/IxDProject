@@ -30,28 +30,50 @@ public class BoardManager : MonoBehaviour
     }
     void Update()
     {
+        setPlayerWaypoint();
+    }
+    void setPlayerWaypoint()
+    {
         if (player.targetWayPoint != null && player.transform.position == player.targetWayPoint.transform.position)
         {
             Waypoint wp = player.targetWayPoint.gameObject.GetComponent<Waypoint>();
             if (wp.isEnd)
             {
+                player.targetWayPoint = wp.next.transform;
+                if (wp.next.transform == null)
+                {
+                    print("next wp:" + wp.next);
+                    print("player wp:" + player.targetWayPoint);
+
+                }
                 _platforms.Remove(_passedTile);
                 Destroy(_passedTile);
                 getRandomTile();
                 _passedTile = _platforms[0];
             }
-            player.targetWayPoint = wp.next.transform;
+            else
+            {
+                if (wp.next.transform == null)
+                {
+                    print("next wp:" + wp.next);
+                    print("player wp:" + player.targetWayPoint);
+
+                }
+                player.targetWayPoint = wp.next.transform;
+            }
         }
     }
     private void initStartTile()
     {
-        GameObject startTile = Instantiate(_start, transform.position, transform.rotation);
+        GameObject startTileGO = Instantiate(_start, transform.position, transform.rotation);
+        Tile startTile = startTileGO.GetComponent<Tile>();
         transform.Rotate(new Vector3(0, 0, 0));
         transform.position += transform.forward * 30;
-        _secondLastTile = startTile.GetComponent<Tile>();
-        _platforms.Add(startTile);
+        _secondLastTile = startTile;
+        _platforms.Add(startTileGO);
         _passedTile = _platforms[0];
-        player.targetWayPoint = _passedTile.GetComponent<Tile>().start[1].transform;
+        startTile.setStartTile();
+        player.targetWayPoint = startTile.getStartWaypoint(); ;
 
     }
 
@@ -96,10 +118,7 @@ public class BoardManager : MonoBehaviour
         }
         _endTile = Instantiate(prefab, tempPosition, tempRotation).GetComponent<Tile>();
         Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-        foreach (var element in _endTile.GetComponentsInChildren<MeshRenderer>())
-        {
-            element.material.color = c;
-        }
+
         //set next waypoint for ends of tile
         _secondLastTile.addNext(_endTile);
         //to keep track of all tiles
