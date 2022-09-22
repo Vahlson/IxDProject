@@ -37,29 +37,14 @@ public class BoardManager : MonoBehaviour
         if (player.targetWayPoint != null && player.transform.position == player.targetWayPoint.transform.position)
         {
             Waypoint wp = player.targetWayPoint.gameObject.GetComponent<Waypoint>();
+            player.targetWayPoint = wp.next.transform;
+
             if (wp.isEnd)
             {
-                player.targetWayPoint = wp.next.transform;
-                if (wp.next.transform == null)
-                {
-                    print("next wp:" + wp.next);
-                    print("player wp:" + player.targetWayPoint);
-
-                }
                 _platforms.Remove(_passedTile);
                 Destroy(_passedTile);
                 getRandomTile();
                 _passedTile = _platforms[0];
-            }
-            else
-            {
-                if (wp.next.transform == null)
-                {
-                    print("next wp:" + wp.next);
-                    print("player wp:" + player.targetWayPoint);
-
-                }
-                player.targetWayPoint = wp.next.transform;
             }
         }
     }
