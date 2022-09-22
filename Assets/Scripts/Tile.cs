@@ -4,7 +4,7 @@ class Tile : MonoBehaviour
     [SerializeField]
     public GameObject[] start;
     [SerializeField]
-    GameObject[] end;
+    private GameObject[] end;
     public void addNext(Tile tile)
     {
         foreach (var waypoint in end)
@@ -18,5 +18,16 @@ class Tile : MonoBehaviour
                 }
             }
         }
+    }
+    public void setStartTile()
+    {
+        foreach (var item in end)
+        {
+            item.GetComponent<Waypoint>().isEnd = false;
+        }
+    }
+    public Transform getStartWaypoint()
+    {
+        return start[1].transform;
     }
 }

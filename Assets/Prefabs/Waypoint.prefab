@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6379599726040389028}
   - component: {fileID: 6453957983363089428}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Waypoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

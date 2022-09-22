@@ -16,6 +16,20 @@ public class Waypoint : MonoBehaviour
     }
     void Start()
     {
+        Color c = Color.black;
+        if (this.tag == "Left")
+        {
+            c = Color.red;
+        }
+        if (this.tag == "Right")
+        {
+            c = Color.blue;
+        }
+        if (this.tag == "Center")
+        {
+            c = Color.green;
+        }
+        this.GetComponent<MeshRenderer>().material.color = c;
 
     }
     void Update()
