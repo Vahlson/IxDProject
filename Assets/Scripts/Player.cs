@@ -57,4 +57,11 @@ public class Player : MonoBehaviour
             transform.position += transform.right * 10;
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Obstacle"){
+            print("Hit obstacle");
+        }
+    }
 }

@@ -9,6 +9,7 @@ TagManager:
   - Right
   - Forward
   - Center
+  - Obstacle
   layers:
   - Default
   - TransparentFX

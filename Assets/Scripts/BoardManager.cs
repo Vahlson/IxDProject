@@ -55,8 +55,8 @@ public class BoardManager : MonoBehaviour
             {
                 if (wp.next.transform == null)
                 {
-                    print("next wp:" + wp.next);
-                    print("player wp:" + player.targetWayPoint);
+                    //print("next wp:" + wp.next);
+                    //print("player wp:" + player.targetWayPoint);
 
                 }
                 player.targetWayPoint = wp.next.transform;
