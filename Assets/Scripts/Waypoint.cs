@@ -10,10 +10,6 @@ public class Waypoint : MonoBehaviour
     public GameObject next;
     public bool isEnd = false;
 
-    public void setNext(GameObject waypoint)
-    {
-        next = waypoint;
-    }
     void Start()
     {
         Color c = Color.black;
