@@ -9,11 +9,8 @@ public class Waypoint : MonoBehaviour
     [SerializeField]
     public GameObject next;
     public bool isEnd = false;
+    public bool isCenter = false;
 
-    public void setNext(GameObject waypoint)
-    {
-        next = waypoint;
-    }
     void Start()
     {
         Color c = Color.black;
@@ -29,7 +26,11 @@ public class Waypoint : MonoBehaviour
         {
             c = Color.green;
         }
-        this.GetComponent<MeshRenderer>().material.color = c;
+        MeshRenderer renderer = this.GetComponent<MeshRenderer>();
+        if (renderer != null)
+        {
+            renderer.material.color = c;
+        }
 
     }
     void Update()

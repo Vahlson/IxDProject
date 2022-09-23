@@ -57,6 +57,11 @@ public class Player : MonoBehaviour
             transform.position += transform.right * 10;
         }
     }
+   public bool hasReachedTarget()
+    {
+        return transform.position == targetWayPoint.transform.position;
+    }
+    
 
     void OnTriggerEnter(Collider other)
     {

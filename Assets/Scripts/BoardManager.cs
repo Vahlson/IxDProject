@@ -14,7 +14,8 @@ public class BoardManager : MonoBehaviour
     private GameObject _start;
     private List<GameObject> _platforms = new List<GameObject>();
     private Player player;
-    private string[] _directions = { "Left", "Right", "Forward" };
+    private string[] _directions = { TileTypes.Left.ToString(), TileTypes.Right.ToString(), TileTypes.Forward.ToString() };
+
     private Tile _endTile = null;
     private Tile _secondLastTile = null;
     private GameObject _passedTile = null;
@@ -34,32 +35,17 @@ public class BoardManager : MonoBehaviour
     }
     void setPlayerWaypoint()
     {
-        if (player.targetWayPoint != null && player.transform.position == player.targetWayPoint.transform.position)
+        if (player.hasReachedTarget())
         {
-            Waypoint wp = player.targetWayPoint.gameObject.GetComponent<Waypoint>();
-            if (wp.isEnd)
-            {
-                player.targetWayPoint = wp.next.transform;
-                if (wp.next.transform == null)
-                {
-                    print("next wp:" + wp.next);
-                    print("player wp:" + player.targetWayPoint);
+            Waypoint oldWp = player.targetWayPoint.gameObject.GetComponent<Waypoint>();
+            player.targetWayPoint = oldWp.next.transform;
 
-                }
+            if (oldWp.isEnd)
+            {
                 _platforms.Remove(_passedTile);
                 Destroy(_passedTile);
                 getRandomTile();
                 _passedTile = _platforms[0];
-            }
-            else
-            {
-                if (wp.next.transform == null)
-                {
-                    //print("next wp:" + wp.next);
-                    //print("player wp:" + player.targetWayPoint);
-
-                }
-                player.targetWayPoint = wp.next.transform;
             }
         }
     }
@@ -67,7 +53,6 @@ public class BoardManager : MonoBehaviour
     {
         GameObject startTileGO = Instantiate(_start, transform.position, transform.rotation);
         Tile startTile = startTileGO.GetComponent<Tile>();
-        transform.Rotate(new Vector3(0, 0, 0));
         transform.position += transform.forward * 30;
         _secondLastTile = startTile;
         _platforms.Add(startTileGO);
@@ -104,7 +89,7 @@ public class BoardManager : MonoBehaviour
                 break;
 
         }
-        // ensures that no two platforms are spawned at the same location.
+        // ensures that no two platforms are spawned at the same location assuming there are less than 6 platforms.
         foreach (var item in _platforms)
         {
             // if position is already taken, get new random tile.
@@ -117,7 +102,6 @@ public class BoardManager : MonoBehaviour
             }
         }
         _endTile = Instantiate(prefab, tempPosition, tempRotation).GetComponent<Tile>();
-        Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
 
         //set next waypoint for ends of tile
         _secondLastTile.addNext(_endTile);
@@ -128,4 +112,8 @@ public class BoardManager : MonoBehaviour
         return;
 
     }
+}
+enum TileTypes
+{
+    Left, Right, Forward
 }
