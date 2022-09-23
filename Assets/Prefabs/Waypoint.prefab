@@ -110,7 +110,6 @@ MonoBehaviour:
   right: {fileID: 0}
   next: {fileID: 0}
   isEnd: 0
-  isCenter: 0
 --- !u!1 &7712846504758191209
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +229,6 @@ MonoBehaviour:
   right: {fileID: 0}
   next: {fileID: 7245074905481221687}
   isEnd: 0
-  isCenter: 0
 --- !u!114 &7658382481972875642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,10 +241,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48975d3a4324c934eb494d62be1b1ae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstaclePrefab: {fileID: 2707457566716922355, guid: a7c4afc2ac2a6114d90c9fcc25c937f1, type: 3}
-  lowObstaclePrefabs: {fileID: 0}
-  midObstaclePrefabs: {fileID: 0}
-  highObstaclePrefabs: {fileID: 0}
+  lowObstaclePrefabs:
+  - {fileID: 2707457566716922355, guid: a7c4afc2ac2a6114d90c9fcc25c937f1, type: 3}
+  midObstaclePrefabs:
+  - {fileID: 2707457566716922355, guid: 1511865abba91744682cff0871660413, type: 3}
+  highObstaclePrefabs:
+  - {fileID: 2707457566716922355, guid: 916bc524b5593a248b1f71cdd42c285c, type: 3}
   blockadeSpawnChance: 0.2
   startSpawnPoint: {fileID: 5457626231217325012}
   middleSpawnPoint: {fileID: 4860310907697327645}

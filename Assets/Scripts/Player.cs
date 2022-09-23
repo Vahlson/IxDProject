@@ -57,15 +57,17 @@ public class Player : MonoBehaviour
             transform.position += transform.right * 10;
         }
     }
-   public bool hasReachedTarget()
+    public bool hasReachedTarget()
     {
         return transform.position == targetWayPoint.transform.position;
     }
-    
+
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Obstacle"){
+        print("asdasd");
+        if (other.tag == "Obstacle")
+        {
             print("Hit obstacle");
         }
     }
