@@ -62,4 +62,11 @@ public class Player : MonoBehaviour
         return transform.position == targetWayPoint.transform.position;
     }
     
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Obstacle"){
+            print("Hit obstacle");
+        }
+    }
 }
