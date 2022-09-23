@@ -9,7 +9,6 @@ public class Waypoint : MonoBehaviour
     [SerializeField]
     public GameObject next;
     public bool isEnd = false;
-    public bool isCenter = false;
 
     void Start()
     {

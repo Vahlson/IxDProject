@@ -109,7 +109,7 @@ MonoBehaviour:
   left: {fileID: 0}
   right: {fileID: 0}
   next: {fileID: 0}
-  isEnd: 1
+  isEnd: 0
   isCenter: 0
 --- !u!1 &7712846504758191209
 GameObject:
@@ -230,7 +230,7 @@ MonoBehaviour:
   right: {fileID: 0}
   next: {fileID: 7245074905481221687}
   isEnd: 0
-  isCenter: 1
+  isCenter: 0
 --- !u!114 &7658382481972875642
 MonoBehaviour:
   m_ObjectHideFlags: 0
