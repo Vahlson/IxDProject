@@ -26,7 +26,11 @@ public class Waypoint : MonoBehaviour
         {
             c = Color.green;
         }
-        this.GetComponent<MeshRenderer>().material.color = c;
+        MeshRenderer renderer = this.GetComponent<MeshRenderer>();
+        if (renderer != null)
+        {
+            renderer.material.color = c;
+        }
 
     }
     void Update()
