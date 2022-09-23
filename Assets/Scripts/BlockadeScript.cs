@@ -16,15 +16,15 @@ public class BlockadeScript : MonoBehaviour
 
     private List<GameObject> obstacles;
 
-    [SerializeField]
-    private GameObject obstaclePrefab;
+    //[SerializeField]
+    //private GameObject obstaclePrefab;
 
     [SerializeField]
-    private GameObject lowObstaclePrefabs;
+    private List<GameObject> lowObstaclePrefabs;
     [SerializeField]
-    private GameObject midObstaclePrefabs;
+    private List<GameObject> midObstaclePrefabs;
     [SerializeField]
-    private GameObject highObstaclePrefabs;
+    private List<GameObject> highObstaclePrefabs;
 
     [SerializeField]
     private float blockadeSpawnChance = 0.2f;
@@ -50,18 +50,16 @@ public class BlockadeScript : MonoBehaviour
         waypointController = TryGetComponent(out Waypoint w) ? waypointController = w : null;
         waypointCollider = TryGetComponent(out MeshCollider meshCollider) ? waypointCollider = meshCollider : null;
 
-        Vector3 parentPosition = transform.position;
-        Vector3 parentExtents = waypointCollider.bounds.extents;
-        Vector3 parentSize = waypointCollider.bounds.extents * 2;
+        /*  Vector3 parentPosition = transform.position;
+         Vector3 parentExtents = waypointCollider.bounds.extents;
+         Vector3 parentSize = waypointCollider.bounds.extents * 2;
 
-        float yOffset = obstaclePrefab.transform.localScale.y / 2;
-        obstacleMesh = obstaclePrefab.TryGetComponent(out MeshFilter meshFilter) ? meshFilter.sharedMesh : null;
-        //print(obstacleMesh);
-        Vector3 obstacleExtents = obstacleMesh?.bounds.extents ?? Vector3.zero;
-        //print(obstacleMesh?.bounds);
+         float yOffset = obstaclePrefab.transform.localScale.y / 2;
+         obstacleMesh = obstaclePrefab.TryGetComponent(out MeshFilter meshFilter) ? meshFilter.sharedMesh : null;
+         Vector3 obstacleExtents = obstacleMesh?.bounds.extents ?? Vector3.zero;
 
-        //Get the collider
-        obstacleCollider = obstaclePrefab.TryGetComponent(out BoxCollider collider) ? collider : null;
+         //Get the collider
+         obstacleCollider = obstaclePrefab.TryGetComponent(out BoxCollider collider) ? collider : null; */
 
         //TODO Make more general and dependent on max walls
         List<Transform> obstacleSpawnPoints = new List<Transform>();
@@ -76,6 +74,28 @@ public class BlockadeScript : MonoBehaviour
             bool shouldSpawn = Random.Range(0f, 1f) < blockadeSpawnChance;
             if (shouldSpawn)
             {
+                List<GameObject> obstaclePrefabs = new List<GameObject>();
+
+                int type = Random.Range(0, 3);
+                switch (type)
+                {
+                    case 0:
+                        obstaclePrefabs = lowObstaclePrefabs;
+                        break;
+                    case 1:
+                        obstaclePrefabs = midObstaclePrefabs;
+                        break;
+                    case 2:
+                        obstaclePrefabs = highObstaclePrefabs;
+                        break;
+                    default:
+                        obstaclePrefabs = midObstaclePrefabs;
+                        break;
+                }
+
+                //Choose which blockade to spawn
+                GameObject obstaclePrefab = obstaclePrefabs[Random.Range(0, obstaclePrefabs.Count)];
+
                 GameObject obstacle = Instantiate(obstaclePrefab, spawnPoint.position, spawnPoint.rotation);
                 obstacle.transform.parent = spawnPoint;
 
