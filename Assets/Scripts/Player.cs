@@ -1,20 +1,27 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     private Animator _animator;
     public float velocity = 5.0f;
     public float acceleration = .2f;
-    public int score = 0;
-    public int currentHealth=3;
     int velocityHash;
     public Transform targetWayPoint;
+    [SerializeField] private int maxHealth = 10;
+    public int currentHealth;
 
+    [HideInInspector] public float score;
+
+    void Awake()
+    {
+        currentHealth = maxHealth;
+
+    }
     void Start()
     {
         _animator = GetComponent<Animator>();
         velocityHash = Animator.StringToHash("Velocity");
-
     }
 
     void Update()
@@ -32,6 +39,8 @@ public class Player : MonoBehaviour
         {
             moveLeft();
         }
+
+        score += Time.deltaTime;
 
 
         velocity += Time.deltaTime * acceleration;
@@ -59,16 +68,29 @@ public class Player : MonoBehaviour
             transform.position += transform.right * 10;
         }
     }
-   public bool hasReachedTarget()
+    public bool hasReachedTarget()
     {
         return transform.position == targetWayPoint.transform.position;
     }
-    
+
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Obstacle"){
+        if (other.tag == "Obstacle")
+        {
+            takeDamage();
             print("Hit obstacle");
         }
+    }
+
+    public void takeDamage()
+    {
+        currentHealth -= 1;
+
+        if (currentHealth <= 0)
+        {
+            SceneManager.LoadScene(1);
+        }
+        print(currentHealth);
     }
 }

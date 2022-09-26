@@ -13,6 +13,8 @@ public class PlayerHUD : MonoBehaviour
     private GameObject _livesContainer;
     [SerializeField]
     private GameObject _healthModel;
+    private Stack<GameObject> _health = new Stack<GameObject>();
+    private int currentHealth = 0;
 
 
     void Start()
@@ -27,20 +29,26 @@ public class PlayerHUD : MonoBehaviour
             g.transform.localScale = new Vector3(100, 100, 100);
             g.transform.localPosition += new Vector3(i * 100, 0, 0);
             g.transform.Rotate(new Vector3(0, 90, 0));
-
+            _health.Push(g);
         }
+        currentHealth = _player.currentHealth;
 
     }
 
-    ///todo change so that highscore is set after game is over perhaps?
     void Update()
     {
-        score.text = "Score: " + _player.score.ToString();
+        score.text = "Score: " + ((int)_player.score).ToString();
         if (_player.score >= _highScore)
         {
-            _highScore = _player.score;
+            _highScore = (int)_player.score;
             highScore.text = "HighScore: " + _highScore;
             PlayerPrefs.SetInt("HighScore", _highScore);
+        }
+        if (_player.currentHealth < currentHealth)
+        {
+            currentHealth--;
+            GameObject g = _health.Pop();
+            Destroy(g);
         }
     }
 }
