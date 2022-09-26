@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour
 {
     public string firstLevel;
     public GameObject optionScreen;
+    public GameObject highscoreScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,16 @@ public class MainMenu : MonoBehaviour
     public void startGame()
     {
         SceneManager.LoadScene(firstLevel);
+    }
+
+    public void startHighscore()
+    {
+        highscoreScreen.SetActive(true);
+    }
+
+    public void closeHighscore()
+    {
+        highscoreScreen.SetActive(false);
     }
 
     public void openOptions()
