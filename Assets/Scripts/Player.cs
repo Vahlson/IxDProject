@@ -3,8 +3,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Animator _animator;
-    float velocity = 5.0f;
+    public float velocity = 5.0f;
     public float acceleration = .2f;
+    public int score = 0;
+    public int currentHealth=3;
     int velocityHash;
     public Transform targetWayPoint;
 
