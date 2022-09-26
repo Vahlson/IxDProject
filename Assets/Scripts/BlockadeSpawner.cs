@@ -4,13 +4,13 @@ using UnityEngine;
 
 public enum BlockadeType
 {
-    Red,
-    Green,
-    Blue,
+    Up,
+    Down,
+    Middle,
     None
 }
 
-public class BlockadeScript : MonoBehaviour
+public class BlockadeSpawner : MonoBehaviour
 {
     private BlockadeType None;
 
@@ -30,18 +30,13 @@ public class BlockadeScript : MonoBehaviour
     private float blockadeSpawnChance = 0.2f;
 
     [SerializeField]
-    public GameObject startSpawnPoint;
+    private GameObject startSpawnPoint;
     [SerializeField]
-    public GameObject middleSpawnPoint;
+    private GameObject middleSpawnPoint;
     [SerializeField]
-    public GameObject endSpawnPoint;
-
-    private const int maxWalls = 3;
+    private GameObject endSpawnPoint;
 
     private Collider waypointCollider;
-    private Mesh obstacleMesh;
-    private Collider obstacleCollider;
-
     private Waypoint waypointController;
 
     void Awake()
@@ -111,10 +106,10 @@ public class BlockadeScript : MonoBehaviour
     }
     bool nextStartIsFree()
     {
-        BlockadeScript nextBlockadeScript = null;
+        BlockadeSpawner nextBlockadeScript = null;
         if (waypointController?.next != null)
         {
-            nextBlockadeScript = waypointController.next.TryGetComponent(out BlockadeScript b) ? b : null;
+            nextBlockadeScript = waypointController.next.TryGetComponent(out BlockadeSpawner b) ? b : null;
         }
         GameObject nextWaypointStartSpawnPoint = nextBlockadeScript?.startSpawnPoint;
 

@@ -238,7 +238,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7712846504758191209}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48975d3a4324c934eb494d62be1b1ae5, type: 3}
+  m_Script: {fileID: 11500000, guid: a77d3e914c902c547b96e05d13ea110a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lowObstaclePrefabs:
