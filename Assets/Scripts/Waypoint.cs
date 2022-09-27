@@ -28,7 +28,7 @@ public class Waypoint : MonoBehaviour
         MeshRenderer renderer = this.GetComponent<MeshRenderer>();
         if (renderer != null)
         {
-            renderer.material.color = c;
+            //renderer.material.color = c;
         }
 
     }
