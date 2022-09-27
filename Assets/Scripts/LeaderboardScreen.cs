@@ -13,6 +13,7 @@ public class LeaderboardScreen : MonoBehaviour
         if (leaderboard != null)
         {
             leaderboard.scores.Sort();
+            leaderboard.scores.Reverse();
             for (int i = 0; i < leaderboard.scores.Count; i++)
             {
                 GameObject g = Instantiate(entryPrefab, Vector3.zero, Quaternion.identity);

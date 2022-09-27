@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System;
+using UnityEngine;
 [Serializable]
 public class Leaderboard
 {
     public List<LeaderboardScore> scores = new List<LeaderboardScore>();
 }
 [Serializable]
-public class LeaderboardScore
+public class LeaderboardScore : IComparable<LeaderboardScore>
 {
     public LeaderboardScore(int score, string name)
     {
@@ -15,4 +16,8 @@ public class LeaderboardScore
     }
     public int score;
     public string name;
+    public int CompareTo(LeaderboardScore obj)
+    {
+        return score.CompareTo(obj.score);
+    }
 }
