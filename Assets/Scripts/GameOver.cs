@@ -14,7 +14,7 @@ public class GameOver : MonoBehaviour
     {
         leaderboard = DataSaver.loadData<Leaderboard>("Leaderboard");
         _score = PlayerPrefs.GetInt("Score");
-        score.text = _score.ToString();
+        score.text = "Score:" + _score.ToString();
 
     }
 
@@ -25,16 +25,16 @@ public class GameOver : MonoBehaviour
 
     public void RestartGame()
     {
-        if (leaderboard == null)
-        {
-            leaderboard = new Leaderboard();
-        }
-        leaderboard.scores.Add(new LeaderboardScore((int)_score, playerName.text));
-        DataSaver.saveData<Leaderboard>(leaderboard, "Leaderboard");
+        SaveScore();
         SceneManager.LoadScene(1);
     }
 
     public void MainMenu()
+    {
+        SaveScore();
+        SceneManager.LoadScene(0);
+    }
+    private void SaveScore()
     {
         if (leaderboard == null)
         {
@@ -42,6 +42,5 @@ public class GameOver : MonoBehaviour
         }
         leaderboard.scores.Add(new LeaderboardScore((int)_score, playerName.text));
         DataSaver.saveData<Leaderboard>(leaderboard, "Leaderboard");
-        SceneManager.LoadScene(0);
     }
 }

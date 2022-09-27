@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class BoardManager : MonoBehaviour
@@ -14,7 +13,6 @@ public class BoardManager : MonoBehaviour
     private GameObject _start;
     private List<GameObject> _platforms = new List<GameObject>();
     private Player player;
-    private string[] _directions = { TileTypes.Left.ToString(), TileTypes.Right.ToString(), TileTypes.Forward.ToString() };
 
     private Tile _endTile = null;
     private Tile _secondLastTile = null;
@@ -64,7 +62,7 @@ public class BoardManager : MonoBehaviour
 
     private void getRandomTile()
     {
-        string tag = "Forward";
+        string tag = TileTypes.Forward.ToString();
         float tileThreshold = Random.value;
         if (tileThreshold <= 0.1)
         {
