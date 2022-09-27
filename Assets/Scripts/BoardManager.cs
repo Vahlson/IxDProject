@@ -24,7 +24,7 @@ public class BoardManager : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<Player>();
         initStartTile();
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 7; i++)
         {
             getRandomTile();
         }
@@ -64,7 +64,23 @@ public class BoardManager : MonoBehaviour
 
     private void getRandomTile()
     {
-        string tag = _directions[Random.Range(0, _directions.Length)];
+        string tag = "Forward";
+        float tileThreshold = Random.value;
+        if (tileThreshold <= 0.1)
+        {
+            tag = TileTypes.Left.ToString();
+        }
+        else if (tileThreshold <= 0.2)
+        {
+            tag = TileTypes.Right.ToString();
+
+        }
+        else if (tileThreshold > 0.2)
+        {
+            tag = TileTypes.Forward.ToString();
+
+        }
+
         Quaternion tempRotation = Quaternion.Euler(transform.rotation.eulerAngles.x,
     transform.rotation.eulerAngles.y,
     transform.rotation.eulerAngles.z);

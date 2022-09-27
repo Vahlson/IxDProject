@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -89,8 +91,8 @@ public class Player : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            PlayerPrefs.SetInt("Score", (int)score);
             SceneManager.LoadScene(2);
         }
-        print(currentHealth);
     }
 }
