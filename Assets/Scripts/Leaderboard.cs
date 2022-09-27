@@ -5,6 +5,11 @@ using UnityEngine;
 public class Leaderboard
 {
     public List<LeaderboardScore> scores = new List<LeaderboardScore>();
+    public Leaderboard()
+    {
+        this.scores.Sort();
+        this.scores.Reverse();
+    }
 }
 [Serializable]
 public class LeaderboardScore : IComparable<LeaderboardScore>

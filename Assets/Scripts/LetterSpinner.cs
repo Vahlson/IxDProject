@@ -1,0 +1,57 @@
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;// Required when using Event data.
+public class LetterSpinner : Selectable
+{
+    public TMP_Text tmp_letter;
+    public string letter;
+    private bool selected = false;
+    [SerializeField]
+    private GameObject topSpinner;
+    [SerializeField]
+    private GameObject bottomSpinner;
+    private char[] _letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+    private int _index = 0;
+
+
+    public override void OnSelect(BaseEventData eventData)
+    {
+        base.OnSelect(eventData);
+        selected = true;
+    }
+    public override void OnDeselect(BaseEventData eventData)
+    {
+        base.OnDeselect(eventData);
+        selected = false;
+    }
+    public void SaveLetter()
+    {
+        this.letter = tmp_letter.text;
+    }
+    void Update()
+    {
+
+        if (selected)
+        {
+            topSpinner.transform.Rotate(Vector3.up * 100 * Time.deltaTime, Space.Self);
+            bottomSpinner.transform.Rotate(Vector3.up * 100 * Time.deltaTime, Space.Self);
+
+            if (Input.GetKeyUp(KeyCode.F))
+            {
+                _index = (_index + 1) % _letters.Length;
+                tmp_letter.text = _letters[_index % _letters.Length].ToString();
+            }
+            if (Input.GetKeyUp(KeyCode.C))
+            {
+                _index = (_index - 1) % _letters.Length;
+                if(_index<0){
+                    _index+=_letters.Length;
+                }
+                print(_index);
+                tmp_letter.text = _letters[_index].ToString();
+            }
+        }
+
+    }
+}
