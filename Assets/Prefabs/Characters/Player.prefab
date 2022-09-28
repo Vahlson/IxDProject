@@ -608,7 +608,9 @@ GameObject:
   - component: {fileID: 6978685324520497565}
   - component: {fileID: 7032944774580401777}
   - component: {fileID: 7242440276238495428}
+  - component: {fileID: 3053283505329353329}
   - component: {fileID: 1707702538956366869}
+  - component: {fileID: 8883122588426601340}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -624,7 +626,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6974954045741939889}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3251567, y: 0.00000023841858, z: 0.13336325}
+  m_LocalPosition: {x: -1.3261791, y: 0.00000023841858, z: 0.09812135}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -650,7 +652,7 @@ Animator:
   m_GameObject: {fileID: 6974954045741939889}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4837235d67e136e4b883adb2bafc73e8, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9799a0c9e3b73bb478f0894e6f48c0f5, type: 2}
+  m_Controller: {fileID: 9100000, guid: e5b200b38a3d31e45909ed50e0d67f8c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -676,8 +678,25 @@ MonoBehaviour:
   acceleration: 0.2
   targetWayPoint: {fileID: 0}
   maxHealth: 10
+  jumpSpeed: 4000
   currentHealth: 0
   score: 0
+--- !u!54 &3053283505329353329
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974954045741939889}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!136 &1707702538956366869
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -692,6 +711,19 @@ CapsuleCollider:
   m_Height: 1.81
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!65 &8883122588426601340
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974954045741939889}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 1, z: 3}
+  m_Center: {x: 0, y: 1, z: 2}
 --- !u!1 &6974975409043500973
 GameObject:
   m_ObjectHideFlags: 0

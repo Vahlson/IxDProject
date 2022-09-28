@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BlockadeType
-{
-    Up,
-    Down,
-    Middle,
-    None
-}
+
 
 public class BlockadeSpawner : MonoBehaviour
 {
-    private BlockadeType None;
 
     private List<GameObject> obstacles;
 
