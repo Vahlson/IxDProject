@@ -33,6 +33,10 @@ public class LeaderboardScreen : MonoBehaviour
                 l.score.text = leaderboard.scores[i].score.ToString();
                 l.position.text = (i + 1).ToString();
                 _children.Push(g);
+                if (i == 9)
+                {
+                    return;
+                }
             }
         }
     }

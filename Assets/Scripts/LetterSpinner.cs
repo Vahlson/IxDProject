@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;// Required when using Event data.
+using UnityEngine.EventSystems;
 public class LetterSpinner : Selectable
 {
     public TMP_Text tmp_letter;
@@ -15,6 +15,11 @@ public class LetterSpinner : Selectable
     private int _index = 0;
 
 
+    override protected void Start()
+    {
+        base.Start();
+        letter = "A";
+    }
     public override void OnSelect(BaseEventData eventData)
     {
         base.OnSelect(eventData);
@@ -24,10 +29,6 @@ public class LetterSpinner : Selectable
     {
         base.OnDeselect(eventData);
         selected = false;
-    }
-    public void SaveLetter()
-    {
-        this.letter = tmp_letter.text;
     }
     void Update()
     {
@@ -41,15 +42,18 @@ public class LetterSpinner : Selectable
             {
                 _index = (_index + 1) % _letters.Length;
                 tmp_letter.text = _letters[_index % _letters.Length].ToString();
+                letter = tmp_letter.text;
             }
             if (Input.GetKeyUp(KeyCode.C))
             {
                 _index = (_index - 1) % _letters.Length;
-                if(_index<0){
-                    _index+=_letters.Length;
+                if (_index < 0)
+                {
+                    _index += _letters.Length;
                 }
-                print(_index);
                 tmp_letter.text = _letters[_index].ToString();
+                letter = tmp_letter.text;
+
             }
         }
 
