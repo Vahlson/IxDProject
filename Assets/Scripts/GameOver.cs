@@ -7,66 +7,74 @@ using TMPro;
 public class GameOver : MonoBehaviour
 {
     public TMP_Text score;
-    private string _name;
+    public GameObject newHighScoreScreen;
+    public GameObject scoreScreen;
+    private string _name = "AAA";
     private int _score;
-    private Leaderboard leaderboard;
-    public GameObject leaderbordScreen;
-    public Toggle saveScore;
+    public GameObject leaderboardScreen;
     private int _placement = 1;
     [SerializeField]
     private LetterSpinner[] spinners;
+    void Update()
+    {
+        if (GameManager.Instance._newLeaderboardEntry != null)
+        {
+            leaderboardScreen.GetComponent<LeaderboardScreen>().rotateNewHighScore(GameManager.Instance._newLeaderboardEntry);
+        }
+    }
 
+    void UpdateText()
+    {
+        _name = "";
+        foreach (var item in spinners)
+        {
+            _name += item.letter;
+        }
+        leaderboardScreen.GetComponent<LeaderboardScreen>().UpdateEntryName(_name, GameManager.Instance._newLeaderboardEntry);
+        GameManager.Instance?.UpdateName(_name);
+
+
+    }
+    void OnDestroy()
+    {
+        foreach (var item in spinners)
+        {
+            item.GetComponent<LetterSpinner>().OnTextChanged -= UpdateText;
+        }
+    }
     void Start()
     {
-        leaderboard = DataSaver.loadData<Leaderboard>("Leaderboard");
-        _score = PlayerPrefs.GetInt("Score");
-        if (leaderboard != null)
+        _score = 500;
+        foreach (var item in spinners)
         {
-            foreach (var item in leaderboard.scores)
-            {
-                if (_score < item.score)
-                {
-                    _placement++;
-                }
-            }
+            item.GetComponent<LetterSpinner>().OnTextChanged += UpdateText;
         }
-
-        score.text = "Your score:" + _score.ToString();
-
+        GameManager.Instance.CheckForHighScoreUpdates();
+        leaderboardScreen.GetComponent<LeaderboardScreen>().CreateLeaderboardEntries(GameManager.Instance.getScores());
     }
 
     public void RestartGame()
     {
-        if (saveScore.isOn)
-        {
-            SaveScore();
-        }
+        SaveScore();
         SceneManager.LoadScene(1);
     }
 
     public void MainMenu()
     {
-        if (saveScore.isOn)
-        {
-            SaveScore();
-        }
+        SaveScore();
         SceneManager.LoadScene(0);
     }
 
 
     private void SaveScore()
     {
-        if (leaderboard == null)
-        {
-            leaderboard = new Leaderboard();
-        }
         foreach (var item in spinners)
         {
             _name += item.letter;
-            print(item.letter);
         }
-        print(_name);
-        leaderboard.scores.Add(new LeaderboardScore((int)_score, _name));
-        DataSaver.saveData<Leaderboard>(leaderboard, "Leaderboard");
+        GameManager.Instance.SaveHighScore();
+        // GameManager.Instance.latestName = _name;
+        // leaderboard.scores.Add(_newScore);
+        // DataSaver.saveData<Leaderboard>(leaderboard, "Leaderboard");
     }
 }

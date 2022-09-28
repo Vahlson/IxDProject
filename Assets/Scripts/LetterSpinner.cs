@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
+using System.Collections.Generic;
 public class LetterSpinner : Selectable
 {
     public TMP_Text tmp_letter;
@@ -14,6 +16,7 @@ public class LetterSpinner : Selectable
     private char[] _letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
     private int _index = 0;
 
+    public event Action OnTextChanged;
 
     override protected void Start()
     {
@@ -43,6 +46,7 @@ public class LetterSpinner : Selectable
                 _index = (_index + 1) % _letters.Length;
                 tmp_letter.text = _letters[_index % _letters.Length].ToString();
                 letter = tmp_letter.text;
+                OnTextChanged?.Invoke();
             }
             if (Input.GetKeyUp(KeyCode.C))
             {
@@ -53,7 +57,7 @@ public class LetterSpinner : Selectable
                 }
                 tmp_letter.text = _letters[_index].ToString();
                 letter = tmp_letter.text;
-
+                OnTextChanged?.Invoke();
             }
         }
 

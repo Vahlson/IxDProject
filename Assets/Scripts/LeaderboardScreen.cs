@@ -8,61 +8,52 @@ public class LeaderboardScreen : MonoBehaviour
     public GameObject entries;
     public GameObject entryPrefab;
     [SerializeField]
-    private bool _gameOver = false;
-    private Stack<GameObject> _children = new Stack<GameObject>();
+    private List<GameObject> _children = new List<GameObject>();
     void Start()
     {
-        CreateLeaderboardEntries();
+        leaderboard = DataSaver.loadData<Leaderboard>("Leaderboard");
+        if (leaderboard != null)
+        {
+            leaderboard.scores.Sort();
+            leaderboard.scores.Reverse();
+            CreateLeaderboardEntries(leaderboard.scores);
+        }
     }
 
-    private void CreateLeaderboardEntries()
+    public void rotateNewHighScore(LeaderboardScore score)
     {
-        leaderboard = DataSaver.loadData<Leaderboard>("Leaderboard");
-        if (leaderboard != null)
-        {
-            leaderboard.scores.Sort();
-            leaderboard.scores.Reverse();
-            for (int i = 0; i < leaderboard.scores.Count; i++)
-            {
-                GameObject g = Instantiate(entryPrefab, Vector3.zero, Quaternion.identity);
-                g.transform.SetParent(entries.transform);
-                g.transform.localScale = Vector3.one;
-                g.transform.localPosition = Vector3.zero;
-                LeaderboardEntry l = g.GetComponent<LeaderboardEntry>();
-                l.playerName.text = leaderboard.scores[i].name;
-                l.score.text = leaderboard.scores[i].score.ToString();
-                l.position.text = (i + 1).ToString();
-                _children.Push(g);
-                if (i == 9)
-                {
-                    return;
-                }
-            }
-        }
+        GameObject g = _children.Find((x) => x.GetComponent<LeaderboardEntry>().leaderboardScore == score);
+        g.transform.Rotate(Vector3.up * 100 * Time.deltaTime, Space.Self);
     }
-    public void CreateLeaderboardEntries(List<LeaderboardScore> list)
+    public void UpdateEntryName(string name, LeaderboardScore score)
     {
-        while (_children.Count > 0)
+        LeaderboardEntry g = _children.Find((x) => x.GetComponent<LeaderboardEntry>().leaderboardScore == score).GetComponent<LeaderboardEntry>();
+        g.playerName.text = name;
+        score.name = name;
+    }
+    public void CreateLeaderboardEntries(List<LeaderboardScore> items)
+    {
+        foreach (var item in _children)
         {
-            Destroy(_children.Pop());
+            Destroy(item);
         }
-        leaderboard = DataSaver.loadData<Leaderboard>("Leaderboard");
-        if (leaderboard != null)
+        _children.Clear();
+
+        items.Sort();
+        items.Reverse();
+        for (int i = 0; i < items.Count; i++)
         {
-            leaderboard.scores.Sort();
-            leaderboard.scores.Reverse();
-            for (int i = 0; i < leaderboard.scores.Count; i++)
-            {
-                GameObject g = Instantiate(entryPrefab, Vector3.zero, Quaternion.identity);
-                g.transform.SetParent(entries.transform);
-                g.transform.localScale = Vector3.one;
-                g.transform.localPosition = Vector3.zero;
-                LeaderboardEntry l = g.GetComponent<LeaderboardEntry>();
-                l.playerName.text = leaderboard.scores[i].name;
-                l.score.text = leaderboard.scores[i].score.ToString();
-                l.position.text = (i + 1).ToString();
-                _children.Push(g);
-            }
+            GameObject g = Instantiate(entryPrefab, Vector3.zero, Quaternion.identity);
+            g.transform.SetParent(entries.transform);
+            g.transform.localScale = Vector3.one;
+            g.transform.localPosition = Vector3.zero;
+            g.transform.rotation = Quaternion.identity;
+            LeaderboardEntry l = g.GetComponent<LeaderboardEntry>();
+            l.leaderboardScore = items[i];
+            l.playerName.text = items[i].name;
+            l.score.text = items[i].score.ToString();
+            l.position.text = (i + 1).ToString();
+            _children.Add(g);
         }
     }
 }
