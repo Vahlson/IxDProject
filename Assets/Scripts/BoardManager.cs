@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class BoardManager : MonoBehaviour
@@ -14,7 +13,6 @@ public class BoardManager : MonoBehaviour
     private GameObject _start;
     private List<GameObject> _platforms = new List<GameObject>();
     private Player player;
-    private string[] _directions = { TileTypes.Left.ToString(), TileTypes.Right.ToString(), TileTypes.Forward.ToString() };
 
     private Tile _endTile = null;
     private Tile _secondLastTile = null;
@@ -24,7 +22,7 @@ public class BoardManager : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<Player>();
         initStartTile();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 7; i++)
         {
             getRandomTile();
         }
@@ -95,7 +93,23 @@ public class BoardManager : MonoBehaviour
 
     private void getRandomTile()
     {
-        string tag = _directions[Random.Range(0, _directions.Length)];
+        string tag = TileTypes.Forward.ToString();
+        float tileThreshold = Random.value;
+        if (tileThreshold <= 0.1)
+        {
+            tag = TileTypes.Left.ToString();
+        }
+        else if (tileThreshold <= 0.2)
+        {
+            tag = TileTypes.Right.ToString();
+
+        }
+        else if (tileThreshold > 0.2)
+        {
+            tag = TileTypes.Forward.ToString();
+
+        }
+
         Quaternion tempRotation = Quaternion.Euler(transform.rotation.eulerAngles.x,
     transform.rotation.eulerAngles.y,
     transform.rotation.eulerAngles.z);

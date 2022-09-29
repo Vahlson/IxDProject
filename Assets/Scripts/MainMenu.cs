@@ -7,8 +7,8 @@ public class MainMenu : MonoBehaviour
     public string firstLevel;
     public GameObject optionScreen;
     public GameObject highscoreScreen;
+    public GameObject leaderBoard;
 
-    // Start is called before the first frame update
     void Start()
     {
 
