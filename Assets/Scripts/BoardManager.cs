@@ -24,7 +24,7 @@ public class BoardManager : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<Player>();
         initStartTile();
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
             getRandomTile();
         }
@@ -53,13 +53,44 @@ public class BoardManager : MonoBehaviour
     {
         GameObject startTileGO = Instantiate(_start, transform.position, transform.rotation);
         Tile startTile = startTileGO.GetComponent<Tile>();
-        transform.position += transform.forward * 30;
+        //TODO move forward based on size of waypoint mesh
+        transform.position += transform.forward * 15;
+        /* float offsetFromNew = getTileOffset(startTile);
+        float offsetFromOld = getTileOffset(_endTile);
+        print(transform.forward);
+        transform.position += transform.forward * (offsetFromNew + offsetFromOld);
+        print("Offset from old: " + offsetFromOld + "offset from new: " + offsetFromNew); */
+
         _secondLastTile = startTile;
         _platforms.Add(startTileGO);
         _passedTile = _platforms[0];
         startTile.setStartTile();
         player.targetWayPoint = startTile.getStartWaypoint(); ;
 
+    }
+
+    private float getTileOffset(Tile tile)
+    {
+        float offset = 0;
+        Waypoint? exampleWaypoint = tile?.start[0].GetComponent<Waypoint>();
+        if (exampleWaypoint != null)
+        {
+            MeshRenderer? waypointCollider = exampleWaypoint.TryGetComponent(out MeshRenderer meshCollider) ? waypointCollider = meshCollider : null;
+            //print(exampleWaypoint);
+            if (waypointCollider != null)
+            {
+                Vector3 waypointBounds = waypointCollider.bounds.extents;
+                print("parent size x: " + waypointBounds.x + " parent size z: " + waypointBounds.z);
+
+
+                //Max since the longest dimension will be forward.
+                offset = 3 * Mathf.Max(waypointBounds.x, waypointBounds.z);
+
+            }
+
+        }
+
+        return offset;
     }
 
     private void getRandomTile()
@@ -70,25 +101,65 @@ public class BoardManager : MonoBehaviour
     transform.rotation.eulerAngles.z);
         Vector3 tempPosition = transform.position;
         GameObject prefab = null;
+        Vector3 offset = Vector3.zero;
         // randomize a direction and randomize which of the available tiles for that direction to be used.
         switch (tag)
         {
+
             case "Left":
                 transform.Rotate(new Vector3(0, -90, 0));
-                transform.position += transform.forward * 30;
+                print("Left");
+                transform.position += transform.forward * 15;
                 prefab = leftTiles[Random.Range(0, leftTiles.Count)];
+
+
+                /* if (prefab.TryGetComponent(out Tile leftTile))
+                {
+                    float offsetFromNew = getTileOffset(leftTile);
+                    float offsetFromOld = getTileOffset(_endTile);
+                    print(transform.forward);
+                    transform.position += transform.forward * (offsetFromNew + offsetFromOld);
+                    print("transform pos:" + transform.position);
+                    print("Offset from old: " + offsetFromOld + "offset from new: " + offsetFromNew);
+
+                } */
+
+
                 break;
             case "Right":
+                print("Right");
                 transform.Rotate(new Vector3(0, 90, 0));
-                transform.position += transform.forward * 30;
+                transform.position += transform.forward * 15;
                 prefab = rightTiles[Random.Range(0, rightTiles.Count)];
+
+                /* if (prefab.TryGetComponent(out Tile rightTile))
+                {
+                    float offsetFromNew = getTileOffset(rightTile);
+                    float offsetFromOld = getTileOffset(_endTile);
+                    print(transform.forward);
+                    transform.position += transform.forward * (offsetFromNew + offsetFromOld);
+                    print("Offset from old: " + offsetFromOld + "offset from new: " + offsetFromNew);
+                } */
                 break;
             case "Forward":
-                transform.position += transform.forward * 30;
+                print("Forward");
+                transform.position += transform.forward * 15;
                 prefab = forwardTiles[Random.Range(0, forwardTiles.Count)];
+
+                /* if (prefab.TryGetComponent(out Tile forwardTile))
+                {
+                    float offsetFromNew = getTileOffset(forwardTile);
+                    float offsetFromOld = getTileOffset(_endTile);
+                    print(transform.forward);
+                    transform.position += transform.forward * (offsetFromNew + offsetFromOld);
+                    print("Offset from old: " + offsetFromOld + "offset from new: " + offsetFromNew);
+                } */
                 break;
 
         }
+
+
+
         // ensures that no two platforms are spawned at the same location assuming there are less than 6 platforms.
         foreach (var item in _platforms)
         {
