@@ -25,6 +25,8 @@ public class LeaderboardScreen : MonoBehaviour
     }
     public void UpdateEntryName(string name)
     {
+        print(_newHighScore);
+        print(name);
         if (_newHighScore != null)
         {
             _newHighScore.GetComponent<LeaderboardEntry>().playerName.text = name;
@@ -44,7 +46,10 @@ public class LeaderboardScreen : MonoBehaviour
         for (int i = 0; i < items.Count; i++)
         {
             GameObject g = Instantiate(_entryPrefab, Vector3.zero, Quaternion.identity);
-            _newHighScore = GameManager.Instance.IsNewLeaderboardScore(items[i]) ? g : null;
+            if (GameManager.Instance.IsNewLeaderboardScore(items[i]))
+            {
+                _newHighScore = g;
+            }
             g.transform.SetParent(_entries.transform);
             g.transform.localScale = Vector3.one;
             g.transform.localPosition = Vector3.zero;

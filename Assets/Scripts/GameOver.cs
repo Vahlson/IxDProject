@@ -5,8 +5,6 @@ public class GameOver : MonoBehaviour
 {
     public GameObject newHighScoreScreen;
     public GameObject scoreScreen;
-    private int _placement = 1;
-    private int _score;
 
     void Start()
     {
