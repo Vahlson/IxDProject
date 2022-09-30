@@ -77,10 +77,14 @@ public class Player : MonoBehaviour
         //print("targetWaypoinyPos: " + targetWayPoint.position);
 
         //Old smooth curve version
+        //transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
+        //transform.position = Vector3.MoveTowards(transform.position, moveToPosition, velocity * Time.deltaTime);
+
+        //This is used to take account for the speed forward becoming slower when switching lanes which we dont want
+        print("reached lane? : " + hasReachedLane());
+        float laneSwitchSpeedAdjustmentFactor = hasReachedLane() ? 1 : Mathf.Sqrt(2);
         transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
-        transform.position = Vector3.MoveTowards(transform.position, moveToPosition, velocity * 2 * Time.deltaTime);
-
-
+        transform.position = Vector3.MoveTowards(transform.position, moveToPosition, laneSwitchSpeedAdjustmentFactor * velocity * Time.deltaTime);
         ////////////////////////////
         /* Vector3 newTargetWaypoint = transform.position;
         Vector3 moveToPositionForwardOffset = Vector3.Scale(targetWayPoint.forward, moveToPosition);
@@ -88,6 +92,7 @@ public class Player : MonoBehaviour
         vectorArray.Add(targetWayPoint.forward.x);
         vectorArray.Add(targetWayPoint.forward.y);
         vectorArray.Add(targetWayPoint.forward.z);
+        
 
         int forwardIndex = vectorArray.IndexOf(1);
         forwardIndex = forwardIndex == -1 ? vectorArray.IndexOf(-1) : 1;
@@ -136,6 +141,7 @@ public class Player : MonoBehaviour
 
     private void moveLeft()
     {
+        if (hasReachedLane() != true) return;
         Transform move = targetWayPoint.GetComponent<Waypoint>().getLeftMove();
         if (move != null)
         {
@@ -148,6 +154,7 @@ public class Player : MonoBehaviour
     }
     private void moveRight()
     {
+        if (hasReachedLane() != true) return;
         Transform move = targetWayPoint.GetComponent<Waypoint>().getRightMove();
         if (move != null)
         {
@@ -164,6 +171,16 @@ public class Player : MonoBehaviour
         //print("Target forward offset: " + (Vector3.Dot(targetWayPoint.forward, transform.position) - Vector3.Dot(targetWayPoint.forward, targetWayPoint.position)));
 
         return Vector3.Dot(targetWayPoint.forward, transform.position) - Vector3.Dot(targetWayPoint.forward, targetWayPoint.position) >= 0;
+    }
+
+    public bool hasReachedLane()
+    {
+        //return transform.position == targetWayPoint.transform.position;
+        //return Vector3.Distance(transform.position, moveToPosition) <= 0.3;
+
+        //print("Target forward offset: " + (Vector3.Dot(targetWayPoint.forward, transform.position) - Vector3.Dot(targetWayPoint.forward, targetWayPoint.position)));
+        float playerToLaneSideOffset = Vector3.Dot(targetWayPoint.right, targetWayPoint.position) - Vector3.Dot(targetWayPoint.right, transform.position);
+        return playerToLaneSideOffset <= 0.1;
     }
 
 
