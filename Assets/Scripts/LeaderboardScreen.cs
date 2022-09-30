@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class LeaderboardScreen : MonoBehaviour
 {
-    private Leaderboard leaderboard;
-    public GameObject entries;
-    public GameObject entryPrefab;
-    public GameObject newHighScore;
-
     [SerializeField]
+    private GameObject _entries;
+    [SerializeField]
+    private GameObject _entryPrefab;
     private List<GameObject> _children = new List<GameObject>();
+    private GameObject _newHighScore;
     void Start()
     {
         CreateLeaderboardEntries();
@@ -18,18 +17,18 @@ public class LeaderboardScreen : MonoBehaviour
 
     public void rotateNewHighScore()
     {
-        if (newHighScore != null)
+        if (_newHighScore != null)
         {
-            newHighScore.transform.Rotate(Vector3.up * 100 * Time.deltaTime, Space.Self);
+            _newHighScore.transform.Rotate(Vector3.up * 100 * Time.deltaTime, Space.Self);
 
         }
     }
     public void UpdateEntryName(string name)
     {
-        if (newHighScore != null)
+        if (_newHighScore != null)
         {
-            newHighScore.GetComponent<LeaderboardEntry>().playerName.text = name;
-            GameManager.Instance._newLeaderboardEntry.name = name;
+            _newHighScore.GetComponent<LeaderboardEntry>().playerName.text = name;
+            GameManager.Instance.UpdateNewLeaderboardScoreName(name);
         }
     }
     public void CreateLeaderboardEntries()
@@ -40,18 +39,13 @@ public class LeaderboardScreen : MonoBehaviour
             Destroy(item);
         }
         _children.Clear();
-
         items.Sort();
         items.Reverse();
         for (int i = 0; i < items.Count; i++)
         {
-
-            GameObject g = Instantiate(entryPrefab, Vector3.zero, Quaternion.identity);
-            if (GameManager.Instance._newLeaderboardEntry != null && GameManager.Instance._newLeaderboardEntry == items[i])
-            {
-                newHighScore = g;
-            }
-            g.transform.SetParent(entries.transform);
+            GameObject g = Instantiate(_entryPrefab, Vector3.zero, Quaternion.identity);
+            _newHighScore = GameManager.Instance.IsNewLeaderboardScore(items[i]) ? g : null;
+            g.transform.SetParent(_entries.transform);
             g.transform.localScale = Vector3.one;
             g.transform.localPosition = Vector3.zero;
             g.transform.rotation = Quaternion.identity;

@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
-using System.Collections.Generic;
 public class LetterSpinner : Selectable
 {
     public TMP_Text tmp_letter;

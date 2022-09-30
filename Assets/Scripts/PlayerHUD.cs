@@ -7,15 +7,14 @@ public class PlayerHUD : MonoBehaviour
 {
     public TMP_Text score;
     public TMP_Text highScore;
-    private int _highScore = 0;
-    private Player _player;
     [SerializeField]
     private GameObject _livesContainer;
     [SerializeField]
     private GameObject _healthModel;
     private Stack<GameObject> _health = new Stack<GameObject>();
     private int currentHealth = 0;
-
+    private int _highScore = 0;
+    private Player _player;
 
     void Start()
     {

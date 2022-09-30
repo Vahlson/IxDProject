@@ -7,15 +7,10 @@ public class GameOver : MonoBehaviour
     public GameObject scoreScreen;
     private int _placement = 1;
     private int _score;
-    [SerializeField]
-
-
-
 
     void Start()
     {
         GameManager.Instance.CheckForHighScoreUpdates();
-        // _score = PlayerPrefs.GetInt("Score",0);
         if (GameManager.Instance.IsNewHighScore())
         {
             newHighScoreScreen.SetActive(true);

@@ -3,12 +3,13 @@ using UnityEngine;
 using TMPro;
 class ScoreScreen : MonoBehaviour
 {
-    public TMP_Text scoreText;
-    public GameObject leaderboardScreen;
-
-    void OnStart()
+    [SerializeField]
+    private TMP_Text _scoreText;
+    [SerializeField]
+    private GameObject _leaderboardScreen;
+    void Start()
     {
-        scoreText.text = "Your Score is: " + GameManager.Instance.latestScore;
-        leaderboardScreen.GetComponent<LeaderboardScreen>().CreateLeaderboardEntries();
+        _scoreText.text = "Your score is: " + GameManager.Instance.latestScore;
     }
+
 }

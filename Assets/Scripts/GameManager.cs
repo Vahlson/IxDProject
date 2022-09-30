@@ -12,17 +12,53 @@ class GameManager : MonoBehaviour
             return _instance;
         }
     }
+
+    public int latestScore;
+    public int latestPlacement { get; private set; }
     private static GameManager _instance;
     private Leaderboard _leaderboard;
-    public int latestScore;
-    public int latestPlacement = 6;
+    private LeaderboardScore newLeaderboardScore;
 
-    public LeaderboardScore _newLeaderboardEntry;
+
+
+    void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+
+        }
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        _leaderboard = DataSaver.loadData<Leaderboard>("Leaderboard") == null ? new Leaderboard() : DataSaver.loadData<Leaderboard>("Leaderboard");
+
+
+        DontDestroyOnLoad(this);
+    }
+
+    public void UpdateNewLeaderboardScoreName(string newName)
+    {
+        newLeaderboardScore.name = newName;
+    }
+    public bool IsNewLeaderboardScore(LeaderboardScore leaderboardScore)
+    {
+        if (newLeaderboardScore == null)
+        {
+            return false;
+        }
+        else
+        {
+            return newLeaderboardScore.Equals(leaderboardScore);
+        }
+    }
     public bool IsNewHighScore()
     {
         foreach (var item in _leaderboard.scores)
         {
-            if (latestScore >= item.score)
+            if (latestScore >= item.score || _leaderboard.scores.Count < 5)
             {
                 return true;
             }
@@ -34,21 +70,13 @@ class GameManager : MonoBehaviour
         }
         return false;
     }
-    void Awake()
-    {
-        _instance = this;
-        _leaderboard = DataSaver.loadData<Leaderboard>("Leaderboard") == null ? new Leaderboard() : DataSaver.loadData<Leaderboard>("Leaderboard");
-        _leaderboard.scores.Add(_newLeaderboardEntry);
-
-        DontDestroyOnLoad(this);
-    }
     public void SaveHighScore()
     {
         DataSaver.saveData<Leaderboard>(_leaderboard, "Leaderboard");
     }
     public void UpdateName(string name)
     {
-        _newLeaderboardEntry.name = name;
+        newLeaderboardScore.name = name;
 
     }
     public List<LeaderboardScore> getScores()
@@ -58,24 +86,36 @@ class GameManager : MonoBehaviour
 
     public void CheckForHighScoreUpdates()
     {
-        foreach (var item in _leaderboard.scores)
+        if (_leaderboard.scores.Count <= 0)
         {
-            print(item.score);
-            if (latestScore >= item.score)
+            newLeaderboardScore = new LeaderboardScore(latestScore, "AAA");
+            _leaderboard.scores.Add(newLeaderboardScore);
+
+        }
+        else
+        {
+            foreach (var item in _leaderboard.scores)
             {
-                _newLeaderboardEntry = new LeaderboardScore(latestScore, "AAA");
-                _leaderboard.scores.Add(_newLeaderboardEntry);
-                break;
+                print(item.score);
+                if (latestScore >= item.score)
+                {
+                    newLeaderboardScore = new LeaderboardScore(latestScore, "AAA");
+                    _leaderboard.scores.Add(newLeaderboardScore);
+                    break;
+                }
+            }
+            while (_leaderboard.scores.Count > 5)
+            {
+                print("leaderboard size:" + _leaderboard.scores.Count);
+                _leaderboard.scores.Sort();
+                _leaderboard.scores.Reverse();
+                _leaderboard.scores.RemoveAt(_leaderboard.scores.Count - 1);
             }
         }
-        if (_leaderboard.scores.Count > 5)
-        {
-            _leaderboard.scores.Sort();
-            _leaderboard.scores.Reverse();
-            _leaderboard.scores.RemoveAt(_leaderboard.scores.Count - 1);
-            latestPlacement = _leaderboard.scores.FindIndex((x) => x == _newLeaderboardEntry);
-        }
+        _leaderboard.scores.Sort();
+        _leaderboard.scores.Reverse();
+        latestPlacement = _leaderboard.scores.FindIndex((x) => x.Equals(newLeaderboardScore)) + 1;
+        print("index: " + latestPlacement);
+
     }
-
-
 }
