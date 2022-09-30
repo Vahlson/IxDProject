@@ -5,6 +5,7 @@ using UnityEngine;
 public class Obstacles : MonoBehaviour
 {
 
+
     public enum BlockadeType
     {
         High,
@@ -32,7 +33,7 @@ public class Obstacles : MonoBehaviour
         {
             if (other is BoxCollider)
             {
-                player.avoidObstacale(this.blockadeType);
+                player.avoidObstacale(this);
                 print("Avoiding obstacale");
             }
 
@@ -44,6 +45,17 @@ public class Obstacles : MonoBehaviour
 
         }
 
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.TryGetComponent(out Player player))
+        {
+            if (other is CapsuleCollider)
+            {
+                player.keepRunning();
+                print("Hit obstacle");
+            }
+        }
     }
 
 }

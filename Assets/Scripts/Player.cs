@@ -11,11 +11,20 @@ public class Player : MonoBehaviour
     public Transform targetWayPoint;
     [SerializeField] private int maxHealth = 10;
 
-    [SerializeField] private int jumpSpeed = 4000;
+    [SerializeField] private int jumpSpeed = 70;
     public int currentHealth;
 
     [HideInInspector] public float score;
     Rigidbody m_Rigidbody;
+
+    Obstacles lastObstacle = null;
+
+    bool jump;
+    bool slide;
+    bool kick;
+
+    private string jumpAnimation;
+
 
 
 
@@ -55,11 +64,40 @@ public class Player : MonoBehaviour
         velocity += Time.deltaTime * acceleration;
     }
 
-    private void jump()
+    void FixedUpdate()
     {
-        _animator.SetBool("Jump", true);
-        _animator.SetBool("Jump", false);
+        if (jump)
+        {
+            m_Rigidbody.AddForce(transform.up * jumpSpeed);
+
+
+            //transform.position += transform.up * 3;
+            jump = false;
+        }
+
+
+        else if (slide)
+        {
+            m_Rigidbody.AddForce(-transform.up * 6);
+            slide = false;
+            //transform.position += transform.up * 3;
+            //jump = false;
+        }
+
+        else if (kick)
+        {
+            m_Rigidbody.AddForce((-transform.up) * 10);
+            kick = false;
+            //transform.position += transform.up * 3;
+            //jump = false;
+        }
     }
+
+    protected void LateUpdate()
+    {
+        transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+    }
+
     private void moveToWaypoint()
     {
         transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.position - transform.position, velocity * Time.deltaTime, 0.0f);
@@ -110,32 +148,42 @@ public class Player : MonoBehaviour
         print(currentHealth);
     }
 
-    public void avoidObstacale(Obstacles.BlockadeType blockadeType)
-    {
-        print(blockadeType);
 
-        if (blockadeType == Obstacles.BlockadeType.High)
+    public void avoidObstacale(Obstacles obstacle)
+    {
+        print(obstacle.blockadeType);
+        if (obstacle == lastObstacle) return;
+        lastObstacle = obstacle;
+
+        if (obstacle.blockadeType == Obstacles.BlockadeType.High)
         {
 
             print("slide");
+            slide = true;
             _animator.SetBool("Slide", true);
 
+
         }
 
-        else if (blockadeType == Obstacles.BlockadeType.Low)
+        else if (obstacle.blockadeType == Obstacles.BlockadeType.Low)
         {
             print("jumping");
+            jump = true;
             _animator.SetBool("Jump", true);
-            transform.position += transform.up * 4;
-            transform.position += transform.forward;
-            //m_Rigidbody.AddForce(transform.up * jumpSpeed);
+            //_animator.SetTrigger("Jumping");
+            //_animator.Play(jumpAnimation);
+            //jump = true;
 
+            //transform.position += transform.up * 4;
+            // transform.position += transform.forward;
 
 
         }
-        else if (blockadeType == Obstacles.BlockadeType.Full)
+        else if (obstacle.blockadeType == Obstacles.BlockadeType.Full)
         {
+            kick = true;
             _animator.SetBool("Kick", true);
+
             print("kick");
         }
 
@@ -143,9 +191,16 @@ public class Player : MonoBehaviour
 
     public void keepRunning()
     {
+
+        print("Floor");
+        //_animator.ResetTrigger("Jumping");
         _animator.SetBool("Slide", false);
         _animator.SetBool("Jump", false);
         _animator.SetBool("Kick", false);
+
+        jump = false;
+        slide = false;
+        kick = false;
 
     }
 }

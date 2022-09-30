@@ -613,7 +613,7 @@ GameObject:
   - component: {fileID: 8883122588426601340}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -689,13 +689,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6974954045741939889}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 20
+  m_Drag: 10
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!136 &1707702538956366869
 CapsuleCollider:
@@ -722,8 +722,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1, z: 3}
-  m_Center: {x: 0, y: 1, z: 2}
+  m_Size: {x: 0.5, y: 1.73, z: 3}
+  m_Center: {x: 0, y: 1, z: 1.7}
 --- !u!1 &6974975409043500973
 GameObject:
   m_ObjectHideFlags: 0
