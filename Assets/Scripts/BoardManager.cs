@@ -18,6 +18,10 @@ public class BoardManager : MonoBehaviour
     private Tile _secondLastTile = null;
     private GameObject _passedTile = null;
 
+    //Creates a baseline number of forward tiles in a row so there are at least a couple before a turn.
+    private int nForwardTilesInRow = 0;
+    [SerializeField] public int minForwardTilesBeforeTurn = 2;
+
     void Start()
     {
         player = GameObject.FindObjectOfType<Player>();
@@ -53,6 +57,7 @@ public class BoardManager : MonoBehaviour
         Tile startTile = startTileGO.GetComponent<Tile>();
         //TODO move forward based on size of waypoint mesh
         transform.position += transform.forward * 15;
+        nForwardTilesInRow++;
         /* float offsetFromNew = getTileOffset(startTile);
         float offsetFromOld = getTileOffset(_endTile);
         print(transform.forward);
@@ -95,18 +100,23 @@ public class BoardManager : MonoBehaviour
     {
         string tag = TileTypes.Forward.ToString();
         float tileThreshold = Random.value;
-        if (tileThreshold <= 0.1)
+        if (tileThreshold <= 0.1 && nForwardTilesInRow >= minForwardTilesBeforeTurn)
         {
             tag = TileTypes.Left.ToString();
+            //Reset forward tiles counter
+            nForwardTilesInRow = 0;
         }
-        else if (tileThreshold <= 0.2)
+        else if (tileThreshold <= 0.2 && nForwardTilesInRow >= minForwardTilesBeforeTurn)
         {
             tag = TileTypes.Right.ToString();
+            //Reset forward tiles counter
+            nForwardTilesInRow = 0;
 
         }
         else if (tileThreshold > 0.2)
         {
             tag = TileTypes.Forward.ToString();
+            nForwardTilesInRow++;
 
         }
 
@@ -156,10 +166,9 @@ public class BoardManager : MonoBehaviour
                 } */
                 break;
             case "Forward":
-                print("Forward");
+                //print("Forward");
                 transform.position += transform.forward * 15;
                 prefab = forwardTiles[Random.Range(0, forwardTiles.Count)];
-
                 /* if (prefab.TryGetComponent(out Tile forwardTile))
                 {
                     float offsetFromNew = getTileOffset(forwardTile);
@@ -177,7 +186,7 @@ public class BoardManager : MonoBehaviour
         // ensures that no two platforms are spawned at the same location assuming there are less than 6 platforms.
         foreach (var item in _platforms)
         {
-            // if position is already taken, get new random tile.
+            // if position is already taken, get new random tile. RESET and try again.
             if (Vector3.Distance(item.transform.position, transform.position) < 1)
             {
                 this.transform.rotation = tempRotation;
