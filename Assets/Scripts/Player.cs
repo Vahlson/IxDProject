@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     public Transform targetWayPoint;
     [SerializeField] private int maxHealth = 10;
     public int currentHealth;
-
     [HideInInspector] public float score;
 
     void Awake()
@@ -92,6 +91,10 @@ public class Player : MonoBehaviour
         if (currentHealth <= 0)
         {
             PlayerPrefs.SetInt("Score", (int)score);
+            GameManager.Instance.latestScore = (int)score;
+        print("latest score from player is:" + GameManager.Instance.latestScore);
+
+            print("my score is" + score);
             SceneManager.LoadScene(2);
         }
     }
