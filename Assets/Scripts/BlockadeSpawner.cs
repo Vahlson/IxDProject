@@ -40,7 +40,7 @@ public class BlockadeSpawner : MonoBehaviour
 
         /*  Vector3 parentPosition = transform.position;
          Vector3 parentExtents = waypointCollider.bounds.extents;
-         Vector3 parentSize = waypointCollider.bounds.extents * 2;
+         
 
          float yOffset = obstaclePrefab.transform.localScale.y / 2;
          obstacleMesh = obstaclePrefab.TryGetComponent(out MeshFilter meshFilter) ? meshFilter.sharedMesh : null;
@@ -87,10 +87,14 @@ public class BlockadeSpawner : MonoBehaviour
                 GameObject obstacle = Instantiate(obstaclePrefab, spawnPoint.position, spawnPoint.rotation);
                 obstacle.transform.parent = spawnPoint;
 
-                //Change width to fit parent.
-                //TODO, Change this to only scale the collider 
-                //obstacle.transform.localScale = new Vector3(parentSize.x,obstacle.transform.localScale.y,obstacle.transform.localScale.z);
+                //Change width of collider to fit parent. 
+                Vector3 parentSize = waypointCollider.bounds.extents * 2;
+                //print("parent size: "+ Mathf.Min(parentSize.x,parentSize.z));
+                if(obstacle.TryGetComponent(out BoxCollider obstacleCollider)){
+                    obstacleCollider.size = new Vector3(Mathf.Min(parentSize.x,parentSize.z),obstacleCollider.size.y,obstacleCollider.size.z);
 
+                }
+                
                 obstacles.Add(obstacle);
             }
 

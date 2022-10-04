@@ -178,7 +178,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c2e9ac57fad70ae4fb734e46954b090d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -243,11 +243,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lowObstaclePrefabs:
-  - {fileID: 2707457566716922355, guid: 706488ecd93cb9f41a9f24f2ec9d3ad1, type: 3}
+  - {fileID: 2707457566716922355, guid: 774aa9af32bcb4d4d9f70d425afe5709, type: 3}
   midObstaclePrefabs:
-  - {fileID: 2707457566716922355, guid: 1511865abba91744682cff0871660413, type: 3}
+  - {fileID: 2707457566716922355, guid: ba86a82afe127744695c8f43c7cc7efd, type: 3}
   highObstaclePrefabs:
-  - {fileID: 2707457566716922355, guid: 916bc524b5593a248b1f71cdd42c285c, type: 3}
+  - {fileID: 2707457566716922355, guid: 98901b96c5c6ded4cb03019b6f1e1a1f, type: 3}
   blockadeSpawnChance: 0.2
   startSpawnPoint: {fileID: 5457626231217325012}
   middleSpawnPoint: {fileID: 4860310907697327645}

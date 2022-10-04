@@ -41,7 +41,7 @@ public class PlayerHUD : MonoBehaviour
         if (_player.score >= _highScore)
         {
             _highScore = (int)_player.score;
-            highScore.text = "HighScore: " + _highScore;
+            highScore.text = "NEW HIGHSCORE: " + _highScore;
             PlayerPrefs.SetInt("HighScore", _highScore);
         }
         if (_player.currentHealth < currentHealth)
