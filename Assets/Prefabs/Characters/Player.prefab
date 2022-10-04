@@ -678,6 +678,7 @@ MonoBehaviour:
   maxHealth: 10
   currentHealth: 0
   score: 0
+  stance: 2
 --- !u!136 &1707702538956366869
 CapsuleCollider:
   m_ObjectHideFlags: 0
