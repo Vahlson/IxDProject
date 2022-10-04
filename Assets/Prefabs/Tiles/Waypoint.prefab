@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 7712846504758191190}
   - component: {fileID: 6379599726040389028}
   - component: {fileID: 7658382481972875642}
+  - component: {fileID: 4260725258106586376}
   m_Layer: 0
   m_Name: Waypoint
   m_TagString: Untagged
@@ -177,7 +178,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c2e9ac57fad70ae4fb734e46954b090d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -242,12 +243,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lowObstaclePrefabs:
-  - {fileID: 2707457566716922355, guid: a7c4afc2ac2a6114d90c9fcc25c937f1, type: 3}
+  - {fileID: 2707457566716922355, guid: 774aa9af32bcb4d4d9f70d425afe5709, type: 3}
   midObstaclePrefabs:
-  - {fileID: 2707457566716922355, guid: 1511865abba91744682cff0871660413, type: 3}
+  - {fileID: 2707457566716922355, guid: ba86a82afe127744695c8f43c7cc7efd, type: 3}
   highObstaclePrefabs:
-  - {fileID: 2707457566716922355, guid: 916bc524b5593a248b1f71cdd42c285c, type: 3}
+  - {fileID: 2707457566716922355, guid: 98901b96c5c6ded4cb03019b6f1e1a1f, type: 3}
   blockadeSpawnChance: 0.2
   startSpawnPoint: {fileID: 5457626231217325012}
   middleSpawnPoint: {fileID: 4860310907697327645}
   endSpawnPoint: {fileID: 7245074905481221687}
+--- !u!65 &4260725258106586376
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7712846504758191209}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 0.5, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}

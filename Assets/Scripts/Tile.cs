@@ -30,4 +30,19 @@ class Tile : MonoBehaviour
     {
         return start[1].transform;
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent(out Player player))
+        {
+
+            if (other is CapsuleCollider)
+            {
+                player.keepRunning();
+                print("Hit obstacle");
+            }
+
+        }
+
+    }
 }
