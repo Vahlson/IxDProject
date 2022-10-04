@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -29,21 +30,14 @@ public class Player : MonoBehaviour
     private Vector3 moveToPosition;
 
 
-
-    // Rigidbody m_Rigidbody;
-
     Obstacles lastObstacle = null;
 
     bool jump;
     bool slide;
     bool kick;
-
+    public event Action<PlayerStance> OnStanceChanged;
     private string jumpAnimation;
-
-
-
-
-
+    private PlayerStance _playerStance = PlayerStance.idle;
     void Awake()
     {
         currentHealth = maxHealth;
@@ -54,9 +48,6 @@ public class Player : MonoBehaviour
         _animator = GetComponent<Animator>();
         velocityHash = Animator.StringToHash("Velocity");
         _animator.SetBool("Jump", false);
-        // m_Rigidbody = GetComponent<Rigidbody>();
-
-        //Start by not lerping position
         laneSwitchTimeElapse = laneSwitchTime;
     }
 
@@ -75,12 +66,26 @@ public class Player : MonoBehaviour
         {
             moveLeft();
         }
-
+        if (Input.GetKeyUp("i"))
+        {
+            setStance(PlayerStance.low);
+        }
+        if (Input.GetKeyUp("o"))
+        {
+            setStance(PlayerStance.medium);
+        }
+        if (Input.GetKeyUp("p"))
+        {
+            setStance(PlayerStance.high);
+        }
         score += Time.deltaTime;
-
-
-
         velocity += Time.deltaTime * acceleration;
+    }
+    void setStance(PlayerStance playerStance)
+    {
+        this._playerStance = playerStance;
+        OnStanceChanged?.Invoke(_playerStance);
+
     }
 
     void FixedUpdate()
@@ -240,36 +245,46 @@ public class Player : MonoBehaviour
     }
 
 
-    void OnTriggerEnter(Collider other)
+    // void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.tag == "Obstacle")
+    //     {
+    //         takeDamage();
+    //         print("Hit obstacle");
+    //     }
+    // }
+
+
+    public void takeDamage(Obstacles.BlockadeType blockadeType)
     {
-        if (other.tag == "Obstacle")
+        if ((blockadeType == Obstacles.BlockadeType.High && _playerStance == PlayerStance.high) ||
+        (blockadeType == Obstacles.BlockadeType.Full && _playerStance == PlayerStance.medium) ||
+        (blockadeType == Obstacles.BlockadeType.Low && _playerStance == PlayerStance.low))
         {
-            takeDamage();
-            print("Hit obstacle");
+            return;
+        }
+        else
+        {
+
+            currentHealth -= 1;
+
+            if (currentHealth <= 0)
+            {
+                PlayerPrefs.SetInt("Score", (int)score);
+                GameManager.Instance.latestScore = (int)score;
+                SceneManager.LoadScene(2);
+            }
         }
     }
 
 
-    public void takeDamage()
-    {
-        currentHealth -= 1;
-
-        if (currentHealth <= 0)
-        {
-            PlayerPrefs.SetInt("Score", (int)score);
-            GameManager.Instance.latestScore = (int)score;
-            SceneManager.LoadScene(2);
-        }
-    }
-
-
-    public void avoidObstacale(Obstacles obstacle)
+    public void avoidObstacle(Obstacles obstacle)
     {
         print(obstacle.blockadeType);
         if (obstacle == lastObstacle) return;
         lastObstacle = obstacle;
 
-        if (obstacle.blockadeType == Obstacles.BlockadeType.High)
+        if (obstacle.blockadeType == Obstacles.BlockadeType.High && _playerStance == PlayerStance.high)
         {
 
             print("slide");
@@ -277,7 +292,7 @@ public class Player : MonoBehaviour
             _animator.SetBool("Slide", true);
         }
 
-        else if (obstacle.blockadeType == Obstacles.BlockadeType.Low)
+        else if (obstacle.blockadeType == Obstacles.BlockadeType.Low && _playerStance == PlayerStance.low)
         {
             print("jumping");
             jump = true;
@@ -285,7 +300,7 @@ public class Player : MonoBehaviour
 
 
         }
-        else if (obstacle.blockadeType == Obstacles.BlockadeType.Full)
+        else if (obstacle.blockadeType == Obstacles.BlockadeType.Full && _playerStance == PlayerStance.medium)
         {
             kick = true;
             _animator.SetBool("Kick", true);
