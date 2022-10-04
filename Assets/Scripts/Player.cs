@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
+    public PlayerContainer playerContainer;
     private Animator _animator;
     public float velocity = 5.0f;
     public float acceleration = .2f;
@@ -59,6 +60,8 @@ public class Player : MonoBehaviour
         {
             targetWayPoint = move;
             transform.position += transform.right * -10;
+            playerContainer.offset += transform.right * 10;
+
         }
     }
     private void moveRight()
@@ -68,6 +71,7 @@ public class Player : MonoBehaviour
         {
             targetWayPoint = move;
             transform.position += transform.right * 10;
+            playerContainer.offset += transform.right * -10;
         }
     }
     public bool hasReachedTarget()
@@ -99,5 +103,5 @@ public class Player : MonoBehaviour
 }
 public enum PlayerStance
 {
-    low, medium, high,idle
+    low, medium, high, idle
 }
