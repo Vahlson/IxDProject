@@ -71,6 +71,7 @@ public class Player : MonoBehaviour
             m_Rigidbody.AddForce(transform.up * jumpSpeed);
 
 
+
             //transform.position += transform.up * 3;
             jump = false;
         }
@@ -78,18 +79,14 @@ public class Player : MonoBehaviour
 
         else if (slide)
         {
-            m_Rigidbody.AddForce(-transform.up * 6);
+            m_Rigidbody.AddForce(-transform.up * 12);
             slide = false;
-            //transform.position += transform.up * 3;
-            //jump = false;
         }
 
         else if (kick)
         {
-            m_Rigidbody.AddForce((-transform.up) * 10);
+            m_Rigidbody.AddForce((-transform.up) * 6);
             kick = false;
-            //transform.position += transform.up * 3;
-            //jump = false;
         }
     }
 
@@ -170,12 +167,6 @@ public class Player : MonoBehaviour
             print("jumping");
             jump = true;
             _animator.SetBool("Jump", true);
-            //_animator.SetTrigger("Jumping");
-            //_animator.Play(jumpAnimation);
-            //jump = true;
-
-            //transform.position += transform.up * 4;
-            // transform.position += transform.forward;
 
 
         }
