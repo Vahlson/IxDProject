@@ -26,21 +26,31 @@ public class ArduinoInputController : MonoBehaviour
 
     void OnMessageArrived(string message)
     {
-        //print(message);
+        print("damessage: " + message);
         //Parse the message.
-        List<int> input = parseArduinoMessage(message);
+        bool[] input = parseArduinoMessage(message);
+
+
+        if (input[0] == false)
+        {
+            moveCube(-1);
+        }
+        else if (input[1] == false)
+        {
+            moveCube(1);
+        }
 
         string temp = "";
-        foreach (int c in input)
+        foreach (bool b in input)
         {
-            temp += c + ", "; //maybe also + '\n' to put them on their own line.
+            temp += b + ", "; //maybe also + '\n' to put them on their own line.
         }
 
-        print(input[1]);
-        if (input[1] == trueBit)
+
+        /* if (input[1] == trueBit)
         {
             moveCube();
-        }
+        } */
 
         print("Lista: " + temp);
         //print("Message: "+ message +" LOL:"+ float.Parse(message));
@@ -56,7 +66,7 @@ public class ArduinoInputController : MonoBehaviour
 
     }
 
-    List<int> parseArduinoMessage(string message)
+    bool[] parseArduinoMessage(string message)
     {
         //TODO might want to remove first bit, the one at position 0, because it is likely a stop bit.
         List<int> charList = new List<int>();
@@ -64,16 +74,28 @@ public class ArduinoInputController : MonoBehaviour
         {
             int number = int.TryParse(c.ToString(), out int i) ? i : -1;
             charList.Add(number);
-            //print("char: "+ c);
+            print("char: " + c);
         }
 
-        return charList;
+        // bit 0 is a stopbit.
+        int messageBit = charList[1];
+
+        //The least significant will be stored first.
+        BitArray bitArray = new BitArray(new int[] { messageBit });
+        bool[] bits = new bool[bitArray.Count];
+        bitArray.CopyTo(bits, 0);
+        //The arduino sends 0 to represent button being pushed, we want the opposite
+        bool[] invertedBits = (bool[])bits.Clone();
+
+
+
+        return bits;
     }
 
-    void moveCube()
+    void moveCube(int direction)
     {
         print("MOVE");
-        transform.Translate(Vector3.right * 0.1f);
+        transform.Translate(Vector3.right * 0.1f * direction);
 
     }
 
