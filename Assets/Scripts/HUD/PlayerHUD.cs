@@ -18,32 +18,9 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField]
     private GameObject _stanceContainer;
     [SerializeField]
-    private GameObject _highStance;
-    [SerializeField]
-    private GameObject _midStance;
-    [SerializeField]
-    private GameObject _lowStance;
-    [SerializeField]
-    private GameObject _idleStance;
     private GameObject currentStance;
-    void OnStanceChanged(PlayerStance playerStance)
-    {
-        switch (playerStance)
-        {
-            case PlayerStance.high:
-                setCurrentStance(_highStance);
-                break;
-            case PlayerStance.medium:
-                setCurrentStance(_midStance);
-                break;
-            case PlayerStance.low:
-                setCurrentStance(_lowStance);
-                break;
-            case PlayerStance.idle:
-                setCurrentStance(_idleStance);
-                break;
-        }
-    }
+    private StanceIndicator _stanceIndicator;
+
     void OnDestroy()
     {
         _player.OnStanceChanged -= OnStanceChanged;
@@ -56,19 +33,16 @@ public class PlayerHUD : MonoBehaviour
         _highScore = PlayerPrefs.GetInt("HighScore");
         highScore.text = "Highscore:" + _highScore.ToString();
         initHealthIndicators();
-        setCurrentStance(_idleStance);
+        initStance(currentStance, new Vector3(0, 90, 0));
     }
-    private void setCurrentStance(GameObject model)
+    private void initStance(GameObject model, Vector3 rotation)
     {
-        if (currentStance != null)
-        {
-            Destroy(currentStance);
-        }
         currentStance = Instantiate(model, _stanceContainer.transform.position, Quaternion.identity);
         currentStance.transform.SetParent(_stanceContainer.transform);
         currentStance.transform.localScale = new Vector3(100, 100, 100);
         currentStance.transform.localPosition = Vector3.zero;
-        currentStance.transform.Rotate(new Vector3(0, 90, 0));
+        currentStance.transform.Rotate(rotation);
+        this._stanceIndicator = currentStance.GetComponent<StanceIndicator>();
     }
     private void initHealthIndicators()
     {
@@ -100,5 +74,34 @@ public class PlayerHUD : MonoBehaviour
             Destroy(g);
         }
     }
+    void OnStanceChanged(PlayerStance playerStance)
+    {
+        switch (playerStance)
+        {
+            case PlayerStance.high:
+                // initStance(_highStance, new Vector3(0, 130, 0));
+                _stanceIndicator.setHigh();
+                currentStance.transform.eulerAngles = new Vector3(0, 130, 0);
+                // currentStance.GetComponent<StanceIndicator>().setHigh();
+                break;
+            case PlayerStance.medium:
+                // initStance(_midStance, new Vector3(0, 130, 0));
+                currentStance.transform.eulerAngles = new Vector3(0, 130, 0);
 
+                _stanceIndicator.setMedium();
+                break;
+            case PlayerStance.low:
+                // initStance(_lowStance, new Vector3(0, 90, 0));
+                currentStance.transform.eulerAngles = new Vector3(0, 90, 0);
+
+                _stanceIndicator.setLow();
+                break;
+            case PlayerStance.idle:
+                // initStance(_idleStance, new Vector3(0, 90, 0));
+                currentStance.transform.eulerAngles = new Vector3(0, 90, 0);
+
+                _stanceIndicator.setIdle();
+                break;
+        }
+    }
 }

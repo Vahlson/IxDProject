@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -380,6 +380,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5716482473542356545, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 7511899839645252034, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
       propertyPath: m_Name
       value: PlayerHUD
@@ -475,7 +479,7 @@ PrefabInstance:
     - target: {fileID: 7511899839645252057, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
       propertyPath: _idleStance
       value: 
-      objectReference: {fileID: 1506550050545096, guid: d3834ce292c8d39418a1528181080c4e, type: 3}
+      objectReference: {fileID: 1506550050545096, guid: fe300c1f42114444f848a83282a4cb1e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
 --- !u!1 &843813230
@@ -721,8 +725,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: velocity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
       propertyPath: jumpSpeed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: acceleration
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
       propertyPath: playerContainer

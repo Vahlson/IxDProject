@@ -293,9 +293,7 @@ MonoBehaviour:
   _livesContainer: {fileID: 7511899840129466678}
   _healthModel: {fileID: 2451797512718930445, guid: ce67e551bb834ab46b6f397665b8a3ca, type: 3}
   _stanceContainer: {fileID: 787549862209215881}
-  _highStance: {fileID: 1506550050545096, guid: d3834ce292c8d39418a1528181080c4e, type: 3}
-  _midStance: {fileID: 1506550050545096, guid: d3834ce292c8d39418a1528181080c4e, type: 3}
-  _lowStance: {fileID: 1506550050545096, guid: d3834ce292c8d39418a1528181080c4e, type: 3}
+  currentStance: {fileID: 1506550050545096, guid: fe300c1f42114444f848a83282a4cb1e, type: 3}
 --- !u!1 &7511899840129466678
 GameObject:
   m_ObjectHideFlags: 0
