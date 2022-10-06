@@ -291,7 +291,7 @@ MonoBehaviour:
   score: {fileID: 7511899840244912187}
   highScore: {fileID: 7511899838860037205}
   _livesContainer: {fileID: 7511899840129466678}
-  _healthModel: {fileID: 2451797512718930445, guid: ce67e551bb834ab46b6f397665b8a3ca, type: 3}
+  _healthModel: {fileID: 1000010714891294, guid: 5a0537415d4017c4fad7a4986f502dc1, type: 3}
   _stanceContainer: {fileID: 787549862209215881}
   currentStance: {fileID: 1506550050545096, guid: fe300c1f42114444f848a83282a4cb1e, type: 3}
 --- !u!1 &7511899840129466678
@@ -328,7 +328,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: 20}
+  m_AnchoredPosition: {x: 91, y: 84}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &7511899840129466696

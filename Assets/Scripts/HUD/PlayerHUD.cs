@@ -50,9 +50,9 @@ public class PlayerHUD : MonoBehaviour
         {
             GameObject g = Instantiate(_healthModel, _livesContainer.transform.position, Quaternion.identity);
             g.transform.SetParent(_livesContainer.transform);
-            g.transform.localScale = new Vector3(100, 100, 100);
-            g.transform.localPosition += new Vector3(i * 100, 0, 0);
-            g.transform.Rotate(new Vector3(0, 90, 0));
+            g.transform.localScale = new Vector3(50, 50, 50);
+            g.transform.localPosition += new Vector3(i * 110, 0, 0);
+            g.transform.eulerAngles = new Vector3(270, 0, 0);
             _health.Push(g);
         }
         currentHealth = _player.currentHealth;
