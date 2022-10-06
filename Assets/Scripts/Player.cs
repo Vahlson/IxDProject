@@ -118,27 +118,27 @@ public class Player : MonoBehaviour
     private void moveToWaypoint()
     {
         //The old, working version.
-        //transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.position - transform.position, velocity * Time.deltaTime, 0.0f);
-        //transform.position = Vector3.MoveTowards(transform.position, targetWayPoint.position, velocity * Time.deltaTime);
+        transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.position - transform.position, velocity * Time.deltaTime, 0.0f);
+        transform.position = Vector3.MoveTowards(transform.position, targetWayPoint.position, velocity * Time.deltaTime);
 
         //2.5 is half of the waypoint length
         //Getting the offset of the component that is forward between waypoint and player. so if z is of forward, what is their z offset.
-        float playerToTargetForwardOffset = Vector3.Dot(targetWayPoint.forward, targetWayPoint.position) - Vector3.Dot(targetWayPoint.forward, transform.position);
-        moveToPosition = targetWayPoint.position + targetWayPoint.forward * (2.5f - playerToTargetForwardOffset);
+        // float playerToTargetForwardOffset = Vector3.Dot(targetWayPoint.forward, targetWayPoint.position) - Vector3.Dot(targetWayPoint.forward, transform.position);
+        // moveToPosition = targetWayPoint.position + targetWayPoint.forward * (2.5f - playerToTargetForwardOffset);
 
-        //print("movetoPos: " + moveToPosition);
-        //print("targetWaypoinyPos: " + targetWayPoint.position);
+        // //print("movetoPos: " + moveToPosition);
+        // //print("targetWaypoinyPos: " + targetWayPoint.position);
 
-        //Old smooth curve version
-        //transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
-        //transform.position = Vector3.MoveTowards(transform.position, moveToPosition, velocity * Time.deltaTime);
+        // //Old smooth curve version
+        // //transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
+        // //transform.position = Vector3.MoveTowards(transform.position, moveToPosition, velocity * Time.deltaTime);
 
-        //This is used to take account for the speed forward becoming slower when switching lanes which we dont want
-        // print("reached lane? : " + hasReachedLane());
-        float laneSwitchSpeedAdjustmentFactor = hasReachedLane() ? 1 : Mathf.Sqrt(2);
-        transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
-        transform.position = Vector3.MoveTowards(transform.position, moveToPosition, laneSwitchSpeedAdjustmentFactor * velocity * Time.deltaTime);
-        ////////////////////////////
+        // //This is used to take account for the speed forward becoming slower when switching lanes which we dont want
+        // // print("reached lane? : " + hasReachedLane());
+        // float laneSwitchSpeedAdjustmentFactor = hasReachedLane() ? 1 : Mathf.Sqrt(2);
+        // transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
+        // transform.position = Vector3.MoveTowards(transform.position, moveToPosition, laneSwitchSpeedAdjustmentFactor * velocity * Time.deltaTime);
+        // ////////////////////////////
         /* Vector3 newTargetWaypoint = transform.position;
         Vector3 moveToPositionForwardOffset = Vector3.Scale(targetWayPoint.forward, moveToPosition);
         List<float> vectorArray = new List<float>();
@@ -222,12 +222,12 @@ public class Player : MonoBehaviour
     }
     public bool hasReachedTarget()
     {
-        //return transform.position == targetWayPoint.transform.position;
-        //return Vector3.Distance(transform.position, moveToPosition) <= 0.3;
+        return Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(targetWayPoint.transform.position.x, 0, targetWayPoint.transform.position.z)) < 0.2;
+        // return Vector3.Distance(transform.position, moveToPosition) <= 0.3;
 
         //print("Target forward offset: " + (Vector3.Dot(targetWayPoint.forward, transform.position) - Vector3.Dot(targetWayPoint.forward, targetWayPoint.position)));
 
-        return Vector3.Dot(targetWayPoint.forward, transform.position) - Vector3.Dot(targetWayPoint.forward, targetWayPoint.position) >= 0;
+        // return Vector3.Dot(targetWayPoint.forward, transform.position) - Vector3.Dot(targetWayPoint.forward, targetWayPoint.position) >= 0;
     }
 
     public bool hasReachedLane()
