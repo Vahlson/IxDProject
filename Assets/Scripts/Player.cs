@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int jumpSpeed = 70;
     public int currentHealth;
     [HideInInspector] public float score;
+
+    [SerializeField] private int pointsForObstacle = 50;
     public PlayerStance stance = PlayerStance.high;
 
     //Lane Switching
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour
     bool jump;
     bool slide;
     bool kick;
+    public bool damage;
     public event Action<PlayerStance> OnStanceChanged;
     private string jumpAnimation;
     private PlayerStance _playerStance = PlayerStance.idle;
@@ -49,6 +52,7 @@ public class Player : MonoBehaviour
         velocityHash = Animator.StringToHash("Velocity");
         _animator.SetBool("Jump", false);
         laneSwitchTimeElapse = laneSwitchTime;
+        damage = true;
     }
 
     void Update()
@@ -92,24 +96,16 @@ public class Player : MonoBehaviour
     {
         if (jump)
         {
-            // m_Rigidbody.AddForce(transform.up * jumpSpeed);
-
-
-
-            //transform.position += transform.up * 3;
             jump = false;
         }
 
-
         else if (slide)
         {
-            // m_Rigidbody.AddForce(-transform.up * 12);
             slide = false;
         }
 
         else if (kick)
         {
-            // m_Rigidbody.AddForce((-transform.up) * 6);
             kick = false;
         }
     }
@@ -245,16 +241,6 @@ public class Player : MonoBehaviour
     }
 
 
-    // void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.tag == "Obstacle")
-    //     {
-    //         takeDamage();
-    //         print("Hit obstacle");
-    //     }
-    // }
-
-
     public void takeDamage(Obstacles.BlockadeType blockadeType)
     {
         if ((blockadeType == Obstacles.BlockadeType.High && _playerStance == PlayerStance.high) ||
@@ -265,7 +251,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-
             currentHealth -= 1;
 
             if (currentHealth <= 0)
@@ -280,41 +265,40 @@ public class Player : MonoBehaviour
 
     public void avoidObstacle(Obstacles obstacle)
     {
-        print(obstacle.blockadeType);
+        //print(obstacle.blockadeType);
+
         if (obstacle == lastObstacle) return;
         lastObstacle = obstacle;
 
         if (obstacle.blockadeType == Obstacles.BlockadeType.High && _playerStance == PlayerStance.high)
         {
-
-            print("slide");
+            damage = false;
             slide = true;
             _animator.SetBool("Slide", true);
+            score += pointsForObstacle;
         }
 
         else if (obstacle.blockadeType == Obstacles.BlockadeType.Low && _playerStance == PlayerStance.low)
         {
-            print("jumping");
+            damage = false;
             jump = true;
             _animator.SetBool("Jump", true);
+            score += pointsForObstacle;
 
 
         }
         else if (obstacle.blockadeType == Obstacles.BlockadeType.Full && _playerStance == PlayerStance.medium)
         {
+            damage = false;
             kick = true;
             _animator.SetBool("Kick", true);
-
-            print("kick");
+            score += pointsForObstacle;
         }
 
     }
 
     public void keepRunning()
     {
-
-        print("Floor");
-        //_animator.ResetTrigger("Jumping");
         _animator.SetBool("Slide", false);
         _animator.SetBool("Jump", false);
         _animator.SetBool("Kick", false);
@@ -322,6 +306,9 @@ public class Player : MonoBehaviour
         jump = false;
         slide = false;
         kick = false;
+
+        damage = true;
+        //setStance(PlayerStance.idle);
 
     }
 }
