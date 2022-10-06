@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int jumpSpeed = 70;
     public int currentHealth;
     [HideInInspector] public float score;
+
+    [SerializeField] private int pointsForObstacle = 50;
     public PlayerStance stance = PlayerStance.high;
 
     //Lane Switching
@@ -289,24 +291,29 @@ public class Player : MonoBehaviour
 
         if (obstacle.blockadeType == Obstacles.BlockadeType.High && _playerStance == PlayerStance.high)
         {
-
+            damage = false;
             print("slide");
             slide = true;
             _animator.SetBool("Slide", true);
+            score += pointsForObstacle;
         }
 
         else if (obstacle.blockadeType == Obstacles.BlockadeType.Low && _playerStance == PlayerStance.low)
         {
+            damage = false;
             print("jumping");
             jump = true;
             _animator.SetBool("Jump", true);
+            score += pointsForObstacle;
 
 
         }
         else if (obstacle.blockadeType == Obstacles.BlockadeType.Full && _playerStance == PlayerStance.medium)
         {
+            damage = false;
             kick = true;
             _animator.SetBool("Kick", true);
+            score += pointsForObstacle;
 
             print("kick");
         }
@@ -325,6 +332,8 @@ public class Player : MonoBehaviour
         jump = false;
         slide = false;
         kick = false;
+
+        damage = true;
 
     }
 }

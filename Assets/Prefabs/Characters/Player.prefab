@@ -684,6 +684,7 @@ MonoBehaviour:
   jumpSpeed: 3000
   currentHealth: 0
   score: 0
+  pointsForObstacle: 60
   stance: 2
   laneSwitchTime: 1
   damage: 0
