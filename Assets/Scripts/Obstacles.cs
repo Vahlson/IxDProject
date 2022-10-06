@@ -14,6 +14,8 @@ public class Obstacles : MonoBehaviour
         None
     }
 
+    bool takeDamage = true;
+
     public BlockadeType blockadeType = BlockadeType.None;
     // Start is called before the first frame update
     void Start()
@@ -37,11 +39,14 @@ public class Obstacles : MonoBehaviour
                 print("Avoiding obstacale");
             }
 
-            if (other is CapsuleCollider)
+            if (other is CapsuleCollider && player.damage && takeDamage)
             {
+                takeDamage = false;
                 player.takeDamage(this.blockadeType);
                 print("Hit obstacle");
             }
+
+
 
         }
 
@@ -50,11 +55,14 @@ public class Obstacles : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
-            if (other is CapsuleCollider)
+            if (other is BoxCollider)
             {
+                takeDamage = true;
                 player.keepRunning();
                 print("Hit obstacle");
             }
+
+
         }
     }
 

@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     bool jump;
     bool slide;
     bool kick;
+    public bool damage;
     public event Action<PlayerStance> OnStanceChanged;
     private string jumpAnimation;
     private PlayerStance _playerStance = PlayerStance.idle;
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
         velocityHash = Animator.StringToHash("Velocity");
         _animator.SetBool("Jump", false);
         laneSwitchTimeElapse = laneSwitchTime;
+        damage = true;
     }
 
     void Update()
@@ -281,6 +283,7 @@ public class Player : MonoBehaviour
     public void avoidObstacle(Obstacles obstacle)
     {
         print(obstacle.blockadeType);
+
         if (obstacle == lastObstacle) return;
         lastObstacle = obstacle;
 
