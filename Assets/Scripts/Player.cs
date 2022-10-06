@@ -304,7 +304,16 @@ public class Player : MonoBehaviour
         {
             kick = true;
             _animator.SetBool("Kick", true);
-
+            ObstacleAnimationBlender ob = obstacle.gameObject.GetComponentInChildren<ObstacleAnimationBlender>();
+            //try to play the death animation if existing
+            if (ob != null)
+            {
+                ob.playDeathAnimation();
+            }
+            else
+            {
+                print("No human found");
+            }
             // print("kick");
         }
 
