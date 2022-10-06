@@ -32,8 +32,46 @@ public class BlockadeSpawner : MonoBehaviour
     private Collider waypointCollider;
     private Waypoint waypointController;
 
+    [SerializeField] private int nTilesBeforeSpawningObstacles = 2;
+
+    [SerializeField] private bool spawnObstaclesOnCorners = false;
+
+    [SerializeField] private GameObject parentTile = null;
+
+    [Tooltip("The frequency of change on the randomness function forwards. Range over which height (strength) of perlin noise varies.")]
+    // Distance covered per second along X axis of Perlin plane.
+    [SerializeField] float perlinSampleXScale = 1.0f;
+
+    [Tooltip("The frequency of change on the randomness function sideways. Range over which height (strength) of perlin noise varies.")]
+    // Distance covered per second along X axis of Perlin plane.
+    [SerializeField] float perlinSampleYScale = 1.0f;
+
+    [Tooltip("Range over which height (strength) varies. Affects how often obstacles spawn.")]
+    [SerializeField] float perlinSampleHeightScale = 1.0f;
+
+
+
+
+
     void Awake()
     {
+
+
+
+    }
+
+    void Start()
+    {
+        //Don't do anything if we haven't passed the beginning or if this is a corner and we shouldn't spawn on corners.
+
+        Tile t = parentTile.GetComponent<Tile>();
+        //print("ISI IT A START TILE? " + t.getIsStartTile());
+        if (t && t.getIsStartTile()) return;
+
+
+
+        //if (GameManager.Instance.getNSpawnedTiles() < nTilesBeforeSpawningObstacles) return; DOESN'T WORK SINCE MULTIPLE ARE SPAWNED BEFORE THIS IS CALLED.
+        if (parentTile?.tag == "Left" || parentTile?.tag == "Right" && !spawnObstaclesOnCorners) return;
 
         waypointController = TryGetComponent(out Waypoint w) ? waypointController = w : null;
         waypointCollider = TryGetComponent(out MeshCollider meshCollider) ? waypointCollider = meshCollider : null;
@@ -59,6 +97,10 @@ public class BlockadeSpawner : MonoBehaviour
         obstacles = new List<GameObject>();
         foreach (Transform spawnPoint in obstacleSpawnPoints)
         {
+
+            //Todo maybe divide perlinnoise by height scale
+            print(1 - blockadeSpawnChance);
+            //bool shouldSpawn = samplePerlinNoise() > 1 - blockadeSpawnChance;
             bool shouldSpawn = Random.Range(0f, 1f) < blockadeSpawnChance;
             if (shouldSpawn)
             {
@@ -90,17 +132,35 @@ public class BlockadeSpawner : MonoBehaviour
                 //Change width of collider to fit parent. 
                 Vector3 parentSize = waypointCollider.bounds.extents * 2;
                 //print("parent size: "+ Mathf.Min(parentSize.x,parentSize.z));
-                if(obstacle.TryGetComponent(out BoxCollider obstacleCollider)){
-                    obstacleCollider.size = new Vector3(Mathf.Min(parentSize.x,parentSize.z),obstacleCollider.size.y,obstacleCollider.size.z);
+                if (obstacle.TryGetComponent(out BoxCollider obstacleCollider))
+                {
+                    obstacleCollider.size = new Vector3(Mathf.Min(parentSize.x, parentSize.z), obstacleCollider.size.y, obstacleCollider.size.z);
 
                 }
-                
+
                 obstacles.Add(obstacle);
             }
 
         }
+    }
+
+    private float samplePerlinNoise()
+    {
+        float x = transform.position.x;
+        float y = transform.position.y;
+        //float xCoord = GameManager.Instance.getPerlinCenter().x + x / noiseTex.width * scale;
+        //float yCoord = GameManager.Instance.getPerlinCenter().y + y / noiseTex.height * scale;
+        float xCoord = 0 + Vector3.Dot(transform.forward, transform.position) * perlinSampleXScale;
+        float yCoord = 0 + Vector3.Dot(transform.right, transform.position) * perlinSampleYScale;
+        float height = Mathf.Clamp(perlinSampleHeightScale * Mathf.PerlinNoise(xCoord, yCoord), 0.0f, 1.0f);
+        print("height: " + height);
+        /*  Vector3 pos = transform.position;
+         pos.y = height;
+         transform.position = pos; */
+        return height;
 
     }
+
     bool nextStartIsFree()
     {
         BlockadeSpawner nextBlockadeScript = null;
@@ -114,10 +174,7 @@ public class BlockadeSpawner : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
 
-    }
 
     void FixedUpdate()
     {

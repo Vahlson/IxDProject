@@ -34,13 +34,13 @@ public class Obstacles : MonoBehaviour
             if (other is BoxCollider)
             {
                 player.avoidObstacle(this);
-                print("Avoiding obstacale");
+                //print("Avoiding obstacale");
             }
 
             if (other is CapsuleCollider)
             {
                 player.takeDamage(this.blockadeType);
-                print("Hit obstacle");
+                //print("Hit obstacle");
             }
 
         }

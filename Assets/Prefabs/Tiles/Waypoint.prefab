@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1434929310187108621
 Transform:
   m_ObjectHideFlags: 0
@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 6379599726040389028}
   - component: {fileID: 7658382481972875642}
   - component: {fileID: 4260725258106586376}
+  - component: {fileID: 8025828934074421771}
   m_Layer: 0
   m_Name: Waypoint
   m_TagString: Untagged
@@ -178,7 +179,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c2e9ac57fad70ae4fb734e46954b090d, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -248,10 +249,16 @@ MonoBehaviour:
   - {fileID: 2707457566716922355, guid: ba86a82afe127744695c8f43c7cc7efd, type: 3}
   highObstaclePrefabs:
   - {fileID: 2707457566716922355, guid: 98901b96c5c6ded4cb03019b6f1e1a1f, type: 3}
-  blockadeSpawnChance: 0.2
+  blockadeSpawnChance: 0.25
   startSpawnPoint: {fileID: 5457626231217325012}
   middleSpawnPoint: {fileID: 4860310907697327645}
   endSpawnPoint: {fileID: 7245074905481221687}
+  nTilesBeforeSpawningObstacles: 2
+  spawnObstaclesOnCorners: 0
+  parentTile: {fileID: 0}
+  perlinSampleXScale: 0.005
+  perlinSampleYScale: 0.005
+  perlinSampleHeightScale: 1
 --- !u!65 &4260725258106586376
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -265,3 +272,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 0.5, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8025828934074421771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7712846504758191209}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166fde36765d60848b958f4e7ec646e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 256
+  height: 256
+  scale: 2
+  offsetX: 100
+  offsetY: 100

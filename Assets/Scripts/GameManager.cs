@@ -19,10 +19,20 @@ class GameManager : MonoBehaviour
     private Leaderboard _leaderboard;
     private LeaderboardScore newLeaderboardScore;
 
+    private int nSpawnedTiles = 0;
 
+    //origin point For generating perlin noise.
+    private float perlinXOrg;
+    private float perlinYOrg;
 
     void Awake()
     {
+        //We need to generate new center for perlin noise between each game.
+
+        perlinXOrg = Random.Range(float.MinValue, float.MaxValue);
+        perlinYOrg = Random.Range(float.MinValue, float.MaxValue);
+        print("Reload perlin center x: " + perlinXOrg + " ,y: " + perlinYOrg);
+
         if (_instance == null)
         {
             _instance = this;
@@ -36,7 +46,30 @@ class GameManager : MonoBehaviour
         _leaderboard = DataSaver.loadData<Leaderboard>("Leaderboard") == null ? new Leaderboard() : DataSaver.loadData<Leaderboard>("Leaderboard");
 
 
+
+
+
         DontDestroyOnLoad(this);
+    }
+
+    void Start()
+    {
+
+    }
+
+    public Vector2 getPerlinCenter()
+    {
+        return new Vector2(perlinXOrg, perlinYOrg);
+    }
+
+    public void IncreaseNTilesSpawned()
+    {
+        nSpawnedTiles++;
+
+    }
+    public int getNSpawnedTiles()
+    {
+        return nSpawnedTiles;
     }
 
     public void UpdateNewLeaderboardScoreName(string newName)
@@ -96,7 +129,7 @@ class GameManager : MonoBehaviour
         {
             foreach (var item in _leaderboard.scores)
             {
-                print(item.score);
+                //print(item.score);
                 if (latestScore >= item.score)
                 {
                     newLeaderboardScore = new LeaderboardScore(latestScore, "AAA");
@@ -106,7 +139,7 @@ class GameManager : MonoBehaviour
             }
             while (_leaderboard.scores.Count > 5)
             {
-                print("leaderboard size:" + _leaderboard.scores.Count);
+                //print("leaderboard size:" + _leaderboard.scores.Count);
                 _leaderboard.scores.Sort();
                 _leaderboard.scores.Reverse();
                 _leaderboard.scores.RemoveAt(_leaderboard.scores.Count - 1);

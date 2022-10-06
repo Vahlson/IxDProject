@@ -5,6 +5,9 @@ class Tile : MonoBehaviour
     public GameObject[] start;
     [SerializeField]
     private GameObject[] end;
+
+    [SerializeField] private bool isStartTile = false;
+
     public void addNext(Tile tile)
     {
         foreach (var waypoint in end)
@@ -19,12 +22,18 @@ class Tile : MonoBehaviour
             }
         }
     }
+    public bool getIsStartTile()
+    {
+        return isStartTile;
+    }
+
     public void setStartTile()
     {
         foreach (var item in end)
         {
             item.GetComponent<Waypoint>().isEnd = false;
         }
+        isStartTile = true;
     }
     public Transform getStartWaypoint()
     {

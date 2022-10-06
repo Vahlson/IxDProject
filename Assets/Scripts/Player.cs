@@ -138,7 +138,7 @@ public class Player : MonoBehaviour
         //transform.position = Vector3.MoveTowards(transform.position, moveToPosition, velocity * Time.deltaTime);
 
         //This is used to take account for the speed forward becoming slower when switching lanes which we dont want
-        print("reached lane? : " + hasReachedLane());
+        //print("reached lane? : " + hasReachedLane());
         float laneSwitchSpeedAdjustmentFactor = hasReachedLane() ? 1 : Mathf.Sqrt(2);
         transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
         transform.position = Vector3.MoveTowards(transform.position, moveToPosition, laneSwitchSpeedAdjustmentFactor * velocity * Time.deltaTime);
@@ -287,14 +287,14 @@ public class Player : MonoBehaviour
         if (obstacle.blockadeType == Obstacles.BlockadeType.High && _playerStance == PlayerStance.high)
         {
 
-            print("slide");
+            //print("slide");
             slide = true;
             _animator.SetBool("Slide", true);
         }
 
         else if (obstacle.blockadeType == Obstacles.BlockadeType.Low && _playerStance == PlayerStance.low)
         {
-            print("jumping");
+            //print("jumping");
             jump = true;
             _animator.SetBool("Jump", true);
 
@@ -305,7 +305,7 @@ public class Player : MonoBehaviour
             kick = true;
             _animator.SetBool("Kick", true);
 
-            print("kick");
+            // print("kick");
         }
 
     }
@@ -313,7 +313,7 @@ public class Player : MonoBehaviour
     public void keepRunning()
     {
 
-        print("Floor");
+        //print("Floor");
         //_animator.ResetTrigger("Jumping");
         _animator.SetBool("Slide", false);
         _animator.SetBool("Jump", false);
