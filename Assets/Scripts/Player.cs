@@ -134,7 +134,7 @@ public class Player : MonoBehaviour
         //transform.position = Vector3.MoveTowards(transform.position, moveToPosition, velocity * Time.deltaTime);
 
         //This is used to take account for the speed forward becoming slower when switching lanes which we dont want
-        print("reached lane? : " + hasReachedLane());
+        // print("reached lane? : " + hasReachedLane());
         float laneSwitchSpeedAdjustmentFactor = hasReachedLane() ? 1 : Mathf.Sqrt(2);
         transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
         transform.position = Vector3.MoveTowards(transform.position, moveToPosition, laneSwitchSpeedAdjustmentFactor * velocity * Time.deltaTime);

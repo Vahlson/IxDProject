@@ -36,11 +36,11 @@ class Tile : MonoBehaviour
         if (other.gameObject.TryGetComponent(out Player player))
         {
 
-            if (other is CapsuleCollider)
-            {
-                player.keepRunning();
-                print("Hit obstacle");
-            }
+            // if (other is CapsuleCollider)
+            // {
+            //     player.keepRunning();
+            //     print("Hit obstacle");
+            // }
 
         }
 
