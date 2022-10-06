@@ -214,6 +214,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Right
       objectReference: {fileID: 0}
+    - target: {fileID: 7658382481972875642, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
+      propertyPath: parentTile
+      value: 
+      objectReference: {fileID: 4963814754868165353}
     - target: {fileID: 7712846504758191189, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -326,6 +330,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Right
       objectReference: {fileID: 0}
+    - target: {fileID: 7658382481972875642, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
+      propertyPath: parentTile
+      value: 
+      objectReference: {fileID: 4963814754868165353}
     - target: {fileID: 7712846504758191189, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -500,6 +508,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Left
       objectReference: {fileID: 0}
+    - target: {fileID: 7658382481972875642, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
+      propertyPath: parentTile
+      value: 
+      objectReference: {fileID: 4963814754868165353}
     - target: {fileID: 7712846504758191189, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -930,6 +942,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Center
       objectReference: {fileID: 0}
+    - target: {fileID: 7658382481972875642, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
+      propertyPath: parentTile
+      value: 
+      objectReference: {fileID: 4963814754868165353}
     - target: {fileID: 7712846504758191189, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1054,6 +1070,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Center
       objectReference: {fileID: 0}
+    - target: {fileID: 7658382481972875642, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
+      propertyPath: parentTile
+      value: 
+      objectReference: {fileID: 4963814754868165353}
     - target: {fileID: 7712846504758191189, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1220,6 +1240,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Left
       objectReference: {fileID: 0}
+    - target: {fileID: 7658382481972875642, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
+      propertyPath: parentTile
+      value: 
+      objectReference: {fileID: 4963814754868165353}
     - target: {fileID: 7712846504758191189, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1589,6 +1613,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Center
       objectReference: {fileID: 0}
+    - target: {fileID: 7658382481972875642, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
+      propertyPath: parentTile
+      value: 
+      objectReference: {fileID: 4963814754868165353}
     - target: {fileID: 7712846504758191189, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1701,6 +1729,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Left
       objectReference: {fileID: 0}
+    - target: {fileID: 7658382481972875642, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
+      propertyPath: parentTile
+      value: 
+      objectReference: {fileID: 4963814754868165353}
     - target: {fileID: 7712846504758191189, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1871,6 +1903,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Right
       objectReference: {fileID: 0}
+    - target: {fileID: 7658382481972875642, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
+      propertyPath: parentTile
+      value: 
+      objectReference: {fileID: 4963814754868165353}
     - target: {fileID: 7712846504758191189, guid: 30480f0330d899142a5dfc2106d743a8, type: 3}
       propertyPath: m_RootOrder
       value: 0

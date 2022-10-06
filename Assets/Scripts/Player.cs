@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public PlayerContainer playerContainer;
     private Animator _animator;
     public float velocity = 5.0f;
+    private float _animationMultiplier = 2.0f;
     public float rotationSpeed = 3.0f;
     public float acceleration = .2f;
     int velocityHash;
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour
     public event Action<PlayerStance> OnStanceChanged;
     private string jumpAnimation;
     private PlayerStance _playerStance = PlayerStance.idle;
+    private int _animationMultiplierHash;
     void Awake()
     {
         currentHealth = maxHealth;
@@ -50,6 +52,7 @@ public class Player : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         velocityHash = Animator.StringToHash("Velocity");
+        _animationMultiplierHash = Animator.StringToHash("AnimationMultiplier");
         _animator.SetBool("Jump", false);
         laneSwitchTimeElapse = laneSwitchTime;
         damage = true;
@@ -58,6 +61,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         _animator.SetFloat(velocityHash, velocity);
+        _animator.SetFloat(_animationMultiplierHash, velocity / 4);
+
         if (targetWayPoint != null)
         {
             moveToWaypoint();

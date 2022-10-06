@@ -22,7 +22,7 @@ public class BoardManager : MonoBehaviour
     private int nForwardTilesInRow = 0;
     [SerializeField] public int minForwardTilesBeforeTurn = 2;
 
-    void Start()
+    void Awake()
     {
         player = GameObject.FindObjectOfType<Player>();
         initStartTile();
@@ -58,6 +58,7 @@ public class BoardManager : MonoBehaviour
         //TODO move forward based on size of waypoint mesh
         transform.position += transform.forward * 15;
         nForwardTilesInRow++;
+        GameManager.Instance.IncreaseNTilesSpawned();
         /* float offsetFromNew = getTileOffset(startTile);
         float offsetFromOld = getTileOffset(_endTile);
         print(transform.forward);
@@ -132,7 +133,7 @@ public class BoardManager : MonoBehaviour
 
             case "Left":
                 transform.Rotate(new Vector3(0, -90, 0));
-                print("Left");
+
                 transform.position += transform.forward * 15;
                 prefab = leftTiles[Random.Range(0, leftTiles.Count)];
 
@@ -151,7 +152,7 @@ public class BoardManager : MonoBehaviour
 
                 break;
             case "Right":
-                print("Right");
+
                 transform.Rotate(new Vector3(0, 90, 0));
                 transform.position += transform.forward * 15;
                 prefab = rightTiles[Random.Range(0, rightTiles.Count)];
@@ -196,6 +197,9 @@ public class BoardManager : MonoBehaviour
             }
         }
         _endTile = Instantiate(prefab, tempPosition, tempRotation).GetComponent<Tile>();
+
+        //Increment global counter
+        GameManager.Instance.IncreaseNTilesSpawned();
 
         //set next waypoint for ends of tile
         _secondLastTile.addNext(_endTile);
