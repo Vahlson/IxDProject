@@ -96,24 +96,16 @@ public class Player : MonoBehaviour
     {
         if (jump)
         {
-            // m_Rigidbody.AddForce(transform.up * jumpSpeed);
-
-
-
-            //transform.position += transform.up * 3;
             jump = false;
         }
 
-
         else if (slide)
         {
-            // m_Rigidbody.AddForce(-transform.up * 12);
             slide = false;
         }
 
         else if (kick)
         {
-            // m_Rigidbody.AddForce((-transform.up) * 6);
             kick = false;
         }
     }
@@ -249,16 +241,6 @@ public class Player : MonoBehaviour
     }
 
 
-    // void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.tag == "Obstacle")
-    //     {
-    //         takeDamage();
-    //         print("Hit obstacle");
-    //     }
-    // }
-
-
     public void takeDamage(Obstacles.BlockadeType blockadeType)
     {
         if ((blockadeType == Obstacles.BlockadeType.High && _playerStance == PlayerStance.high) ||
@@ -269,7 +251,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-
             currentHealth -= 1;
 
             if (currentHealth <= 0)
@@ -284,7 +265,7 @@ public class Player : MonoBehaviour
 
     public void avoidObstacle(Obstacles obstacle)
     {
-        print(obstacle.blockadeType);
+        //print(obstacle.blockadeType);
 
         if (obstacle == lastObstacle) return;
         lastObstacle = obstacle;
@@ -292,7 +273,6 @@ public class Player : MonoBehaviour
         if (obstacle.blockadeType == Obstacles.BlockadeType.High && _playerStance == PlayerStance.high)
         {
             damage = false;
-            print("slide");
             slide = true;
             _animator.SetBool("Slide", true);
             score += pointsForObstacle;
@@ -301,7 +281,6 @@ public class Player : MonoBehaviour
         else if (obstacle.blockadeType == Obstacles.BlockadeType.Low && _playerStance == PlayerStance.low)
         {
             damage = false;
-            print("jumping");
             jump = true;
             _animator.SetBool("Jump", true);
             score += pointsForObstacle;
@@ -314,17 +293,12 @@ public class Player : MonoBehaviour
             kick = true;
             _animator.SetBool("Kick", true);
             score += pointsForObstacle;
-
-            print("kick");
         }
 
     }
 
     public void keepRunning()
     {
-
-        print("Floor");
-        //_animator.ResetTrigger("Jumping");
         _animator.SetBool("Slide", false);
         _animator.SetBool("Jump", false);
         _animator.SetBool("Kick", false);
@@ -334,6 +308,7 @@ public class Player : MonoBehaviour
         kick = false;
 
         damage = true;
+        //setStance(PlayerStance.idle);
 
     }
 }
