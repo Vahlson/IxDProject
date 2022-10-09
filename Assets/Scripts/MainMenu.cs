@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     public string firstLevel;
     public GameObject optionScreen;
     public GameObject highscoreScreen;
     public GameObject leaderBoard;
+    //public SpriteRenderer spriteRenderer;
+    public Image firstImg;
+    public Sprite nextImg;
+
 
     void Start()
     {
+
 
     }
 
@@ -23,6 +29,7 @@ public class MainMenu : MonoBehaviour
     public void startGame()
     {
         SceneManager.LoadScene(firstLevel);
+
     }
 
     public void startHighscore()
@@ -51,4 +58,6 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
         Debug.Log("Quitting");
     }
+
+
 }
