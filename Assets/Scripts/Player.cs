@@ -29,10 +29,7 @@ public class Player : MonoBehaviour
     private float targetLaneOffset = 0;
     [SerializeField] private float laneSwitchTime = 1f;
     private float laneSwitchTimeElapse;
-
     private Vector3 moveToPosition;
-
-
     Obstacles lastObstacle = null;
 
     bool jump;
@@ -40,9 +37,12 @@ public class Player : MonoBehaviour
     bool kick;
     public bool damage;
     public event Action<PlayerStance> OnStanceChanged;
+    public event Action<String> OnLaneSwitched;
     private string jumpAnimation;
     private PlayerStance _playerStance = PlayerStance.idle;
     private int _animationMultiplierHash;
+    public float stanceDuration = 8.0f;
+    public float currentStanceDuration;
     void Awake()
     {
         currentHealth = maxHealth;
@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        currentStanceDuration = stanceDuration;
         _animator = GetComponent<Animator>();
         velocityHash = Animator.StringToHash("Velocity");
         _animationMultiplierHash = Animator.StringToHash("AnimationMultiplier");
@@ -60,6 +61,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (_playerStance != PlayerStance.idle)
+        {
+            currentStanceDuration -= Time.deltaTime;
+            if (currentStanceDuration <= 0)
+            {
+                setStance(PlayerStance.idle);
+            }
+        }
         _animator.SetFloat(velocityHash, velocity);
         _animator.SetFloat(_animationMultiplierHash, velocity / 4);
 
@@ -92,8 +101,11 @@ public class Player : MonoBehaviour
     }
     void setStance(PlayerStance playerStance)
     {
+        keepRunning();
         this._playerStance = playerStance;
         OnStanceChanged?.Invoke(_playerStance);
+        currentStanceDuration = stanceDuration;
+
 
     }
 
@@ -206,8 +218,8 @@ public class Player : MonoBehaviour
             targetWayPoint = move;
             transform.position += transform.right * -5;
             playerContainer.offset += transform.right * 5;
+            OnLaneSwitched?.Invoke("Left");
             //transform.position += transform.right * -5;
-
             // startLerpBetweenLanes(-5);
 
         }
@@ -221,6 +233,7 @@ public class Player : MonoBehaviour
             targetWayPoint = move;
             transform.position += transform.right * 5;
             playerContainer.offset += transform.right * -5;
+            OnLaneSwitched?.Invoke("Right");
             //transform.position += transform.right * 5;
             // startLerpBetweenLanes(5);
         }

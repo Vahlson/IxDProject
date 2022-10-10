@@ -21,11 +21,7 @@ public class PlayerHUD : MonoBehaviour
     private GameObject currentStance;
     private StanceIndicator _stanceIndicator;
 
-    void OnDestroy()
-    {
-        _player.OnStanceChanged -= OnStanceChanged;
 
-    }
     void Start()
     {
         _player = GameObject.FindObjectOfType<Player>();
@@ -33,30 +29,9 @@ public class PlayerHUD : MonoBehaviour
         _highScore = PlayerPrefs.GetInt("HighScore");
         highScore.text = "Highscore:" + _highScore.ToString();
         initHealthIndicators();
-        initStance(currentStance, new Vector3(0, 90, 0));
+        initStance(currentStance);
     }
-    private void initStance(GameObject model, Vector3 rotation)
-    {
-        currentStance = Instantiate(model, _stanceContainer.transform.position, Quaternion.identity);
-        currentStance.transform.SetParent(_stanceContainer.transform);
-        currentStance.transform.localScale = new Vector3(100, 100, 100);
-        currentStance.transform.localPosition = Vector3.zero;
-        currentStance.transform.Rotate(rotation);
-        this._stanceIndicator = currentStance.GetComponent<StanceIndicator>();
-    }
-    private void initHealthIndicators()
-    {
-        for (int i = 0; i < _player.currentHealth; i++)
-        {
-            GameObject g = Instantiate(_healthModel, _livesContainer.transform.position, Quaternion.identity);
-            g.transform.SetParent(_livesContainer.transform);
-            g.transform.localScale = new Vector3(50, 50, 50);
-            g.transform.localPosition += new Vector3(i * 110, 0, 0);
-            g.transform.eulerAngles = new Vector3(270, 0, 0);
-            _health.Push(g);
-        }
-        currentHealth = _player.currentHealth;
-    }
+
     void Update()
     {
         score.text = "Score: " + ((int)_player.score).ToString();
@@ -74,31 +49,48 @@ public class PlayerHUD : MonoBehaviour
             Destroy(g);
         }
     }
+    void OnDestroy()
+    {
+        _player.OnStanceChanged -= OnStanceChanged;
+
+    }
+    private void initStance(GameObject model)
+    {
+        currentStance = Instantiate(model, _stanceContainer.transform.position, Quaternion.identity);
+        currentStance.transform.SetParent(_stanceContainer.transform);
+        currentStance.transform.localScale = new Vector3(100, 100, 100);
+        currentStance.transform.localPosition = Vector3.zero;
+        currentStance.transform.Rotate(Vector3.zero);
+        this._stanceIndicator = currentStance.GetComponent<StanceIndicator>();
+    }
+    private void initHealthIndicators()
+    {
+        for (int i = 0; i < _player.currentHealth; i++)
+        {
+            GameObject g = Instantiate(_healthModel, _livesContainer.transform.position, Quaternion.identity);
+            g.transform.SetParent(_livesContainer.transform);
+            g.transform.localScale = new Vector3(50, 50, 50);
+            g.transform.localPosition += new Vector3(i * 110, 0, 0);
+            g.transform.eulerAngles = new Vector3(270, 0, 0);
+            _health.Push(g);
+        }
+        currentHealth = _player.currentHealth;
+    }
     void OnStanceChanged(PlayerStance playerStance)
     {
         switch (playerStance)
         {
             case PlayerStance.high:
-                // initStance(_highStance, new Vector3(0, 130, 0));
-                _stanceIndicator.setHigh();
-                currentStance.transform.eulerAngles = new Vector3(0, 130, 0);
-                // currentStance.GetComponent<StanceIndicator>().setHigh();
+                _stanceIndicator.setHigh(_player.stanceDuration);
                 break;
             case PlayerStance.medium:
-                // initStance(_midStance, new Vector3(0, 130, 0));
-                currentStance.transform.eulerAngles = new Vector3(0, 130, 0);
 
-                _stanceIndicator.setMedium();
+                _stanceIndicator.setMedium(_player.stanceDuration);
                 break;
             case PlayerStance.low:
-                // initStance(_lowStance, new Vector3(0, 90, 0));
-                currentStance.transform.eulerAngles = new Vector3(0, 90, 0);
-
-                _stanceIndicator.setLow();
+                _stanceIndicator.setLow(_player.stanceDuration);
                 break;
             case PlayerStance.idle:
-                // initStance(_idleStance, new Vector3(0, 90, 0));
-                currentStance.transform.eulerAngles = new Vector3(0, 90, 0);
 
                 _stanceIndicator.setIdle();
                 break;

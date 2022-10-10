@@ -21,6 +21,8 @@ public class BoardManager : MonoBehaviour
     //Creates a baseline number of forward tiles in a row so there are at least a couple before a turn.
     private int nForwardTilesInRow = 0;
     [SerializeField] public int minForwardTilesBeforeTurn = 2;
+    [SerializeField]
+    GameObject badguyGO;
 
     void Awake()
     {
@@ -35,11 +37,27 @@ public class BoardManager : MonoBehaviour
     {
         setPlayerWaypoint();
     }
+    void setBadGuysWaypoint(Waypoint oldWp)
+    {
+        Badguy badguy = badguyGO.GetComponent<Badguy>();
+        if (badguy.targetWayPoint != oldWp.transform)
+        {
+            badguy.targetWayPoint = oldWp.transform;
+
+        }
+        else
+        {
+            badguy.targetWayPoint = oldWp.next.transform;
+        }
+
+    }
     void setPlayerWaypoint()
     {
         if (player.hasReachedTarget())
         {
             Waypoint oldWp = player.targetWayPoint.gameObject.GetComponent<Waypoint>();
+            setBadGuysWaypoint(oldWp);
+
             player.targetWayPoint = oldWp.next.transform;
 
             if (oldWp.isEnd)
