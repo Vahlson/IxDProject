@@ -12,6 +12,10 @@ public class ChangePlayer : MonoBehaviour
 
     public Image startRight;
 
+    public GameObject playerCharacter;
+
+    string currentPlayer;
+
     int order;
     int fitList;
     int restartList;
@@ -19,11 +23,14 @@ public class ChangePlayer : MonoBehaviour
     int orderLeft;
 
     public Sprite[] nextImg;
+
+
     // Start is called before the first frame update
     void Start()
     {
         order = 0;
         firstElement = 0;
+        playerCharacter = Resources.Load("Character_Business_Man_01") as GameObject;
 
     }
 
@@ -33,6 +40,11 @@ public class ChangePlayer : MonoBehaviour
 
     }
 
+
+    void FixedUpdate()
+    {
+        currentPlayer = startSelected.ToString();
+    }
     public void changeSpriteLeft()
     {
         if (firstElement == 1)
