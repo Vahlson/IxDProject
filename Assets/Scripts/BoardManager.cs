@@ -26,6 +26,7 @@ public class BoardManager : MonoBehaviour
 
     void Awake()
     {
+        GameManager.Instance.gameState = GameState.ongoing;
         player = GameObject.FindObjectOfType<Player>();
         initStartTile();
         for (int i = 0; i < 7; i++)
@@ -36,27 +37,28 @@ public class BoardManager : MonoBehaviour
     void Update()
     {
         setPlayerWaypoint();
+        // setBadGuyWaypoint();
     }
-    void setBadGuysWaypoint(Waypoint oldWp)
-    {
-        Badguy badguy = badguyGO.GetComponent<Badguy>();
-        if (badguy.targetWayPoint != oldWp.transform)
-        {
-            badguy.targetWayPoint = oldWp.transform;
+    // void setBadGuysWaypoint(Waypoint oldWp)
+    // {
+    //     Badguy badguy = badguyGO.GetComponent<Badguy>();
+    //     if (badguy.targetWayPoint != oldWp.transform)
+    //     {
+    //         badguy.targetWayPoint = oldWp.transform;
 
-        }
-        else
-        {
-            badguy.targetWayPoint = oldWp.next.transform;
-        }
+    //     }
+    //     else
+    //     {
+    //         badguy.targetWayPoint = oldWp.next.transform;
+    //     }
 
-    }
+    // }
     void setPlayerWaypoint()
     {
         if (player.hasReachedTarget())
         {
             Waypoint oldWp = player.targetWayPoint.gameObject.GetComponent<Waypoint>();
-            setBadGuysWaypoint(oldWp);
+            // setBadGuysWaypoint(oldWp);
 
             player.targetWayPoint = oldWp.next.transform;
 
@@ -69,6 +71,26 @@ public class BoardManager : MonoBehaviour
             }
         }
     }
+
+    // void setBadGuyWaypoint()
+    // {
+    //     Badguy badguy = badguyGO.GetComponent<Badguy>();
+
+    //     if (badguy.hasReachedTarget())
+    //     {
+    //         Waypoint oldWp = badguy.targetWayPoint.gameObject.GetComponent<Waypoint>();
+
+    //         badguy.targetWayPoint = oldWp.next.transform;
+
+    //         if (oldWp.isEnd)
+    //         {
+    //             _platforms.Remove(_passedTile);
+    //             Destroy(_passedTile);
+    //             // getRandomTile();
+    //             _passedTile = _platforms[0];
+    //         }
+    //     }
+    // }
     private void initStartTile()
     {
         GameObject startTileGO = Instantiate(_start, transform.position, transform.rotation);
@@ -87,8 +109,7 @@ public class BoardManager : MonoBehaviour
         _platforms.Add(startTileGO);
         _passedTile = _platforms[0];
         startTile.setStartTile();
-        player.targetWayPoint = startTile.getStartWaypoint(); ;
-
+        player.targetWayPoint = startTile.getStartWaypoint();
     }
 
     private float getTileOffset(Tile tile)
@@ -117,6 +138,7 @@ public class BoardManager : MonoBehaviour
 
     private void getRandomTile()
     {
+        int tempForwardTilesInRow = nForwardTilesInRow;
         string tag = TileTypes.Forward.ToString();
         float tileThreshold = Random.value;
         if (tileThreshold <= 0.1 && nForwardTilesInRow >= minForwardTilesBeforeTurn)
@@ -210,6 +232,7 @@ public class BoardManager : MonoBehaviour
             {
                 this.transform.rotation = tempRotation;
                 this.transform.position = tempPosition;
+                nForwardTilesInRow = tempForwardTilesInRow;
                 getRandomTile();
                 return;
             }

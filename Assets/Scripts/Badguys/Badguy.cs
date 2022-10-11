@@ -3,73 +3,48 @@ using UnityEngine;
 class Badguy : MonoBehaviour
 {
     private Animator _animator;
-    public float velocity = 5.0f;
-    private float _animationMultiplier = 2.0f;
-    public Transform targetWayPoint;
-    private int _animationMultiplierHash;
+    public float velocity = 0;
     private int _velocityHash;
-    public float acceleration = 0.5f;
+    [SerializeField]
+    float totalDistanceTravelled = 0.0f;
 
     [SerializeField]
     private Player _target;
-    void OnLaneSwitched(string direction)
-    {
-        print("Onlaneswitched");
-        if (direction == "Left")
-        {
-            Transform move = targetWayPoint.GetComponent<Waypoint>().getLeftMove();
-            targetWayPoint = move;
-            transform.position += transform.right * -5;
+    public float badGuyAcceleration = 0f;
 
-        }
-        else if (direction == "Right")
-        {
-            Transform move = targetWayPoint.GetComponent<Waypoint>().getRightMove();
-            targetWayPoint = move;
-            transform.position += transform.right * 5;
-        }
-    }
+
     void Start()
     {
-        _target.OnLaneSwitched += OnLaneSwitched;
+        badGuyAcceleration = _target.baseAcceleration *1.3f;
+        totalDistanceTravelled = -Vector3.Distance(transform.position, _target.transform.position);
+        velocity = _target.velocity;
         _animator = GetComponent<Animator>();
         _velocityHash = Animator.StringToHash("Velocity");
-        _animationMultiplierHash = Animator.StringToHash("AnimationMultiplier");
 
     }
-    void OnDestroy()
-    {
-        _target.OnLaneSwitched -= OnLaneSwitched;
 
-    }
     void Update()
     {
         _animator.SetFloat(_velocityHash, velocity);
-        _animator.SetFloat(_animationMultiplierHash, velocity / 4);
-        if (targetWayPoint != null)
+        totalDistanceTravelled += velocity * Time.deltaTime;
+        if (_target.totalDistanceTravelled < this.totalDistanceTravelled || GameManager.Instance.gameState == GameState.over)
         {
-            moveToWaypoint();
-        }
-        velocity += Time.deltaTime * acceleration;
-
-    }
-    private void moveToWaypoint()
-    {
-        transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.position - transform.position, velocity * Time.deltaTime, 0.0f);
-        transform.position = Vector3.MoveTowards(transform.position, targetWayPoint.position, velocity * Time.deltaTime);
-
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.TryGetComponent(out Player player))
-        {
-            if (other is BoxCollider)
+            if (GameManager.Instance.gameState != GameState.over)
             {
-                print("game over");
+                _target.gotCaught();
+                transform.position = _target.transform.position - _target.transform.forward * 5;
+                GameManager.Instance.gameState = GameState.over;
+            }
+            else
+            {
+
+                transform.forward = Vector3.RotateTowards(transform.forward, _target.transform.position - transform.position, 3 * Time.deltaTime, 0.0f);
+                transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, 3 * Time.deltaTime);
+                print("gameover");
+                //activate kick, complete kick, game over.
             }
         }
+        velocity += Time.deltaTime * badGuyAcceleration;
 
     }
-
 }

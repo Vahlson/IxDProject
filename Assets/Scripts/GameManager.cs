@@ -24,6 +24,7 @@ class GameManager : MonoBehaviour
     //origin point For generating perlin noise.
     private float perlinXOrg;
     private float perlinYOrg;
+    public GameState gameState = GameState.menu;
 
     void Awake()
     {
@@ -151,4 +152,8 @@ class GameManager : MonoBehaviour
         print("index: " + latestPlacement);
 
     }
+}
+enum GameState
+{
+    ongoing, over, menu
 }

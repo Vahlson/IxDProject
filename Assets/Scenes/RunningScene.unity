@@ -1350,9 +1350,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 5
-  targetWayPoint: {fileID: 0}
-  acceleration: 0.5
+  totalDistanceTravelled: 0
   _target: {fileID: 7005620314944752063}
+  badGuyAcceleration: 0
 --- !u!95 &311515049
 Animator:
   serializedVersion: 4
@@ -3433,6 +3433,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 109.399994
       objectReference: {fileID: 0}
+    - target: {fileID: 7511899838860037202, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7511899839645252034, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
       propertyPath: m_Name
       value: PlayerHUD
@@ -3529,6 +3533,10 @@ PrefabInstance:
       propertyPath: _idleStance
       value: 
       objectReference: {fileID: 1506550050545096, guid: fe300c1f42114444f848a83282a4cb1e, type: 3}
+    - target: {fileID: 7511899840244912184, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
 --- !u!1 &840383083
@@ -8842,11 +8850,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
       propertyPath: velocity
-      value: 3
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: bpmFactor
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
       propertyPath: jumpSpeed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: maxHealth
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
       propertyPath: acceleration
@@ -8856,6 +8872,10 @@ PrefabInstance:
       propertyPath: playerContainer
       value: 
       objectReference: {fileID: 476398178}
+    - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: baseAcceleration
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 8883122588426601340, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
       propertyPath: m_Size.y
       value: 3
