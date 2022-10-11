@@ -99,6 +99,7 @@ public class BoardManager : MonoBehaviour
         transform.position += transform.forward * 15;
         nForwardTilesInRow++;
         GameManager.Instance.IncreaseNTilesSpawned();
+        // spawn a ground plane to hide infinity
         /* float offsetFromNew = getTileOffset(startTile);
         float offsetFromOld = getTileOffset(_endTile);
         print(transform.forward);

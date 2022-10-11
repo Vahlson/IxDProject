@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System;
-
+using Cinemachine;
 public class Player : MonoBehaviour
 {
     public PlayerContainer playerContainer;
@@ -80,7 +80,6 @@ public class Player : MonoBehaviour
             }
         }
         bpmAcceleration = steps.Count * bpmFactor;
-        print(steps.Count);
     }
     void Update()
     {
@@ -305,14 +304,18 @@ public class Player : MonoBehaviour
 
             if (currentHealth <= 0)
             {
-                PlayerPrefs.SetInt("Score", (int)score);
-                GameManager.Instance.latestScore = (int)score;
                 GameManager.Instance.gameState = GameState.over;
-                SceneManager.LoadScene(2);
             }
         }
     }
 
+    void GameOver()
+    {
+        PlayerPrefs.SetInt("Score", (int)score);
+        GameManager.Instance.latestScore = (int)score;
+        GameManager.Instance.gameState = GameState.over;
+        SceneManager.LoadScene(2);
+    }
 
     public void avoidObstacle(Obstacles obstacle)
     {
@@ -344,6 +347,16 @@ public class Player : MonoBehaviour
             kick = true;
             _animator.SetBool("Kick", true);
             score += pointsForObstacle;
+            ObstacleAnimationBlender ob = obstacle.gameObject.GetComponentInChildren<ObstacleAnimationBlender>();
+            //try to play the death animation if existing
+            if (ob != null)
+            {
+                ob.playDeathAnimation();
+            }
+            else
+            {
+                print("No human found");
+            }
         }
 
     }
@@ -353,12 +366,10 @@ public class Player : MonoBehaviour
         _animator.SetBool("Slide", false);
         _animator.SetBool("Jump", false);
         _animator.SetBool("Kick", false);
-
         jump = false;
         slide = false;
         kick = false;
         damage = true;
-
     }
     public void gotCaught()
     {
@@ -366,6 +377,14 @@ public class Player : MonoBehaviour
         this.bpmAcceleration = 0;
         this.velocity = 0;
         this.baseAcceleration = 0;
+        GameObject.FindGameObjectWithTag("FollowCam").GetComponent<CinemachineVirtualCamera>().Follow = null;
+        this.transform.forward = -transform.forward;
+        keepRunning();
+        _animator.SetBool("GameOver", true);
+        _animator.SetBool("Death", true);
+        Invoke("GameOver", 3.0f);
+
+
     }
 }
 public enum PlayerStance

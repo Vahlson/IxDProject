@@ -88,6 +88,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_Badguy_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1942289980213182, guid: 085e53ee40ad24b40a83bd90705ad460, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4517892917420314, guid: 085e53ee40ad24b40a83bd90705ad460, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -132,6 +136,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95918252503098470, guid: 085e53ee40ad24b40a83bd90705ad460, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 279d7c2d7094a2e468d6ba7f5944aca2, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 085e53ee40ad24b40a83bd90705ad460, type: 3}
 --- !u!4 &1238024691648215197 stripped
@@ -139,3 +147,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4517892917420314, guid: 085e53ee40ad24b40a83bd90705ad460, type: 3}
   m_PrefabInstance: {fileID: 1242523018830502279}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1240938074434772537 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1942289980213182, guid: 085e53ee40ad24b40a83bd90705ad460, type: 3}
+  m_PrefabInstance: {fileID: 1242523018830502279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2360565714729655886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240938074434772537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1181d4827922ec346bf3558be79bdc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendSpeed: 0.1
+  changeAnimationChance: 0.5
