@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -31,11 +32,11 @@ public class ArduinoInputController : MonoBehaviour
         bool[] input = parseArduinoMessage(message);
 
 
-        if (input[0] == false)
+        if (input[0] == true)
         {
             moveCube(-1);
         }
-        else if (input[1] == false)
+        else if (input[1] == true)
         {
             moveCube(1);
         }
@@ -77,8 +78,13 @@ public class ArduinoInputController : MonoBehaviour
             print("char: " + c);
         }
 
-        // bit 0 is a stopbit.
-        int messageBit = charList[1];
+        // bit 0 is a stopbit. REMOVE IT
+        charList.RemoveAt(0);
+
+        string word = charList.Select(i => i.ToString()).Aggregate((i, j) => i + j);
+        print("The numberrrrrr: " + word);
+        int messageBit = int.Parse(word);
+        //int messageBit = charList[1];
 
         //The least significant will be stored first.
         BitArray bitArray = new BitArray(new int[] { messageBit });
