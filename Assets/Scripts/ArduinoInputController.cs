@@ -8,6 +8,15 @@ public class ArduinoInputController : MonoBehaviour
 {
 
     public int trueBit = 0;
+    private bool[] input;
+
+    private bool[] previousInput = new bool[32];
+
+    private bool[] keyDownInput = new bool[32];
+
+    private double[] keyDownTimer = new double[32];
+
+    public double keyDownTimeDelay = 0.1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,17 +38,18 @@ public class ArduinoInputController : MonoBehaviour
     {
         print("damessage: " + message);
         //Parse the message.
-        bool[] input = parseArduinoMessage(message);
+        input = parseArduinoMessage(message);
 
+        generateInputEvents();
 
-        if (input[0] == true)
+        /* if (input[0] == true)
         {
             moveCube(-1);
         }
         else if (input[1] == true)
         {
             moveCube(1);
-        }
+        } */
 
         string temp = "";
         foreach (bool b in input)
@@ -47,11 +57,6 @@ public class ArduinoInputController : MonoBehaviour
             temp += b + ", "; //maybe also + '\n' to put them on their own line.
         }
 
-
-        /* if (input[1] == trueBit)
-        {
-            moveCube();
-        } */
 
         print("Lista: " + temp);
         //print("Message: "+ message +" LOL:"+ float.Parse(message));
@@ -67,6 +72,39 @@ public class ArduinoInputController : MonoBehaviour
 
     }
 
+    public bool getKeyDown(int buttonIndex)
+    {
+        return keyDownInput[buttonIndex];
+    }
+
+
+
+    private void generateInputEvents()
+    {
+        //Resetting event lists
+        keyDownInput = new bool[32];
+
+        //Generate events for each input if needed.
+        for (int i = 0; i < input.Length; i++)
+        {
+            //update input timer.
+            //keyDownTimer[i] += Time.deltaTime;
+            //&& keyDownTimer[i] > keyDownTimeDelay
+
+            //Keyup event generation.
+            if (input[i] == true && previousInput[i] == false)
+            {
+                //Generate event and reset timer.
+                keyDownInput[i] = true;
+                keyDownTimer[i] = 0;
+            }
+        }
+
+
+        //
+        previousInput = (bool[])input.Clone();
+    }
+
     bool[] parseArduinoMessage(string message)
     {
         //TODO might want to remove first bit, the one at position 0, because it is likely a stop bit.
@@ -75,14 +113,14 @@ public class ArduinoInputController : MonoBehaviour
         {
             int number = int.TryParse(c.ToString(), out int i) ? i : -1;
             charList.Add(number);
-            print("char: " + c);
+            //print("char: " + c);
         }
 
         // bit 0 is a stopbit. REMOVE IT
         charList.RemoveAt(0);
 
         string word = charList.Select(i => i.ToString()).Aggregate((i, j) => i + j);
-        print("The numberrrrrr: " + word);
+        //print("The numberrrrrr: " + word);
         int messageBit = int.Parse(word);
         //int messageBit = charList[1];
 
@@ -101,7 +139,7 @@ public class ArduinoInputController : MonoBehaviour
     void moveCube(int direction)
     {
         print("MOVE");
-        transform.Translate(Vector3.right * 0.1f * direction);
+        //transform.Translate(Vector3.right * 0.1f * direction);
 
     }
 

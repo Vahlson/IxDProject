@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
 
     [HideInInspector] public float score;
 
+    public bool useArduinoInput = true;
+    private ArduinoInputController arduinoInputController;
+
     void Awake()
     {
         currentHealth = maxHealth;
@@ -21,24 +24,43 @@ public class Player : MonoBehaviour
     void Start()
     {
         _animator = GetComponent<Animator>();
+        arduinoInputController = GetComponent<ArduinoInputController>();
         velocityHash = Animator.StringToHash("Velocity");
     }
 
     void Update()
     {
-        _animator.SetFloat(velocityHash, velocity);
+        //_animator.SetFloat(velocityHash, velocity);
         if (targetWayPoint != null)
         {
             moveToWaypoint();
         }
-        if (Input.GetKeyUp("d"))
+
+        if (useArduinoInput)
         {
-            moveRight();
+            if (arduinoInputController.getKeyDown(1))
+            {
+                moveLeft();
+            }
+            if (arduinoInputController.getKeyDown(2))
+            {
+
+                moveRight();
+            }
+
         }
-        if (Input.GetKeyUp("a"))
+        else
         {
-            moveLeft();
+            if (Input.GetKeyUp("d"))
+            {
+                moveRight();
+            }
+            if (Input.GetKeyUp("a"))
+            {
+                moveLeft();
+            }
         }
+
 
         score += Time.deltaTime;
 
@@ -79,7 +101,7 @@ public class Player : MonoBehaviour
         if (other.tag == "Obstacle")
         {
             takeDamage();
-            print("Hit obstacle");
+            //print("Hit obstacle");
         }
     }
 
@@ -91,6 +113,6 @@ public class Player : MonoBehaviour
         {
             SceneManager.LoadScene(2);
         }
-        print(currentHealth);
+        //print(currentHealth);
     }
 }

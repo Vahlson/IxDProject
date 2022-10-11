@@ -21,7 +21,7 @@ public class SampleUserPolling_ReadWrite : MonoBehaviour
     {
         serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
 
-        Debug.Log("Press A or Z to execute some actions");
+        //Debug.Log("Press A or Z to execute some actions");
     }
 
     // Executed each frame
@@ -33,7 +33,7 @@ public class SampleUserPolling_ReadWrite : MonoBehaviour
 
         // If you press one of these keys send it to the serial device. A
         // sample serial device that accepts this input is given in the README.
-        if (Input.GetKeyDown(KeyCode.A))
+        /* if (Input.GetKeyDown(KeyCode.A))
         {
             Debug.Log("Sending A");
             serialController.SendSerialMessage("A");
@@ -43,7 +43,7 @@ public class SampleUserPolling_ReadWrite : MonoBehaviour
         {
             Debug.Log("Sending Z");
             serialController.SendSerialMessage("Z");
-        }
+        } */
 
 
         //---------------------------------------------------------------------
@@ -60,7 +60,7 @@ public class SampleUserPolling_ReadWrite : MonoBehaviour
             Debug.Log("Connection established");
         else if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_DISCONNECTED))
             Debug.Log("Connection attempt failed or disconnection detected");
-        else
-            Debug.Log("Message arrived: " + message);
+        else { }
+        //Debug.Log("Message arrived: " + message);
     }
 }
