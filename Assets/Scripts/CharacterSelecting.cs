@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public static class HoldData
+{
+    public static int selectedCharacter { get; set; }
+}
+
 public class CharacterSelecting : MonoBehaviour
 {
-    int selecedCharacter = 0;
+    // public static int selecedCharacter = 0;
 
     public GameObject[] characters;
+
     // Start is called before the first frame update
     void Start()
     {
         hideAllPlayers();
-        selecedCharacter = 0;
-        characters[selecedCharacter].SetActive(true);
+        HoldData.selectedCharacter = 0;
+        characters[HoldData.selectedCharacter].SetActive(true);
 
     }
 
@@ -32,28 +39,32 @@ public class CharacterSelecting : MonoBehaviour
 
     public void nextCharacter()
     {
-        characters[selecedCharacter].SetActive(false);
-        selecedCharacter++;
-        if (selecedCharacter >= characters.Length)
+        characters[HoldData.selectedCharacter].SetActive(false);
+        HoldData.selectedCharacter++;
+        if (HoldData.selectedCharacter >= characters.Length)
         {
-            selecedCharacter = 0;
+            HoldData.selectedCharacter = 0;
         }
 
-        characters[selecedCharacter].SetActive(true);
+        characters[HoldData.selectedCharacter].SetActive(true);
 
     }
 
     public void prevCharacter()
     {
-        characters[selecedCharacter].SetActive(false);
-        selecedCharacter--;
-        if (selecedCharacter < 0)
+        characters[HoldData.selectedCharacter].SetActive(false);
+        HoldData.selectedCharacter--;
+        if (HoldData.selectedCharacter < 0)
         {
-            selecedCharacter = characters.Length - 1;
+            HoldData.selectedCharacter = characters.Length - 1;
         }
 
-        characters[selecedCharacter].SetActive(true);
+        characters[HoldData.selectedCharacter].SetActive(true);
 
     }
+
+
+
+
 
 }

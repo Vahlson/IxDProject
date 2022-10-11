@@ -7,6 +7,7 @@ using System;
 
 public class Player : MonoBehaviour
 {
+
     public PlayerContainer playerContainer;
     private Animator _animator;
     public float velocity = 5.0f;
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour
         _animator.SetBool("Jump", false);
         laneSwitchTimeElapse = laneSwitchTime;
         damage = true;
+
     }
 
     void Update()
@@ -110,6 +112,8 @@ public class Player : MonoBehaviour
         }
     }
 
+
+
     protected void LateUpdate()
     {
         transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
@@ -134,7 +138,7 @@ public class Player : MonoBehaviour
         //transform.position = Vector3.MoveTowards(transform.position, moveToPosition, velocity * Time.deltaTime);
 
         //This is used to take account for the speed forward becoming slower when switching lanes which we dont want
-        print("reached lane? : " + hasReachedLane());
+        //print("reached lane? : " + hasReachedLane());
         float laneSwitchSpeedAdjustmentFactor = hasReachedLane() ? 1 : Mathf.Sqrt(2);
         transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
         transform.position = Vector3.MoveTowards(transform.position, moveToPosition, laneSwitchSpeedAdjustmentFactor * velocity * Time.deltaTime);

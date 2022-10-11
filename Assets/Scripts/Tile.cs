@@ -39,7 +39,7 @@ class Tile : MonoBehaviour
             if (other is CapsuleCollider)
             {
                 player.keepRunning();
-                print("Hit obstacle");
+                //  print("Hit obstacle");
             }
 
         }

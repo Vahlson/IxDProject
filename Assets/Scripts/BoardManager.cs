@@ -83,7 +83,7 @@ public class BoardManager : MonoBehaviour
             if (waypointCollider != null)
             {
                 Vector3 waypointBounds = waypointCollider.bounds.extents;
-                print("parent size x: " + waypointBounds.x + " parent size z: " + waypointBounds.z);
+                //print("parent size x: " + waypointBounds.x + " parent size z: " + waypointBounds.z);
 
 
                 //Max since the longest dimension will be forward.
