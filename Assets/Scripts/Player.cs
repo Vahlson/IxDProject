@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     private Animator _animator;
     public float velocity = 2.0f;
     public float baseAcceleration = .02f;
+    [SerializeField]
+    private float bpmFactor = 0.001f;
+
     int velocityHash;
     public Transform targetWayPoint;
     [SerializeField] private int maxHealth = 10;
@@ -39,8 +42,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     public float totalDistanceTravelled = 0.0f;
     private Queue<float> steps = new Queue<float>();
-    [SerializeField]
-    private float bpmFactor = 0.001f;
     private float bpmAcceleration = 0.0f;
     void Awake()
     {

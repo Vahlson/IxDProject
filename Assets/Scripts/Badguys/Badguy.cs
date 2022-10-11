@@ -3,15 +3,14 @@ using UnityEngine;
 class Badguy : MonoBehaviour
 {
     private Animator _animator;
-    public float velocity = 0;
-    private int _velocityHash;
+    private float velocity = 0;
+    public float badGuyAccelerationFactor = 1.3f;
     [SerializeField]
     float totalDistanceTravelled = 0.0f;
-
+    private int _velocityHash;
     [SerializeField]
     private Player _target;
     public float acceleration = 0f;
-    public float badGuyAccelerationFactor = 1.3f;
     private Vector3 endPosition;
     private bool targetCaught = false;
     [SerializeField]
