@@ -114,7 +114,7 @@ public class SerialController : MonoBehaviour
 
         // Read the next message from the queue
         string message = (string)serialThread.ReadMessage();
-        //print(message);
+        print(message);
         if (message == null)
             return;
 

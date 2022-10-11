@@ -10,6 +10,7 @@ TagManager:
   - Forward
   - Center
   - Obstacle
+  - FollowCam
   layers:
   - Default
   - TransparentFX

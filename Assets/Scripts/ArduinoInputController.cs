@@ -36,7 +36,7 @@ public class ArduinoInputController : MonoBehaviour
 
     void OnMessageArrived(string message)
     {
-        print("damessage: " + message);
+        //print("damessage: " + message);
         //Parse the message.
         input = parseArduinoMessage(message);
 
@@ -115,6 +115,8 @@ public class ArduinoInputController : MonoBehaviour
             charList.Add(number);
             //print("char: " + c);
         }
+
+        if (charList.Count.Equals(0)) return new bool[32];
 
         // bit 0 is a stopbit. REMOVE IT
         charList.RemoveAt(0);
