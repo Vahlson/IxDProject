@@ -4,7 +4,7 @@ class Tile : MonoBehaviour
     [SerializeField]
     public GameObject[] start;
     [SerializeField]
-    private GameObject[] end;
+    public GameObject[] end;
 
     [SerializeField] private bool isStartTile = false;
 

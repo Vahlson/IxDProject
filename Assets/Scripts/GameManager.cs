@@ -31,7 +31,7 @@ class GameManager : MonoBehaviour
 
         perlinXOrg = Random.Range(float.MinValue, float.MaxValue);
         perlinYOrg = Random.Range(float.MinValue, float.MaxValue);
-        print("Reload perlin center x: " + perlinXOrg + " ,y: " + perlinYOrg);
+        //print("Reload perlin center x: " + perlinXOrg + " ,y: " + perlinYOrg);
 
         if (_instance == null)
         {

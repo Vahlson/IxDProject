@@ -29,6 +29,14 @@ public class Player : MonoBehaviour
 
     private Vector3 moveToPosition;
 
+    public Transform cameraFollowTransform;
+    private float cameraFollowTargetOffset;
+    private float cameraFollowOldTargetOffset;
+    private float cameraFollowOffset = 0f;
+    private float cameraLerpTime = 0f;
+    public float cameraLerpSpeed = 0.5f;
+    public float cameraTargetOffset = 1f;
+
 
     Obstacles lastObstacle = null;
 
@@ -80,6 +88,18 @@ public class Player : MonoBehaviour
         }
         score += Time.deltaTime;
         velocity += Time.deltaTime * acceleration;
+
+        //Lerping camera offset
+        //Also adding a short bias
+        if (cameraLerpTime < (1 - 0.1f))
+        {
+            cameraLerpTime += Time.deltaTime * cameraLerpSpeed;
+            cameraFollowOffset = Mathf.Lerp(cameraFollowOldTargetOffset, cameraFollowTargetOffset, cameraLerpTime);
+            print("Camera Offset" + cameraFollowOffset);
+
+            cameraFollowTransform.localPosition = new Vector3(transform.localPosition.x + cameraFollowOffset, cameraFollowTransform.localPosition.y, cameraFollowTransform.localPosition.z);
+        }
+
     }
     void setStance(PlayerStance playerStance)
     {
@@ -189,11 +209,11 @@ public class Player : MonoBehaviour
 
     }
 
-    private void startLerpBetweenLanes(float targetOffset)
+    private void startCameraLerpBetweenLanes(float targetOffset)
     {
-        targetLaneTargetOffset = targetOffset;
-        targetLaneOffset = 0;
-        laneSwitchTimeElapse = 0;
+        cameraFollowOldTargetOffset = cameraFollowTargetOffset;
+        cameraFollowTargetOffset = cameraFollowOldTargetOffset + targetOffset;
+        cameraLerpTime = 0;
     }
 
     private void moveLeft()
@@ -205,9 +225,13 @@ public class Player : MonoBehaviour
             targetWayPoint = move;
             transform.position += transform.right * -5;
             playerContainer.offset += transform.right * 5;
+
+            //cameraFollowTransform.position += transform.right * 5;
+
+
             //transform.position += transform.right * -5;
 
-            // startLerpBetweenLanes(-5);
+            startCameraLerpBetweenLanes(1);
 
         }
     }
@@ -220,8 +244,11 @@ public class Player : MonoBehaviour
             targetWayPoint = move;
             transform.position += transform.right * 5;
             playerContainer.offset += transform.right * -5;
+
+            //cameraFollowTransform.position += transform.right * -5;
+
             //transform.position += transform.right * 5;
-            // startLerpBetweenLanes(5);
+            startCameraLerpBetweenLanes(-1);
         }
     }
     public bool hasReachedTarget()
