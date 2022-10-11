@@ -374,7 +374,9 @@ public class Player : MonoBehaviour
     }
     public void gotCaught()
     {
+        keepRunning();
         steps.Clear();
+        currentHealth = 0;
         this.bpmAcceleration = 0;
         this.velocity = 0;
         this.baseAcceleration = 0;

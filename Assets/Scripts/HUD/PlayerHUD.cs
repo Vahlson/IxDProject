@@ -44,7 +44,7 @@ public class PlayerHUD : MonoBehaviour
             highScore.text = "NEW HIGHSCORE: " + _highScore;
             PlayerPrefs.SetInt("HighScore", _highScore);
         }
-        if (_player.currentHealth < currentHealth)
+        while (_player.currentHealth < currentHealth)
         {
             currentHealth--;
             GameObject g = _health.Pop();
