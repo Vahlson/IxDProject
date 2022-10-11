@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
             }
         }
         _animator.SetFloat(velocityHash, velocity);
-        _animator.SetFloat(_animationMultiplierHash, velocity / 4);
+        _animator.SetFloat(_animationMultiplierHash, velocity / 6);
         recountBPM();
         if (Input.GetKeyUp("j") || Input.GetKeyUp("h"))
         {
@@ -385,6 +385,10 @@ public class Player : MonoBehaviour
         Invoke("GameOver", 3.0f);
 
 
+    }
+    public int getBPM()
+    {
+        return steps.Count;
     }
 }
 public enum PlayerStance

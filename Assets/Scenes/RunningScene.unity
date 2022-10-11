@@ -1355,6 +1355,7 @@ MonoBehaviour:
   _target: {fileID: 7005620314944752063}
   acceleration: 0
   badGuyAccelerationFactor: 1.3
+  mesh: {fileID: 2305802436063807293}
 --- !u!95 &311515049
 Animator:
   serializedVersion: 4
@@ -2826,7 +2827,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &739652819
 Transform:
   m_ObjectHideFlags: 0
@@ -3000,7 +3001,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &756577620
 Transform:
   m_ObjectHideFlags: 0
@@ -8760,7 +8761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2131283015
 Transform:
   m_ObjectHideFlags: 0

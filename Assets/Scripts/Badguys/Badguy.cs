@@ -14,10 +14,13 @@ class Badguy : MonoBehaviour
     public float badGuyAccelerationFactor = 1.3f;
     private Vector3 endPosition;
     private bool targetCaught = false;
+    [SerializeField]
+    private SkinnedMeshRenderer mesh;
 
 
     void Start()
     {
+        mesh.enabled = false;
         acceleration = _target.baseAcceleration * badGuyAccelerationFactor;
         totalDistanceTravelled = -Vector3.Distance(transform.position, _target.transform.position);
         velocity = _target.velocity;
@@ -34,6 +37,7 @@ class Badguy : MonoBehaviour
         {
             if (!targetCaught)
             {
+                mesh.enabled = true;
                 transform.position = _target.transform.position - _target.transform.forward * 5;
                 _target.gotCaught();
                 GameManager.Instance.gameState = GameState.over;

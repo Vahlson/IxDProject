@@ -6,6 +6,7 @@ using TMPro;
 public class PlayerHUD : MonoBehaviour
 {
     public TMP_Text score;
+    public TMP_Text bpm;
     public TMP_Text highScore;
     [SerializeField]
     private GameObject _livesContainer;
@@ -34,7 +35,8 @@ public class PlayerHUD : MonoBehaviour
 
     void Update()
     {
-        score.text = "Score: " + ((int)_player.score).ToString();
+        score.text = "Score: " + ((int)_player.score).ToString();  
+        bpm.text = "BPM: " + _player.getBPM();
 
         if (_player.score >= _highScore)
         {

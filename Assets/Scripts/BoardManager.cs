@@ -37,28 +37,12 @@ public class BoardManager : MonoBehaviour
     void Update()
     {
         setPlayerWaypoint();
-        // setBadGuyWaypoint();
     }
-    // void setBadGuysWaypoint(Waypoint oldWp)
-    // {
-    //     Badguy badguy = badguyGO.GetComponent<Badguy>();
-    //     if (badguy.targetWayPoint != oldWp.transform)
-    //     {
-    //         badguy.targetWayPoint = oldWp.transform;
-
-    //     }
-    //     else
-    //     {
-    //         badguy.targetWayPoint = oldWp.next.transform;
-    //     }
-
-    // }
     void setPlayerWaypoint()
     {
         if (player.hasReachedTarget())
         {
             Waypoint oldWp = player.targetWayPoint.gameObject.GetComponent<Waypoint>();
-            // setBadGuysWaypoint(oldWp);
 
             player.targetWayPoint = oldWp.next.transform;
 
@@ -72,30 +56,10 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    // void setBadGuyWaypoint()
-    // {
-    //     Badguy badguy = badguyGO.GetComponent<Badguy>();
-
-    //     if (badguy.hasReachedTarget())
-    //     {
-    //         Waypoint oldWp = badguy.targetWayPoint.gameObject.GetComponent<Waypoint>();
-
-    //         badguy.targetWayPoint = oldWp.next.transform;
-
-    //         if (oldWp.isEnd)
-    //         {
-    //             _platforms.Remove(_passedTile);
-    //             Destroy(_passedTile);
-    //             // getRandomTile();
-    //             _passedTile = _platforms[0];
-    //         }
-    //     }
-    // }
     private void initStartTile()
     {
         GameObject startTileGO = Instantiate(_start, transform.position, transform.rotation);
         Tile startTile = startTileGO.GetComponent<Tile>();
-        //TODO move forward based on size of waypoint mesh
         transform.position += transform.forward * 15;
         nForwardTilesInRow++;
         GameManager.Instance.IncreaseNTilesSpawned();
@@ -116,10 +80,10 @@ public class BoardManager : MonoBehaviour
     private float getTileOffset(Tile tile)
     {
         float offset = 0;
-        Waypoint? exampleWaypoint = tile?.start[0].GetComponent<Waypoint>();
+        Waypoint exampleWaypoint = tile?.start[0].GetComponent<Waypoint>();
         if (exampleWaypoint != null)
         {
-            MeshRenderer? waypointCollider = exampleWaypoint.TryGetComponent(out MeshRenderer meshCollider) ? waypointCollider = meshCollider : null;
+            MeshRenderer waypointCollider = exampleWaypoint.TryGetComponent(out MeshRenderer meshCollider) ? waypointCollider = meshCollider : null;
             //print(exampleWaypoint);
             if (waypointCollider != null)
             {
