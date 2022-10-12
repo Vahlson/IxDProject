@@ -53,6 +53,9 @@ public class Player : MonoBehaviour
 
     private Queue<float> steps = new Queue<float>();
     private float bpmAcceleration = 0.0f;
+    public bool useArduinoInput = true;
+    private ArduinoInputController arduinoInputController;
+
     void Awake()
     {
         currentHealth = maxHealth;
@@ -60,9 +63,14 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        if (!useArduinoInput)
+        {
+            FindObjectOfType<SerialController>().enabled = false;
+        }
         _audioSource = GetComponent<AudioSource>();
         currentStanceDuration = stanceDuration;
         _animator = GetComponent<Animator>();
+        arduinoInputController = GetComponent<ArduinoInputController>();
         velocityHash = Animator.StringToHash("Velocity");
         _animationMultiplierHash = Animator.StringToHash("AnimationMultiplier");
         _animator.SetBool("Jump", false);
@@ -106,34 +114,75 @@ public class Player : MonoBehaviour
         _animator.SetFloat(velocityHash, velocity);
         _animator.SetFloat(_animationMultiplierHash, velocity / 6);
         recountBPM();
-        if (Input.GetKeyUp("j") || Input.GetKeyUp("h"))
-        {
-            step();
-        }
+
+
+
+
+
         if (targetWayPoint != null)
         {
             moveToWaypoint();
         }
-        if (Input.GetKeyUp("d"))
+
+        if (GameManager.Instance.gameState == GameState.ongoing && useArduinoInput)
         {
-            moveRight();
+
+
+            if (arduinoInputController.getKeyDown(1) || arduinoInputController.getKeyDown(2))
+            {
+                step();
+            }
+            if (arduinoInputController.getKeyDown(3))
+            {
+                moveRight();
+            }
+            if (arduinoInputController.getKeyDown(0))
+            {
+                moveLeft();
+            }
+            if (arduinoInputController.getKeyDown(6))
+            {
+                setStance(PlayerStance.low);
+            }
+            if (arduinoInputController.getKeyDown(5))
+            {
+                setStance(PlayerStance.medium);
+            }
+            if (arduinoInputController.getKeyDown(4))
+            {
+                setStance(PlayerStance.high);
+            }
+
         }
-        if (Input.GetKeyUp("a"))
+        else if (GameManager.Instance.gameState == GameState.ongoing && !useArduinoInput)
         {
-            moveLeft();
+            if (Input.GetKeyUp("j") || Input.GetKeyUp("h"))
+            {
+                step();
+            }
+            if (Input.GetKeyUp("d"))
+            {
+                moveRight();
+            }
+            if (Input.GetKeyUp("a"))
+            {
+                moveLeft();
+            }
+            if (Input.GetKeyUp("i"))
+            {
+                setStance(PlayerStance.low);
+            }
+            if (Input.GetKeyUp("o"))
+            {
+                setStance(PlayerStance.medium);
+            }
+            if (Input.GetKeyUp("p"))
+            {
+                setStance(PlayerStance.high);
+            }
+
         }
-        if (Input.GetKeyUp("i"))
-        {
-            setStance(PlayerStance.low);
-        }
-        if (Input.GetKeyUp("o"))
-        {
-            setStance(PlayerStance.medium);
-        }
-        if (Input.GetKeyUp("p"))
-        {
-            setStance(PlayerStance.high);
-        }
+
         if (GameManager.Instance.gameState == GameState.ongoing)
         {
             totalDistanceTravelled += Time.deltaTime * velocity;
@@ -169,7 +218,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    protected void LateUpdate()
+    void LateUpdate()
     {
         transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
     }
@@ -204,7 +253,7 @@ public class Player : MonoBehaviour
         vectorArray.Add(targetWayPoint.forward.x);
         vectorArray.Add(targetWayPoint.forward.y);
         vectorArray.Add(targetWayPoint.forward.z);
-        
+
 
         int forwardIndex = vectorArray.IndexOf(1);
         forwardIndex = forwardIndex == -1 ? vectorArray.IndexOf(-1) : 1;
@@ -301,6 +350,9 @@ public class Player : MonoBehaviour
     }
 
 
+    //return transform.position == targetWayPoint.transform.position;
+    //return Vector3.Distance(transform.position, moveToPosition) <= 0.3;
+
     public void takeDamage(Obstacles.BlockadeType blockadeType)
     {
         if ((blockadeType == Obstacles.BlockadeType.High && _playerStance == PlayerStance.high) ||
@@ -377,6 +429,7 @@ public class Player : MonoBehaviour
     private void DodgedObstacle()
     {
         _audioSource.clip = scoreSound;
+        print("playing scoresound");
         _audioSource.Play();
         score += pointsForObstacle;
         OnObstacleDodged?.Invoke(pointsForObstacle);

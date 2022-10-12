@@ -55,7 +55,15 @@ public class PlayerHUD : MonoBehaviour
     {
         score.text = "Score: " + ((int)_player.score).ToString();
         bpm.text = "BPM: " + _player.getBPM();
-        badGuyDistance.text = "Bad guy distance: " + Mathf.Abs(_player.totalDistanceTravelled - _badguy.totalDistanceTravelled);
+        if (GameManager.Instance.gameState == GameState.ongoing)
+        {
+            badGuyDistance.text = "Bad guy distance: " + Mathf.Abs(_player.totalDistanceTravelled - _badguy.totalDistanceTravelled);
+
+        }
+        else
+        {
+            badGuyDistance.enabled = false;
+        }
 
         if (_player.score >= _highScore)
         {

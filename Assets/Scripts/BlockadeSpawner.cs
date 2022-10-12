@@ -99,7 +99,7 @@ public class BlockadeSpawner : MonoBehaviour
         {
 
             //Todo maybe divide perlinnoise by height scale
-            print(1 - blockadeSpawnChance);
+            //print(1 - blockadeSpawnChance);
             //bool shouldSpawn = samplePerlinNoise() > 1 - blockadeSpawnChance;
             bool shouldSpawn = Random.Range(0f, 1f) < blockadeSpawnChance;
             if (shouldSpawn)

@@ -36,7 +36,7 @@ class StanceIndicator : MonoBehaviour
     }
     void updateStanceDuration()
     {
-        print("update stance duration");
+        //print("update stance duration");
         float newWidth = duration / _stanceTime;
         if (newWidth <= .2f)
         {
