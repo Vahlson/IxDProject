@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
     public bool damage;
     public event Action<PlayerStance> OnStanceChanged;
     public event Action<String> OnLaneSwitched;
+    public event Action<float> OnObstacleDodged;
+
     private string jumpAnimation;
     private PlayerStance _playerStance = PlayerStance.idle;
     private int _animationMultiplierHash;
@@ -41,6 +43,14 @@ public class Player : MonoBehaviour
     public float currentStanceDuration;
     [SerializeField]
     public float totalDistanceTravelled = 0.0f;
+    // public AudioClip kickSound;
+    // public AudioClip jumpSound;
+    // public AudioClip slideSound;
+    public AudioClip scoreSound;
+    public AudioClip damageSound;
+
+    private AudioSource _audioSource;
+
     private Queue<float> steps = new Queue<float>();
     private float bpmAcceleration = 0.0f;
     void Awake()
@@ -50,6 +60,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         currentStanceDuration = stanceDuration;
         _animator = GetComponent<Animator>();
         velocityHash = Animator.StringToHash("Velocity");
@@ -302,7 +313,8 @@ public class Player : MonoBehaviour
         {
             velocity *= 0.5f;
             currentHealth -= 1;
-
+            _audioSource.clip = damageSound;
+            _audioSource.Play();
             if (currentHealth <= 0)
             {
                 GameManager.Instance.gameState = GameState.over;
@@ -330,7 +342,8 @@ public class Player : MonoBehaviour
             damage = false;
             slide = true;
             _animator.SetBool("Slide", true);
-            score += pointsForObstacle;
+            DodgedObstacle();
+
         }
 
         else if (obstacle.blockadeType == Obstacles.BlockadeType.Low && _playerStance == PlayerStance.low)
@@ -338,7 +351,7 @@ public class Player : MonoBehaviour
             damage = false;
             jump = true;
             _animator.SetBool("Jump", true);
-            score += pointsForObstacle;
+            DodgedObstacle();
 
 
         }
@@ -347,7 +360,7 @@ public class Player : MonoBehaviour
             damage = false;
             kick = true;
             _animator.SetBool("Kick", true);
-            score += pointsForObstacle;
+            DodgedObstacle();
             ObstacleAnimationBlender ob = obstacle.gameObject.GetComponentInChildren<ObstacleAnimationBlender>();
             //try to play the death animation if existing
             if (ob != null)
@@ -360,6 +373,13 @@ public class Player : MonoBehaviour
             }
         }
 
+    }
+    private void DodgedObstacle()
+    {
+        _audioSource.clip = scoreSound;
+        _audioSource.Play();
+        score += pointsForObstacle;
+        OnObstacleDodged?.Invoke(pointsForObstacle);
     }
 
     public void keepRunning()

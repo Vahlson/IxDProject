@@ -5,7 +5,12 @@ using TMPro;
 
 public class PlayerHUD : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject _scoreTextContainer;
+    [SerializeField]
+    private GameObject _scoreTextAnimation;
     public TMP_Text score;
+    public TMP_Text badGuyDistance;
     public TMP_Text bpm;
     public TMP_Text highScore;
     [SerializeField]
@@ -16,6 +21,7 @@ public class PlayerHUD : MonoBehaviour
     private int currentHealth = 0;
     private int _highScore = 0;
     private Player _player;
+    private Badguy _badguy;
     [SerializeField]
     private GameObject _stanceContainer;
     [SerializeField]
@@ -23,10 +29,22 @@ public class PlayerHUD : MonoBehaviour
     private StanceIndicator _stanceIndicator;
 
 
+    void OnObstacleDodged(float score)
+    {
+        GameObject g = Instantiate(_scoreTextAnimation, Vector3.zero, Quaternion.identity);
+        g.transform.parent = _scoreTextContainer.transform;
+        g.transform.localPosition = Vector3.zero;
+        g.transform.localScale = Vector3.one;
+        g.transform.eulerAngles = Vector3.one;
+        g.GetComponent<TextAnimation>().setRandomizedPosition();
+
+    }
     void Start()
     {
         _player = GameObject.FindObjectOfType<Player>();
+        _badguy = GameObject.FindObjectOfType<Badguy>();
         _player.OnStanceChanged += OnStanceChanged;
+        _player.OnObstacleDodged += OnObstacleDodged;
         _highScore = PlayerPrefs.GetInt("HighScore");
         highScore.text = "Highscore:" + _highScore.ToString();
         initHealthIndicators();
@@ -35,8 +53,9 @@ public class PlayerHUD : MonoBehaviour
 
     void Update()
     {
-        score.text = "Score: " + ((int)_player.score).ToString();  
+        score.text = "Score: " + ((int)_player.score).ToString();
         bpm.text = "BPM: " + _player.getBPM();
+        badGuyDistance.text = "Bad guy distance: " + Mathf.Abs(_player.totalDistanceTravelled - _badguy.totalDistanceTravelled);
 
         if (_player.score >= _highScore)
         {
@@ -54,6 +73,8 @@ public class PlayerHUD : MonoBehaviour
     void OnDestroy()
     {
         _player.OnStanceChanged -= OnStanceChanged;
+        _player.OnObstacleDodged -= OnObstacleDodged;
+
 
     }
     private void initStance(GameObject model)

@@ -6,7 +6,7 @@ class Badguy : MonoBehaviour
     private float velocity = 0;
     public float badGuyAccelerationFactor = 1.3f;
     [SerializeField]
-    float totalDistanceTravelled = 0.0f;
+    public float totalDistanceTravelled = 0.0f;
     private int _velocityHash;
     [SerializeField]
     private Player _target;
