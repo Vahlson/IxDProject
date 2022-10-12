@@ -30,12 +30,17 @@ public class Player : MonoBehaviour
     private Vector3 moveToPosition;
 
     public Transform cameraFollowTransform;
-    private float cameraFollowTargetOffset;
-    private float cameraFollowOldTargetOffset;
+    [Range(0f, 5f)] public float cameraMoveWithLaneSwitch = 2f;
+    private float cameraFollowTargetOffset = 0f;
+    private float oldCameraFollowTargetOffset = 0f;
+    private float oldCameraFollowStartOffset = 0f;
+    private float cameraFollowStartOffset = 0f;
     private float cameraFollowOffset = 0f;
     private float cameraLerpTime = 0f;
     public float cameraLerpSpeed = 0.5f;
-    public float cameraTargetOffset = 1f;
+
+    private float cameraFollowLerpStart = 0f;
+    //public float cameraTargetOffset = 1f;
 
 
     Obstacles lastObstacle = null;
@@ -57,6 +62,8 @@ public class Player : MonoBehaviour
         velocityHash = Animator.StringToHash("Velocity");
         _animator.SetBool("Jump", false);
         laneSwitchTimeElapse = laneSwitchTime;
+
+        startCameraLerpBetweenLanes(0);
     }
 
     void Update()
@@ -91,14 +98,25 @@ public class Player : MonoBehaviour
 
         //Lerping camera offset
         //Also adding a short bias
-        if (cameraLerpTime < (1 - 0.1f))
+        if (cameraLerpTime < (1 - 0.01f))
         {
             cameraLerpTime += Time.deltaTime * cameraLerpSpeed;
-            cameraFollowOffset = Mathf.Lerp(cameraFollowOldTargetOffset, cameraFollowTargetOffset, cameraLerpTime);
+            cameraFollowOffset = Mathf.Lerp(cameraFollowLerpStart, cameraFollowTargetOffset, cameraLerpTime);
             print("Camera Offset" + cameraFollowOffset);
 
-            cameraFollowTransform.localPosition = new Vector3(transform.localPosition.x + cameraFollowOffset, cameraFollowTransform.localPosition.y, cameraFollowTransform.localPosition.z);
+            cameraFollowTransform.localPosition = new Vector3(cameraFollowOffset, cameraFollowTransform.localPosition.y, cameraFollowTransform.localPosition.z);
         }
+        else
+        {
+            oldCameraFollowTargetOffset = cameraFollowTargetOffset;
+        }
+
+        /* if (laneSwitchTimeElapse < laneSwitchTime && laneSwitchTime != 0)
+        {
+            targetLaneOffset = Mathf.Lerp(0, targetLaneTargetOffset, laneSwitchTimeElapse / laneSwitchTime);
+            laneSwitchTimeElapse += Time.deltaTime;
+            //transform.position += transform.right * targetLaneOffset;
+        } */
 
     }
     void setStance(PlayerStance playerStance)
@@ -209,10 +227,32 @@ public class Player : MonoBehaviour
 
     }
 
-    private void startCameraLerpBetweenLanes(float targetOffset)
+    private void startCameraLerpBetweenLanes(float baseOffsetToCenter)
     {
-        cameraFollowOldTargetOffset = cameraFollowTargetOffset;
-        cameraFollowTargetOffset = cameraFollowOldTargetOffset + targetOffset;
+        //Jump camera follow to center to keep centered
+
+        //cameraFollowTransform.position += transform.right * baseOffsetToCenter;
+        //cameraFollowTransform.localPosition = new Vector3(transform.localPosition.x + baseOffsetToCenter, cameraFollowTransform.localPosition.y, cameraFollowTransform.localPosition.z);
+
+        //Reset cameraOffset
+        cameraFollowOffset = 0f;
+
+
+        //cameraFollowTransform.localPosition = new Vector3(cameraFollowStartOffset, cameraFollowTransform.localPosition.y, cameraFollowTransform.localPosition.z);
+
+        print("Start Offset: " + cameraFollowStartOffset);
+        //baseOffsetToCenter - oldCameraFollowTargetOffset
+        cameraFollowStartOffset += baseOffsetToCenter;
+        cameraFollowLerpStart = cameraFollowStartOffset - oldCameraFollowStartOffset + oldCameraFollowTargetOffset;
+
+
+        print("Lerp start " + cameraFollowLerpStart);
+        //Move from middle a little bit.
+        float followOffset = cameraFollowStartOffset == 0 ? 0 : cameraMoveWithLaneSwitch * Math.Sign(baseOffsetToCenter);
+        cameraFollowTargetOffset = cameraFollowStartOffset - followOffset;
+
+        oldCameraFollowTargetOffset = cameraFollowTargetOffset;
+        oldCameraFollowStartOffset = cameraFollowStartOffset;
         cameraLerpTime = 0;
     }
 
@@ -231,7 +271,7 @@ public class Player : MonoBehaviour
 
             //transform.position += transform.right * -5;
 
-            startCameraLerpBetweenLanes(1);
+            startCameraLerpBetweenLanes(5);
 
         }
     }
@@ -248,7 +288,7 @@ public class Player : MonoBehaviour
             //cameraFollowTransform.position += transform.right * -5;
 
             //transform.position += transform.right * 5;
-            startCameraLerpBetweenLanes(-1);
+            startCameraLerpBetweenLanes(-5);
         }
     }
     public bool hasReachedTarget()
