@@ -21,9 +21,12 @@ public class BoardManager : MonoBehaviour
     //Creates a baseline number of forward tiles in a row so there are at least a couple before a turn.
     private int nForwardTilesInRow = 0;
     [SerializeField] public int minForwardTilesBeforeTurn = 2;
+    [SerializeField]
+    GameObject badguyGO;
 
     void Awake()
     {
+        GameManager.Instance.gameState = GameState.ongoing;
         player = GameObject.FindObjectOfType<Player>();
         initStartTile();
         for (int i = 0; i < 7; i++)
@@ -40,6 +43,7 @@ public class BoardManager : MonoBehaviour
         if (player.hasReachedTarget())
         {
             Waypoint oldWp = player.targetWayPoint.gameObject.GetComponent<Waypoint>();
+
             player.targetWayPoint = oldWp.next.transform;
 
             if (oldWp.isEnd)
@@ -51,11 +55,11 @@ public class BoardManager : MonoBehaviour
             }
         }
     }
+
     private void initStartTile()
     {
         GameObject startTileGO = Instantiate(_start, transform.position, transform.rotation);
         Tile startTile = startTileGO.GetComponent<Tile>();
-        //TODO move forward based on size of waypoint mesh
         transform.position += transform.forward * 15;
         nForwardTilesInRow++;
         GameManager.Instance.IncreaseNTilesSpawned();
@@ -70,17 +74,16 @@ public class BoardManager : MonoBehaviour
         _platforms.Add(startTileGO);
         _passedTile = _platforms[0];
         startTile.setStartTile();
-        player.targetWayPoint = startTile.getStartWaypoint(); ;
-
+        player.targetWayPoint = startTile.getStartWaypoint();
     }
 
     private float getTileOffset(Tile tile)
     {
         float offset = 0;
-        Waypoint? exampleWaypoint = tile?.start[0].GetComponent<Waypoint>();
+        Waypoint exampleWaypoint = tile?.start[0].GetComponent<Waypoint>();
         if (exampleWaypoint != null)
         {
-            MeshRenderer? waypointCollider = exampleWaypoint.TryGetComponent(out MeshRenderer meshCollider) ? waypointCollider = meshCollider : null;
+            MeshRenderer waypointCollider = exampleWaypoint.TryGetComponent(out MeshRenderer meshCollider) ? waypointCollider = meshCollider : null;
             //print(exampleWaypoint);
             if (waypointCollider != null)
             {
@@ -100,6 +103,7 @@ public class BoardManager : MonoBehaviour
 
     private void getRandomTile()
     {
+        int tempForwardTilesInRow = nForwardTilesInRow;
         string tag = TileTypes.Forward.ToString();
         float tileThreshold = Random.value;
         if (tileThreshold <= 0.1 && nForwardTilesInRow >= minForwardTilesBeforeTurn)
@@ -193,6 +197,7 @@ public class BoardManager : MonoBehaviour
             {
                 this.transform.rotation = tempRotation;
                 this.transform.position = tempPosition;
+                nForwardTilesInRow = tempForwardTilesInRow;
                 getRandomTile();
                 return;
             }

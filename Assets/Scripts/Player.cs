@@ -1,32 +1,30 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 using System.Collections.Generic;
 using System;
-
+using Cinemachine;
 public class Player : MonoBehaviour
 {
     public PlayerContainer playerContainer;
     private Animator _animator;
-    public float velocity = 5.0f;
-    public float rotationSpeed = 3.0f;
-    public float acceleration = .2f;
+    public float velocity = 2.0f;
+    public float baseAcceleration = .02f;
+    [SerializeField]
+    private float bpmFactor = 0.001f;
+
     int velocityHash;
     public Transform targetWayPoint;
     [SerializeField] private int maxHealth = 10;
-
-    [SerializeField] private int jumpSpeed = 70;
     public int currentHealth;
     [HideInInspector] public float score;
-    public PlayerStance stance = PlayerStance.high;
+    [SerializeField] private int pointsForObstacle = 50;
 
     //Lane Switching
     private float targetLaneTargetOffset = 0;
     private float targetLaneOffset = 0;
     [SerializeField] private float laneSwitchTime = 1f;
     private float laneSwitchTimeElapse;
-
     private Vector3 moveToPosition;
 
     public Transform cameraFollowTransform;
@@ -48,9 +46,31 @@ public class Player : MonoBehaviour
     bool jump;
     bool slide;
     bool kick;
+    public bool damage;
     public event Action<PlayerStance> OnStanceChanged;
+    public event Action<String> OnLaneSwitched;
+    public event Action<float> OnObstacleDodged;
+
     private string jumpAnimation;
     private PlayerStance _playerStance = PlayerStance.idle;
+    private int _animationMultiplierHash;
+    public float stanceDuration = 8.0f;
+    public float currentStanceDuration;
+    [SerializeField]
+    public float totalDistanceTravelled = 0.0f;
+    // public AudioClip kickSound;
+    // public AudioClip jumpSound;
+    // public AudioClip slideSound;
+    public AudioClip scoreSound;
+    public AudioClip damageSound;
+
+    private AudioSource _audioSource;
+
+    private Queue<float> steps = new Queue<float>();
+    private float bpmAcceleration = 0.0f;
+    public bool useArduinoInput = true;
+    private ArduinoInputController arduinoInputController;
+
     void Awake()
     {
         currentHealth = maxHealth;
@@ -58,46 +78,135 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        if (!useArduinoInput)
+        {
+            FindObjectOfType<SerialController>().enabled = false;
+        }
+        _audioSource = GetComponent<AudioSource>();
+        currentStanceDuration = stanceDuration;
         _animator = GetComponent<Animator>();
+        arduinoInputController = GetComponent<ArduinoInputController>();
         velocityHash = Animator.StringToHash("Velocity");
+        _animationMultiplierHash = Animator.StringToHash("AnimationMultiplier");
         _animator.SetBool("Jump", false);
         laneSwitchTimeElapse = laneSwitchTime;
 
         startCameraLerpBetweenLanes(0);
+        damage = true;
+        // initSteps();
     }
+    void initSteps()
+    {
+        for (int i = 0; i < 60; i++)
+        {
+            steps.Enqueue(Time.realtimeSinceStartup);
+        }
+    }
+    void step()
+    {
+        steps.Enqueue(Time.realtimeSinceStartup);
+    }
+    void recountBPM()
+    {
+        if (steps.Count > 0)
+        {
 
+            while (Time.realtimeSinceStartup - steps.Peek() >= 60)
+            {
+                steps.Dequeue();
+            }
+        }
+        bpmAcceleration = steps.Count * bpmFactor;
+    }
     void Update()
     {
+        if (_playerStance != PlayerStance.idle)
+        {
+            currentStanceDuration -= Time.deltaTime;
+            if (currentStanceDuration <= 0)
+            {
+                setStance(PlayerStance.idle);
+            }
+        }
         _animator.SetFloat(velocityHash, velocity);
+        _animator.SetFloat(_animationMultiplierHash, velocity / 6);
+        recountBPM();
+
+
+
+
+
         if (targetWayPoint != null)
         {
             moveToWaypoint();
         }
-        if (Input.GetKeyUp("d"))
-        {
-            moveRight();
-        }
-        if (Input.GetKeyUp("a"))
-        {
-            moveLeft();
-        }
-        if (Input.GetKeyUp("i"))
-        {
-            setStance(PlayerStance.low);
-        }
-        if (Input.GetKeyUp("o"))
-        {
-            setStance(PlayerStance.medium);
-        }
-        if (Input.GetKeyUp("p"))
-        {
-            setStance(PlayerStance.high);
-        }
-        score += Time.deltaTime;
-        velocity += Time.deltaTime * acceleration;
 
-        //Lerping camera offset
-        //Also adding a short bias
+        if (GameManager.Instance.gameState == GameState.ongoing && useArduinoInput)
+        {
+
+
+            if (arduinoInputController.getKeyDown(1) || arduinoInputController.getKeyDown(2))
+            {
+                step();
+            }
+            if (arduinoInputController.getKeyDown(3))
+            {
+                moveRight();
+            }
+            if (arduinoInputController.getKeyDown(0))
+            {
+                moveLeft();
+            }
+            if (arduinoInputController.getKeyDown(6))
+            {
+                setStance(PlayerStance.low);
+            }
+            if (arduinoInputController.getKeyDown(5))
+            {
+                setStance(PlayerStance.medium);
+            }
+            if (arduinoInputController.getKeyDown(4))
+            {
+                setStance(PlayerStance.high);
+            }
+
+        }
+        else if (GameManager.Instance.gameState == GameState.ongoing && !useArduinoInput)
+        {
+            if (Input.GetKeyUp("j") || Input.GetKeyUp("h"))
+            {
+                step();
+            }
+            if (Input.GetKeyUp("d"))
+            {
+                moveRight();
+            }
+            if (Input.GetKeyUp("a"))
+            {
+                moveLeft();
+            }
+            if (Input.GetKeyUp("i"))
+            {
+                setStance(PlayerStance.low);
+            }
+            if (Input.GetKeyUp("o"))
+            {
+                setStance(PlayerStance.medium);
+            }
+            if (Input.GetKeyUp("p"))
+            {
+                setStance(PlayerStance.high);
+            }
+
+        }
+
+        if (GameManager.Instance.gameState == GameState.ongoing)
+        {
+            totalDistanceTravelled += Time.deltaTime * velocity;
+            score += Time.deltaTime;
+            velocity += Time.deltaTime * baseAcceleration + Time.deltaTime * bpmAcceleration;
+        }
+
         if (cameraLerpTime < (1 - 0.01f))
         {
             cameraLerpTime += Time.deltaTime * cameraLerpSpeed;
@@ -110,19 +219,14 @@ public class Player : MonoBehaviour
         {
             oldCameraFollowTargetOffset = cameraFollowTargetOffset;
         }
-
-        /* if (laneSwitchTimeElapse < laneSwitchTime && laneSwitchTime != 0)
-        {
-            targetLaneOffset = Mathf.Lerp(0, targetLaneTargetOffset, laneSwitchTimeElapse / laneSwitchTime);
-            laneSwitchTimeElapse += Time.deltaTime;
-            //transform.position += transform.right * targetLaneOffset;
-        } */
-
     }
     void setStance(PlayerStance playerStance)
     {
+        keepRunning();
         this._playerStance = playerStance;
         OnStanceChanged?.Invoke(_playerStance);
+        currentStanceDuration = stanceDuration;
+
 
     }
 
@@ -130,29 +234,21 @@ public class Player : MonoBehaviour
     {
         if (jump)
         {
-            // m_Rigidbody.AddForce(transform.up * jumpSpeed);
-
-
-
-            //transform.position += transform.up * 3;
             jump = false;
         }
 
-
         else if (slide)
         {
-            // m_Rigidbody.AddForce(-transform.up * 12);
             slide = false;
         }
 
         else if (kick)
         {
-            // m_Rigidbody.AddForce((-transform.up) * 6);
             kick = false;
         }
     }
 
-    protected void LateUpdate()
+    void LateUpdate()
     {
         transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
     }
@@ -160,34 +256,34 @@ public class Player : MonoBehaviour
     private void moveToWaypoint()
     {
         //The old, working version.
-        //transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.position - transform.position, velocity * Time.deltaTime, 0.0f);
-        //transform.position = Vector3.MoveTowards(transform.position, targetWayPoint.position, velocity * Time.deltaTime);
+        transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.position - transform.position, velocity * Time.deltaTime, 0.0f);
+        transform.position = Vector3.MoveTowards(transform.position, targetWayPoint.position, velocity * Time.deltaTime);
 
         //2.5 is half of the waypoint length
         //Getting the offset of the component that is forward between waypoint and player. so if z is of forward, what is their z offset.
-        float playerToTargetForwardOffset = Vector3.Dot(targetWayPoint.forward, targetWayPoint.position) - Vector3.Dot(targetWayPoint.forward, transform.position);
-        moveToPosition = targetWayPoint.position + targetWayPoint.forward * (2.5f - playerToTargetForwardOffset);
+        // float playerToTargetForwardOffset = Vector3.Dot(targetWayPoint.forward, targetWayPoint.position) - Vector3.Dot(targetWayPoint.forward, transform.position);
+        // moveToPosition = targetWayPoint.position + targetWayPoint.forward * (2.5f - playerToTargetForwardOffset);
 
-        //print("movetoPos: " + moveToPosition);
-        //print("targetWaypoinyPos: " + targetWayPoint.position);
+        // //print("movetoPos: " + moveToPosition);
+        // //print("targetWaypoinyPos: " + targetWayPoint.position);
 
-        //Old smooth curve version
-        //transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
-        //transform.position = Vector3.MoveTowards(transform.position, moveToPosition, velocity * Time.deltaTime);
+        // //Old smooth curve version
+        // //transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
+        // //transform.position = Vector3.MoveTowards(transform.position, moveToPosition, velocity * Time.deltaTime);
 
-        //This is used to take account for the speed forward becoming slower when switching lanes which we dont want
-        //print("reached lane? : " + hasReachedLane());
-        float laneSwitchSpeedAdjustmentFactor = hasReachedLane() ? 1 : Mathf.Sqrt(2);
-        transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
-        transform.position = Vector3.MoveTowards(transform.position, moveToPosition, laneSwitchSpeedAdjustmentFactor * velocity * Time.deltaTime);
-        ////////////////////////////
+        // //This is used to take account for the speed forward becoming slower when switching lanes which we dont want
+        // // print("reached lane? : " + hasReachedLane());
+        // float laneSwitchSpeedAdjustmentFactor = hasReachedLane() ? 1 : Mathf.Sqrt(2);
+        // transform.forward = Vector3.RotateTowards(transform.forward, targetWayPoint.forward, rotationSpeed * Time.deltaTime, 0.0f);
+        // transform.position = Vector3.MoveTowards(transform.position, moveToPosition, laneSwitchSpeedAdjustmentFactor * velocity * Time.deltaTime);
+        // ////////////////////////////
         /* Vector3 newTargetWaypoint = transform.position;
         Vector3 moveToPositionForwardOffset = Vector3.Scale(targetWayPoint.forward, moveToPosition);
         List<float> vectorArray = new List<float>();
         vectorArray.Add(targetWayPoint.forward.x);
         vectorArray.Add(targetWayPoint.forward.y);
         vectorArray.Add(targetWayPoint.forward.z);
-        
+
 
         int forwardIndex = vectorArray.IndexOf(1);
         forwardIndex = forwardIndex == -1 ? vectorArray.IndexOf(-1) : 1;
@@ -264,7 +360,7 @@ public class Player : MonoBehaviour
         {
             targetWayPoint = move;
             transform.position += transform.right * -5;
-            playerContainer.offset += transform.right * 5;
+            //playerContainer.offset += transform.right * 5;
 
             //cameraFollowTransform.position += transform.right * 5;
 
@@ -272,6 +368,9 @@ public class Player : MonoBehaviour
             //transform.position += transform.right * -5;
 
             startCameraLerpBetweenLanes(5);
+            OnLaneSwitched?.Invoke("Left");
+            //transform.position += transform.right * -5;
+            // startLerpBetweenLanes(-5);
 
         }
     }
@@ -283,22 +382,23 @@ public class Player : MonoBehaviour
         {
             targetWayPoint = move;
             transform.position += transform.right * 5;
-            playerContainer.offset += transform.right * -5;
+            //playerContainer.offset += transform.right * -5;
 
             //cameraFollowTransform.position += transform.right * -5;
 
+            OnLaneSwitched?.Invoke("Right");
             //transform.position += transform.right * 5;
             startCameraLerpBetweenLanes(-5);
         }
     }
     public bool hasReachedTarget()
     {
-        //return transform.position == targetWayPoint.transform.position;
-        //return Vector3.Distance(transform.position, moveToPosition) <= 0.3;
+        return Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(targetWayPoint.transform.position.x, 0, targetWayPoint.transform.position.z)) < 0.2;
+        // return Vector3.Distance(transform.position, moveToPosition) <= 0.3;
 
         //print("Target forward offset: " + (Vector3.Dot(targetWayPoint.forward, transform.position) - Vector3.Dot(targetWayPoint.forward, targetWayPoint.position)));
 
-        return Vector3.Dot(targetWayPoint.forward, transform.position) - Vector3.Dot(targetWayPoint.forward, targetWayPoint.position) >= 0;
+        // return Vector3.Dot(targetWayPoint.forward, transform.position) - Vector3.Dot(targetWayPoint.forward, targetWayPoint.position) >= 0;
     }
 
     public bool hasReachedLane()
@@ -312,15 +412,8 @@ public class Player : MonoBehaviour
     }
 
 
-    // void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.tag == "Obstacle")
-    //     {
-    //         takeDamage();
-    //         print("Hit obstacle");
-    //     }
-    // }
-
+    //return transform.position == targetWayPoint.transform.position;
+    //return Vector3.Distance(transform.position, moveToPosition) <= 0.3;
 
     public void takeDamage(Obstacles.BlockadeType blockadeType)
     {
@@ -332,45 +425,56 @@ public class Player : MonoBehaviour
         }
         else
         {
-
+            velocity *= 0.5f;
             currentHealth -= 1;
-
+            _audioSource.clip = damageSound;
+            _audioSource.Play();
             if (currentHealth <= 0)
             {
-                PlayerPrefs.SetInt("Score", (int)score);
-                GameManager.Instance.latestScore = (int)score;
-                SceneManager.LoadScene(2);
+                GameManager.Instance.gameState = GameState.over;
             }
         }
     }
 
+    void GameOver()
+    {
+        PlayerPrefs.SetInt("Score", (int)score);
+        GameManager.Instance.latestScore = (int)score;
+        GameManager.Instance.gameState = GameState.over;
+        SceneManager.LoadScene(2);
+    }
 
     public void avoidObstacle(Obstacles obstacle)
     {
-        print(obstacle.blockadeType);
+        //print(obstacle.blockadeType);
+
         if (obstacle == lastObstacle) return;
         lastObstacle = obstacle;
 
         if (obstacle.blockadeType == Obstacles.BlockadeType.High && _playerStance == PlayerStance.high)
         {
-
-            //print("slide");
+            damage = false;
             slide = true;
             _animator.SetBool("Slide", true);
+            DodgedObstacle();
+
         }
 
         else if (obstacle.blockadeType == Obstacles.BlockadeType.Low && _playerStance == PlayerStance.low)
         {
-            //print("jumping");
+            damage = false;
             jump = true;
             _animator.SetBool("Jump", true);
+            DodgedObstacle();
 
 
         }
         else if (obstacle.blockadeType == Obstacles.BlockadeType.Full && _playerStance == PlayerStance.medium)
         {
+            damage = false;
             kick = true;
             _animator.SetBool("Kick", true);
+            DodgedObstacle();
             ObstacleAnimationBlender ob = obstacle.gameObject.GetComponentInChildren<ObstacleAnimationBlender>();
             //try to play the death animation if existing
             if (ob != null)
@@ -381,24 +485,48 @@ public class Player : MonoBehaviour
             {
                 print("No human found");
             }
-            // print("kick");
         }
 
+    }
+    private void DodgedObstacle()
+    {
+        _audioSource.clip = scoreSound;
+        print("playing scoresound");
+        _audioSource.Play();
+        score += pointsForObstacle;
+        OnObstacleDodged?.Invoke(pointsForObstacle);
     }
 
     public void keepRunning()
     {
-
-        //print("Floor");
-        //_animator.ResetTrigger("Jumping");
         _animator.SetBool("Slide", false);
         _animator.SetBool("Jump", false);
         _animator.SetBool("Kick", false);
-
         jump = false;
         slide = false;
         kick = false;
+        damage = true;
+    }
+    public void gotCaught()
+    {
+        keepRunning();
+        steps.Clear();
+        currentHealth = 0;
+        this.bpmAcceleration = 0;
+        this.velocity = 0;
+        this.baseAcceleration = 0;
+        GameObject.FindGameObjectWithTag("FollowCam").GetComponent<CinemachineVirtualCamera>().Follow = null;
+        this.transform.forward = -transform.forward;
+        keepRunning();
+        _animator.SetBool("GameOver", true);
+        _animator.SetBool("Death", true);
+        Invoke("GameOver", 3.0f);
 
+
+    }
+    public int getBPM()
+    {
+        return steps.Count;
     }
 }
 public enum PlayerStance
