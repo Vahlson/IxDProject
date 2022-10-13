@@ -2413,7 +2413,7 @@ GameObject:
   - component: {fileID: 592901694}
   - component: {fileID: 592901693}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: CanvasCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9043,6 +9043,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5947891583564774476, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6974954045741939889, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
       propertyPath: m_Name
       value: Player
