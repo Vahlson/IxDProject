@@ -1350,6 +1350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51f33c70783d668409324b6dde81a309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  velocity: 0
   badGuyAccelerationFactor: 1.3
   totalDistanceTravelled: 0
   _target: {fileID: 7005620314944752063}
@@ -3578,50 +3579,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 563888805867742625, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: ab650577c5ae0f648a598e8d6ca58eac, type: 2}
-    - target: {fileID: 563888805867742625, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 1827526054952021576, guid: ab650577c5ae0f648a598e8d6ca58eac, type: 2}
-    - target: {fileID: 4896491743963304950, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4896491743963304950, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4896491743963304950, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5716482473542356545, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 109.399994
-      objectReference: {fileID: 0}
-    - target: {fileID: 5754454203925174514, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: ab650577c5ae0f648a598e8d6ca58eac, type: 2}
-    - target: {fileID: 5754454203925174514, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 1827526054952021576, guid: ab650577c5ae0f648a598e8d6ca58eac, type: 2}
-    - target: {fileID: 7511899838860037202, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_AnchoredPosition.y
+    - target: {fileID: 5172626960093845451, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
+      propertyPath: m_Pivot.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7511899838860037205, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: ab650577c5ae0f648a598e8d6ca58eac, type: 2}
-    - target: {fileID: 7511899838860037205, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 1827526054952021576, guid: ab650577c5ae0f648a598e8d6ca58eac, type: 2}
+    - target: {fileID: 5172626960093845451, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5172626960093845451, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7511899839645252034, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
       propertyPath: m_Name
       value: PlayerHUD
@@ -3710,26 +3679,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7511899839645252039, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 592901694}
-    - target: {fileID: 7511899839645252057, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: _idleStance
-      value: 
-      objectReference: {fileID: 1506550050545096, guid: fe300c1f42114444f848a83282a4cb1e, type: 3}
-    - target: {fileID: 7511899840244912184, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7511899840244912187, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: ab650577c5ae0f648a598e8d6ca58eac, type: 2}
-    - target: {fileID: 7511899840244912187, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 1827526054952021576, guid: ab650577c5ae0f648a598e8d6ca58eac, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
 --- !u!1 &840383083

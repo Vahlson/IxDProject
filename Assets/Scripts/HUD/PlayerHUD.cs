@@ -23,9 +23,6 @@ public class PlayerHUD : MonoBehaviour
     private Player _player;
     private Badguy _badguy;
     [SerializeField]
-    private GameObject _stanceContainer;
-    [SerializeField]
-    private GameObject currentStance;
     private StanceIndicator _stanceIndicator;
 
 
@@ -48,7 +45,7 @@ public class PlayerHUD : MonoBehaviour
         _highScore = PlayerPrefs.GetInt("HighScore");
         highScore.text = "Highscore:" + _highScore.ToString();
         initHealthIndicators();
-        initStance(currentStance);
+        // initStance(currentStance);
     }
 
     void Update()
@@ -85,15 +82,15 @@ public class PlayerHUD : MonoBehaviour
 
 
     }
-    private void initStance(GameObject model)
-    {
-        currentStance = Instantiate(model, _stanceContainer.transform.position, Quaternion.identity);
-        currentStance.transform.SetParent(_stanceContainer.transform);
-        currentStance.transform.localScale = new Vector3(100, 100, 100);
-        currentStance.transform.localPosition = Vector3.zero;
-        currentStance.transform.Rotate(Vector3.zero);
-        this._stanceIndicator = currentStance.GetComponent<StanceIndicator>();
-    }
+    // private void initStance(GameObject model)
+    // {
+    //     currentStance = Instantiate(model, _stanceContainer.transform.position, Quaternion.identity);
+    //     currentStance.transform.SetParent(_stanceContainer.transform);
+    //     currentStance.transform.localScale = new Vector3(100, 100, 100);
+    //     currentStance.transform.localPosition = Vector3.zero;
+    //     currentStance.transform.Rotate(Vector3.zero);
+    //     this._stanceIndicator = currentStance.GetComponent<StanceIndicator>();
+    // }
     private void initHealthIndicators()
     {
         for (int i = 0; i < _player.currentHealth; i++)
@@ -127,4 +124,5 @@ public class PlayerHUD : MonoBehaviour
                 break;
         }
     }
+
 }

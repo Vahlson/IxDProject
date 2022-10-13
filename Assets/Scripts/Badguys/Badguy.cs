@@ -3,7 +3,7 @@ using UnityEngine;
 class Badguy : MonoBehaviour
 {
     private Animator _animator;
-    private float velocity = 0;
+    public float velocity = 0;
     public float badGuyAccelerationFactor = 1.3f;
     [SerializeField]
     public float totalDistanceTravelled = 0.0f;
