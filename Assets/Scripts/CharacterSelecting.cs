@@ -47,6 +47,7 @@ public class CharacterSelecting : MonoBehaviour
         }
 
         characters[HoldData.selectedCharacter].SetActive(true);
+        print("Char is" + HoldData.selectedCharacter);
 
     }
 
@@ -60,6 +61,7 @@ public class CharacterSelecting : MonoBehaviour
         }
 
         characters[HoldData.selectedCharacter].SetActive(true);
+        print("Char is" + HoldData.selectedCharacter);
 
     }
 
