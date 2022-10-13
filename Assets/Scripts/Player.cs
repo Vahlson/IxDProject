@@ -108,13 +108,10 @@ public class Player : MonoBehaviour
     }
     void recountBPM()
     {
-        if (steps.Count > 0)
-        {
 
-            while (Time.realtimeSinceStartup - steps.Peek() >= 60)
-            {
-                steps.Dequeue();
-            }
+        while (steps.Count > 0 && Time.realtimeSinceStartup - steps.Peek() >= 60)
+        {
+            steps.Dequeue();
         }
         bpmAcceleration = steps.Count * bpmFactor;
     }

@@ -28,7 +28,10 @@ public class BadGuyDistance : MonoBehaviour
 
     void Update()
     {
-        UpdateDistance();
+        if (GameManager.Instance.gameState == GameState.ongoing)
+        {
+            UpdateDistance();
+        }
         // print("xdistance = " + _xDistance);
         // _badGuyImage.transform.localPosition = new Vector3(_xDistance, _badGuyImage.transform.localPosition.y, _badGuyImage.transform.localPosition.z);
         // print("Badguysimage pos " + _badGuyImage.transform.localPosition.x);
@@ -38,7 +41,6 @@ public class BadGuyDistance : MonoBehaviour
     void UpdateDistance()
     {
         float currentDistance = Mathf.Abs(_player.totalDistanceTravelled - _badguy.totalDistanceTravelled);
-        print("current distance = " + currentDistance);
         if (currentDistance > 100)
         {
             _badGuyImage.transform.localPosition = new Vector3(0, _badGuyImage.transform.localPosition.y, _badGuyImage.transform.localPosition.z);
@@ -47,11 +49,11 @@ public class BadGuyDistance : MonoBehaviour
         else
         {
 
-            _badGuyImage.transform.localPosition = new Vector3(_xDistance / currentDistance, _badGuyImage.transform.localPosition.y, _badGuyImage.transform.localPosition.z);
-            print("current pos " + _badGuyImage.transform.localPosition);
-            print("current div " + _xDistance / currentDistance);
-
-
+            _badGuyImage.transform.localPosition = new Vector3(_xStep * (100 - currentDistance), _badGuyImage.transform.localPosition.y, _badGuyImage.transform.localPosition.z);
+            if (_badGuyImage.transform.localPosition.x >= _playerImage.transform.localPosition.x)
+            {
+                _badGuyImage.transform.localPosition = new Vector3(_playerImage.transform.localPosition.x, _badGuyImage.transform.localPosition.y, _badGuyImage.transform.localPosition.z);
+            }
         }
     }
 
