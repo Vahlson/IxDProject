@@ -300,7 +300,6 @@ MonoBehaviour:
   highScore: {fileID: 7511899838860037205}
   _livesContainer: {fileID: 7511899840129466678}
   _healthModel: {fileID: 1000010714891294, guid: 5a0537415d4017c4fad7a4986f502dc1, type: 3}
-  currentStance: {fileID: 0}
   _stanceIndicator: {fileID: 144120352186981904}
 --- !u!1 &7511899840129466678
 GameObject:

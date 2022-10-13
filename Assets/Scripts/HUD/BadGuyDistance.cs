@@ -17,12 +17,14 @@ public class BadGuyDistance : MonoBehaviour
     private float _lastDistance = .0f;
     private float _xDistance = 0.0f;
     private float _xStep = 0.0f;
+    private float _end = 0.0f;
     void Start()
     {
         _player = GameObject.FindObjectOfType<Player>();
         _badguy = GameObject.FindObjectOfType<Badguy>();
+        _end = _playerImage.transform.localPosition.x - _playerImage.rectTransform.rect.width;
         _lastDistance = Mathf.Abs(_player.totalDistanceTravelled - _badguy.totalDistanceTravelled);
-        _xDistance = Mathf.Abs(_playerImage.transform.localPosition.x - _badGuyImage.transform.localPosition.x);
+        _xDistance = Mathf.Abs(_badguy.transform.localPosition.x - _end);
         _xStep = _xDistance / 100;
     }
 
@@ -50,9 +52,9 @@ public class BadGuyDistance : MonoBehaviour
         {
 
             _badGuyImage.transform.localPosition = new Vector3(_xStep * (100 - currentDistance), _badGuyImage.transform.localPosition.y, _badGuyImage.transform.localPosition.z);
-            if (_badGuyImage.transform.localPosition.x >= _playerImage.transform.localPosition.x)
+            if (_badGuyImage.transform.localPosition.x >= _end)
             {
-                _badGuyImage.transform.localPosition = new Vector3(_playerImage.transform.localPosition.x, _badGuyImage.transform.localPosition.y, _badGuyImage.transform.localPosition.z);
+                _badGuyImage.transform.localPosition = new Vector3(_end, _badGuyImage.transform.localPosition.y, _badGuyImage.transform.localPosition.z);
             }
         }
     }
