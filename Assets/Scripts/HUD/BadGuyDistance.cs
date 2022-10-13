@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 
 public class BadGuyDistance : MonoBehaviour
 {
@@ -12,12 +12,15 @@ public class BadGuyDistance : MonoBehaviour
     private GameObject _timer;
     [SerializeField]
     private Image _playerImage;
+    [SerializeField]
+    private TMP_Text _badGuyDistanceText;
     private Player _player;
     private Badguy _badguy;
     private float _lastDistance = .0f;
     private float _xDistance = 0.0f;
     private float _xStep = 0.0f;
     private float _end = 0.0f;
+
     void Start()
     {
         _player = GameObject.FindObjectOfType<Player>();
@@ -32,6 +35,7 @@ public class BadGuyDistance : MonoBehaviour
     {
         if (GameManager.Instance.gameState == GameState.ongoing)
         {
+
             UpdateDistance();
         }
         // print("xdistance = " + _xDistance);
@@ -43,6 +47,8 @@ public class BadGuyDistance : MonoBehaviour
     void UpdateDistance()
     {
         float currentDistance = Mathf.Abs(_player.totalDistanceTravelled - _badguy.totalDistanceTravelled);
+        _badGuyDistanceText.text = ((int)currentDistance).ToString();
+
         if (currentDistance > 100)
         {
             _badGuyImage.transform.localPosition = new Vector3(0, _badGuyImage.transform.localPosition.y, _badGuyImage.transform.localPosition.z);

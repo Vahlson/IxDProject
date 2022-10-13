@@ -12,7 +12,9 @@ public class Player : MonoBehaviour
     public float baseAcceleration = .02f;
     [SerializeField]
     private float bpmFactor = 0.001f;
-
+    [SerializeField]
+    private GameObject _background;
+    private Quaternion _backgroundRotation;
     int velocityHash;
     public Transform targetWayPoint;
     [SerializeField] private int maxHealth = 10;
@@ -26,7 +28,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float laneSwitchTime = 1f;
     private float laneSwitchTimeElapse;
     private Vector3 moveToPosition;
-
     public Transform cameraFollowTransform;
     [Range(0f, 5f)] public float cameraMoveWithLaneSwitch = 2f;
     private float cameraFollowTargetOffset = 0f;
@@ -73,6 +74,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        _backgroundRotation = this.transform.rotation;
         currentHealth = maxHealth;
 
     }
@@ -248,6 +250,7 @@ public class Player : MonoBehaviour
     void LateUpdate()
     {
         transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+        _background.transform.rotation = _backgroundRotation;
     }
 
     private void moveToWaypoint()
@@ -512,7 +515,9 @@ public class Player : MonoBehaviour
         this.bpmAcceleration = 0;
         this.velocity = 0;
         this.baseAcceleration = 0;
-        GameObject.FindGameObjectWithTag("FollowCam").GetComponent<CinemachineVirtualCamera>().Follow = null;
+        CinemachineVirtualCamera cm = GameObject.FindGameObjectWithTag("FollowCam").GetComponent<CinemachineVirtualCamera>();
+        cm.Follow = null;
+        cm.LookAt = null;
         this.transform.forward = -transform.forward;
         keepRunning();
         _animator.SetBool("GameOver", true);

@@ -10,7 +10,6 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField]
     private GameObject _scoreTextAnimation;
     public TMP_Text score;
-    public TMP_Text badGuyDistance;
     public TMP_Text bpm;
     public TMP_Text highScore;
     [SerializeField]
@@ -45,23 +44,12 @@ public class PlayerHUD : MonoBehaviour
         _highScore = PlayerPrefs.GetInt("HighScore");
         highScore.text = "Highscore:" + _highScore.ToString();
         initHealthIndicators();
-        // initStance(currentStance);
     }
 
     void Update()
     {
         score.text = "Score: " + ((int)_player.score).ToString();
         bpm.text = "BPM: " + _player.getBPM();
-        if (GameManager.Instance.gameState == GameState.ongoing)
-        {
-            badGuyDistance.text = "Bad guy distance: " + Mathf.Abs(_player.totalDistanceTravelled - _badguy.totalDistanceTravelled);
-
-        }
-        else
-        {
-            badGuyDistance.enabled = false;
-        }
-
         if (_player.score >= _highScore)
         {
             _highScore = (int)_player.score;
@@ -82,15 +70,6 @@ public class PlayerHUD : MonoBehaviour
 
 
     }
-    // private void initStance(GameObject model)
-    // {
-    //     currentStance = Instantiate(model, _stanceContainer.transform.position, Quaternion.identity);
-    //     currentStance.transform.SetParent(_stanceContainer.transform);
-    //     currentStance.transform.localScale = new Vector3(100, 100, 100);
-    //     currentStance.transform.localPosition = Vector3.zero;
-    //     currentStance.transform.Rotate(Vector3.zero);
-    //     this._stanceIndicator = currentStance.GetComponent<StanceIndicator>();
-    // }
     private void initHealthIndicators()
     {
         for (int i = 0; i < _player.currentHealth; i++)
