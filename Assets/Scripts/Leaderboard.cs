@@ -15,13 +15,13 @@ public class Leaderboard
 [Serializable]
 public class LeaderboardScore : IComparable<LeaderboardScore>
 {
-    public LeaderboardScore(int score, string name)
+    public LeaderboardScore(int score, int character)
     {
         this.score = score;
-        this.name = name;
+        this.character = character;
     }
     public int score;
-    public string name;
+    public int character;
     public int CompareTo(LeaderboardScore obj)
     {
         return score.CompareTo(obj.score);

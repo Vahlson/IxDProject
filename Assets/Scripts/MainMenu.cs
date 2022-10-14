@@ -38,19 +38,22 @@ public class MainMenu : MonoBehaviour
         }
         if (arduinoInputController.getKeyDown(3))
         {
+            //right
         }
         if (arduinoInputController.getKeyDown(0))
         {
+            //left
+
         }
-        if (arduinoInputController.getKeyDown(6))
-        {
-        }
-        if (arduinoInputController.getKeyDown(5))
-        {
-        }
-        if (arduinoInputController.getKeyDown(4))
-        {
-        }
+        // if (arduinoInputController.getKeyDown(6))
+        // {
+        // }
+        // if (arduinoInputController.getKeyDown(5))
+        // {
+        // }
+        // if (arduinoInputController.getKeyDown(4))
+        // {
+        // }
         if (Input.GetKeyDown("h") || Input.GetKeyDown("j"))
         {
             steps.Enqueue(Time.realtimeSinceStartup);

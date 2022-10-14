@@ -12,7 +12,7 @@ class GameManager : MonoBehaviour
             return _instance;
         }
     }
-
+    public int selectedCharacter = 0;
     public int latestScore;
     public int latestPlacement { get; private set; }
     private static GameManager _instance;
@@ -73,10 +73,7 @@ class GameManager : MonoBehaviour
         return nSpawnedTiles;
     }
 
-    public void UpdateNewLeaderboardScoreName(string newName)
-    {
-        newLeaderboardScore.name = newName;
-    }
+
     public bool IsNewLeaderboardScore(LeaderboardScore leaderboardScore)
     {
         if (newLeaderboardScore == null)
@@ -85,6 +82,7 @@ class GameManager : MonoBehaviour
         }
         else
         {
+            print("in isnewleaderboardscore");
             return newLeaderboardScore.Equals(leaderboardScore);
         }
     }
@@ -108,11 +106,7 @@ class GameManager : MonoBehaviour
     {
         DataSaver.saveData<Leaderboard>(_leaderboard, "Leaderboard");
     }
-    public void UpdateName(string name)
-    {
-        newLeaderboardScore.name = name;
 
-    }
     public List<LeaderboardScore> getScores()
     {
         return _leaderboard.scores;
@@ -122,7 +116,7 @@ class GameManager : MonoBehaviour
     {
         if (_leaderboard.scores.Count <= 0)
         {
-            newLeaderboardScore = new LeaderboardScore(latestScore, "AAA");
+            newLeaderboardScore = new LeaderboardScore(latestScore, selectedCharacter);
             _leaderboard.scores.Add(newLeaderboardScore);
 
         }
@@ -130,17 +124,15 @@ class GameManager : MonoBehaviour
         {
             foreach (var item in _leaderboard.scores)
             {
-                //print(item.score);
                 if (latestScore >= item.score)
                 {
-                    newLeaderboardScore = new LeaderboardScore(latestScore, "AAA");
+                    newLeaderboardScore = new LeaderboardScore(latestScore, selectedCharacter);
                     _leaderboard.scores.Add(newLeaderboardScore);
                     break;
                 }
             }
             while (_leaderboard.scores.Count > 5)
             {
-                //print("leaderboard size:" + _leaderboard.scores.Count);
                 _leaderboard.scores.Sort();
                 _leaderboard.scores.Reverse();
                 _leaderboard.scores.RemoveAt(_leaderboard.scores.Count - 1);
@@ -148,8 +140,8 @@ class GameManager : MonoBehaviour
         }
         _leaderboard.scores.Sort();
         _leaderboard.scores.Reverse();
-        latestPlacement = _leaderboard.scores.FindIndex((x) => x.Equals(newLeaderboardScore)) + 1;
-        print("index: " + latestPlacement);
+        // latestPlacement = _leaderboard.scores.FindIndex((x) => x.Equals(newLeaderboardScore)) + 1;
+        // print("index: " + latestPlacement);
 
     }
 }

@@ -17,7 +17,7 @@ public class HighscoreScreen : MonoBehaviour
         {
             leaderboard = new Leaderboard();
         }
-        leaderboard.scores.Add(new LeaderboardScore((int)_score, "coolkid"));
+        leaderboard.scores.Add(new LeaderboardScore((int)_score, 1));
         DataSaver.saveData<Leaderboard>(leaderboard, "Leaderboard");
 
 

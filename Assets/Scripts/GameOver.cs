@@ -5,30 +5,45 @@ using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
-    public GameObject[] characters;
-    // Start is called before the first frame update
+    public CharacterSelect characterSelect;
+    public GameObject newHighScoreScreen;
+    public GameObject scoreScreen;
     void Start()
     {
-        for (int i = 0; i < characters.Length; i++)
+
+        GameManager.Instance.CheckForHighScoreUpdates();
+        if (GameManager.Instance.IsNewHighScore())
         {
-            characters[i].SetActive(false);
+            newHighScoreScreen.SetActive(true);
+            scoreScreen.SetActive(false);
         }
-        characters[HoldData.selectedCharacter].SetActive(true);
+        else
+        {
+            newHighScoreScreen.SetActive(false);
+            scoreScreen.SetActive(true);
+        }
+        characterSelect.activateCharacter(GameManager.Instance.selectedCharacter);
+
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void RestartGame()
     {
+        SaveScore();
         SceneManager.LoadScene(1);
     }
 
     public void MainMenu()
     {
+        SaveScore();
         SceneManager.LoadScene(0);
+    }
+
+
+    private void SaveScore()
+    {
+        if (GameManager.Instance.IsNewHighScore())
+        {
+            GameManager.Instance.SaveHighScore();
+
+        }
     }
 }

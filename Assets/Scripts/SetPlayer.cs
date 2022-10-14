@@ -12,7 +12,7 @@ public class SetPlayer : MonoBehaviour
     void Start()
     {
         hideCharactersNotUSed();
-        playerCharacters[HoldData.selectedCharacter].SetActive(true);
+        playerCharacters[GameManager.Instance.selectedCharacter].SetActive(true);
 
 
     }
