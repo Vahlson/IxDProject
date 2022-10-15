@@ -3966,7 +3966,6 @@ MonoBehaviour:
   - {fileID: 4963814754868165353, guid: 5736ffbdef1f6d2439d6690f6516eb16, type: 3}
   _start: {fileID: 4963814754868165353, guid: fd1907385b53e834ca811deab132cd39, type: 3}
   minForwardTilesBeforeTurn: 2
-  badguyGO: {fileID: 0}
 --- !u!4 &843813232
 Transform:
   m_ObjectHideFlags: 0
@@ -9257,6 +9256,10 @@ PrefabInstance:
     - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
       propertyPath: velocity
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: onDamageVelocityMultiplier
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}

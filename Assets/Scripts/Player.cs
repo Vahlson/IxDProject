@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     //Movement speed -------------------------------------
     public float velocity = 20.0f;
-    public float onDamageVelocityMultiplier = 0.5f;
+    public float onDamageVelocityMultiplier = 0.8f;
 
 
     public float baseVelocitIncrease = 0.5f;
