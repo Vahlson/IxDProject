@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
     public PlayerContainer playerContainer;
     private Animator _animator;
     public float velocity = 2.0f;
+    public float onDamageVelocityMultiplier = 0.8f;
+    public float onOnDamageBPMAccelerationMultiplier = 1f;
+    
     public float baseAcceleration = .02f;
     [SerializeField]
     private float bpmFactor = 0.001f;
@@ -69,7 +72,7 @@ public class Player : MonoBehaviour
 
     private Queue<float> steps = new Queue<float>();
     private float bpmAcceleration = 0.0f;
-    
+
     private ArduinoInputController arduinoInputController;
 
     void Awake()
@@ -425,7 +428,8 @@ public class Player : MonoBehaviour
         }
         else
         {
-            velocity *= 0.5f;
+            velocity *= onDamageVelocityMultiplier;
+            bpmAcceleration*= onOnDamageBPMAccelerationMultiplier;
             currentHealth -= 1;
             _audioSource.clip = damageSound;
             _audioSource.Play();
