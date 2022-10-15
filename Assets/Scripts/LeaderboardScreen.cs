@@ -9,10 +9,11 @@ public class LeaderboardScreen : MonoBehaviour
     private GameObject _entries;
     [SerializeField]
     private GameObject _entryPrefab;
-    private List<GameObject> _children = new List<GameObject>();
     private GameObject _newHighScore;
-    public int placement = 0;
-    public event Action<int> OnPlacementFound;
+    public string placement = "";
+    public event Action<string> OnPlacementFound;
+    [SerializeField]
+    private GameObject[] _placements;
 
     void Start()
     {
@@ -39,33 +40,54 @@ public class LeaderboardScreen : MonoBehaviour
     public void CreateLeaderboardEntries()
     {
         List<LeaderboardScore> items = GameManager.Instance.getScores();
-        foreach (var item in _children)
-        {
-            Destroy(item);
-        }
-        _children.Clear();
+        // foreach (var item in _children)
+        // {
+        //     Destroy(item);
+        // }
+        // _children.Clear();
         items.Sort();
         items.Reverse();
         for (int i = 0; i < items.Count; i++)
         {
-            GameObject g = Instantiate(_entryPrefab, Vector3.zero, Quaternion.identity);
+            _placements[i].SetActive(true);
+            // GameObject g = Instantiate(_entryPrefab, Vector3.zero, Quaternion.identity);
             if (GameManager.Instance.IsNewLeaderboardScore(items[i]))
             {
-                _newHighScore = g;
-                placement = i;
-                OnPlacementFound?.Invoke(placement + 1);
+                _newHighScore = _placements[i];
+                placement = getPositionText(i+1);
+                OnPlacementFound?.Invoke(placement);
             }
-            g.transform.SetParent(_entries.transform);
-            g.transform.localScale = Vector3.one;
-            g.transform.localPosition = Vector3.zero;
-            g.transform.localRotation = Quaternion.identity;
-            LeaderboardEntry l = g.GetComponent<LeaderboardEntry>();
+            // g.transform.SetParent(_entries.transform);
+            // g.transform.localScale = Vector3.one;
+            // g.transform.localPosition = Vector3.zero;
+            // g.transform.localRotation = Quaternion.identity;
+            LeaderboardEntry l = _placements[i].GetComponent<LeaderboardEntry>();
             l.leaderboardScore = items[i];
             l.characterSelect.activateCharacter(items[i].character);
             // l.characterSelect.transform.localPosition += new Vector3(0, -25, 0);
-            l.score.text = items[i].score.ToString();
-            l.position.text = (i + 1).ToString();
-            _children.Add(g);
+            l.score.text = items[i].score.ToString() + " pts";
+            l.position.text = getPositionText(i+1);
+            // _children.Add(g);
+        }
+    }
+    string getPositionText(int position)
+    {
+        string pos;
+        switch (position)
+        {
+            case 1:
+                pos = position + "st";
+                return pos;
+            case 2:
+                pos = position + "nd";
+                return pos;
+            case 3:
+                pos = position + "rd";
+                return pos;
+            default:
+                pos = position + "th";
+                return pos;
+
         }
     }
 }
