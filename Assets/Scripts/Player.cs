@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public float velocity = 2.0f;
     public float onDamageVelocityMultiplier = 0.8f;
     public float onOnDamageBPMAccelerationMultiplier = 1f;
-    
+
     public float baseAcceleration = .02f;
     [SerializeField]
     private float bpmFactor = 0.001f;
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
         }
         _audioSource = GetComponent<AudioSource>();
         currentStanceDuration = stanceDuration;
-        _animator = GetComponent<Animator>();
+        _animator = transform.GetChild(0).GetComponent<Animator>();
         arduinoInputController = GetComponent<ArduinoInputController>();
         velocityHash = Animator.StringToHash("Velocity");
         _animationMultiplierHash = Animator.StringToHash("AnimationMultiplier");
@@ -429,7 +429,7 @@ public class Player : MonoBehaviour
         else
         {
             velocity *= onDamageVelocityMultiplier;
-            bpmAcceleration*= onOnDamageBPMAccelerationMultiplier;
+            bpmAcceleration *= onOnDamageBPMAccelerationMultiplier;
             currentHealth -= 1;
             _audioSource.clip = damageSound;
             _audioSource.Play();
