@@ -24,7 +24,6 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         this.arduinoInputController = GetComponent<ArduinoInputController>();
-
     }
 
     // Update is called once per frame

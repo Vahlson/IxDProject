@@ -10,31 +10,19 @@ class NewHighScoreScreen : MonoBehaviour
     {
 
         leaderboardScreen.GetComponent<LeaderboardScreen>().OnPlacementFound += setPositionText;
+
         leaderboardScreen.GetComponent<LeaderboardScreen>().CreateLeaderboardEntries();
     }
 
-    void setPositionText(int position)
+    void setPositionText(string position)
     {
-        string pos;
-        switch (position)
-        {
-            case 1:
-                pos = position + "st";
-                break;
-            case 2:
-                pos = position + "nd";
-                break;
-            case 3:
-                pos = position + "rd";
-                break;
-            default:
-                pos = position + "th";
-                break;
 
-        }
-        scoreText.text = "You placed " + pos + " with " + GameManager.Instance.latestScore + " points!";
+        scoreText.text = "You placed " + position + " with " + GameManager.Instance.latestScore + " points!";
+    }
+    void OnDestroy()
+    {
+        leaderboardScreen.GetComponent<LeaderboardScreen>().OnPlacementFound -= setPositionText;
 
     }
-
 
 }

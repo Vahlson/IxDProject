@@ -74,18 +74,7 @@ class GameManager : MonoBehaviour
             return;
         }
         _leaderboard = DataSaver.loadData<Leaderboard>("Leaderboard") == null ? new Leaderboard() : DataSaver.loadData<Leaderboard>("Leaderboard");
-
-
-
-
-
         DontDestroyOnLoad(this);
-    }
-
-
-    void Start()
-    {
-
     }
 
     public Vector2 getPerlinCenter()
@@ -96,7 +85,6 @@ class GameManager : MonoBehaviour
     public void IncreaseNTilesSpawned()
     {
         nSpawnedTiles++;
-
     }
     public int getNSpawnedTiles()
     {
@@ -112,7 +100,6 @@ class GameManager : MonoBehaviour
         }
         else
         {
-            print("in isnewleaderboardscore");
             return newLeaderboardScore.Equals(leaderboardScore);
         }
     }
@@ -135,6 +122,7 @@ class GameManager : MonoBehaviour
     public void SaveHighScore()
     {
         DataSaver.saveData<Leaderboard>(_leaderboard, "Leaderboard");
+        newLeaderboardScore = null;
     }
 
     public List<LeaderboardScore> getScores()
@@ -161,17 +149,14 @@ class GameManager : MonoBehaviour
                     break;
                 }
             }
+            _leaderboard.scores.Sort();
+            _leaderboard.scores.Reverse();
             while (_leaderboard.scores.Count > 5)
             {
-                _leaderboard.scores.Sort();
-                _leaderboard.scores.Reverse();
                 _leaderboard.scores.RemoveAt(_leaderboard.scores.Count - 1);
             }
         }
-        _leaderboard.scores.Sort();
-        _leaderboard.scores.Reverse();
-        // latestPlacement = _leaderboard.scores.FindIndex((x) => x.Equals(newLeaderboardScore)) + 1;
-        // print("index: " + latestPlacement);
+
 
     }
 
