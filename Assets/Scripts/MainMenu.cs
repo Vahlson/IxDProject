@@ -8,18 +8,7 @@ public class MainMenu : MonoBehaviour
     public string firstLevel;
 
     private ArduinoInputController arduinoInputController;
-    //[SerializeField]
-    //private Image _progressBar;
-    /* [SerializeField]
-    private Image _progressIndicator; */
-    private float _stepSize;
-    public int nSteps = 10;
-    public int nSeconds = 10;
-    private Queue<float> steps = new Queue<float>();
     private int currentSteps = 0;
-    private float _endpos;
-
-
     private float smoothCurrentStep;
     [SerializeField] private float currentStepDecreaseSpeed = 0.1f;
 
@@ -32,8 +21,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         this.arduinoInputController = GetComponent<ArduinoInputController>();
-        //_endpos = _progressBar.rectTransform.rect.width - _progressIndicator.rectTransform.rect.width;
-        _stepSize = _endpos / nSteps;
+
     }
 
     // Update is called once per frame
@@ -44,8 +32,6 @@ public class MainMenu : MonoBehaviour
 
         if (arduinoInputController.getKeyDown(1) || arduinoInputController.getKeyDown(2))
         {
-            steps.Enqueue(Time.realtimeSinceStartup);
-            currentSteps++;
 
             smoothCurrentStep += 0.1f;
         }
@@ -88,8 +74,7 @@ public class MainMenu : MonoBehaviour
 
         if (Input.GetKeyDown("h") || Input.GetKeyDown("j"))
         {
-            steps.Enqueue(Time.realtimeSinceStartup);
-            currentSteps++;
+
 
             smoothCurrentStep += 0.1f;
         }

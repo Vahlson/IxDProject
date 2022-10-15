@@ -10,8 +10,6 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField]
     private GameObject _scoreTextAnimation;
     public TMP_Text score;
-    public TMP_Text bpm;
-    public TMP_Text highScore;
     [SerializeField]
     private GameObject _livesContainer;
     [SerializeField]
@@ -42,21 +40,18 @@ public class PlayerHUD : MonoBehaviour
         _player.OnStanceChanged += OnStanceChanged;
         _player.OnObstacleDodged += OnObstacleDodged;
         _highScore = PlayerPrefs.GetInt("HighScore");
-        highScore.text = "Highscore:" + _highScore.ToString();
         initHealthIndicators();
     }
 
     void Update()
     {
-        score.text = "Score: " + ((int)_player.score).ToString();
-        bpm.text = "BPM: " + _player.getBPM();
+        score.text = "SCORE: " + ((int)_player.score).ToString();
         if (_player.score >= _highScore)
         {
             _highScore = (int)_player.score;
-            highScore.text = "NEW HIGHSCORE: " + _highScore;
             PlayerPrefs.SetInt("HighScore", _highScore);
         }
-        while (_player.currentHealth < currentHealth)
+        while (_health.Count > 0 && _player.currentHealth < currentHealth)
         {
             currentHealth--;
             GameObject g = _health.Pop();
@@ -76,8 +71,8 @@ public class PlayerHUD : MonoBehaviour
         {
             GameObject g = Instantiate(_healthModel, _livesContainer.transform.position, Quaternion.identity);
             g.transform.SetParent(_livesContainer.transform);
-            g.transform.localScale = new Vector3(50, 50, 50);
-            g.transform.localPosition += new Vector3(i * 110, 0, 0);
+            g.transform.localScale = new Vector3(30, 30, 30);
+            g.transform.localPosition += new Vector3(i * 70, 0, 0);
             g.transform.eulerAngles = new Vector3(270, 0, 0);
             _health.Push(g);
         }
