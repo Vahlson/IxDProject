@@ -20,9 +20,8 @@ public class BoardManager : MonoBehaviour
 
     //Creates a baseline number of forward tiles in a row so there are at least a couple before a turn.
     private int nForwardTilesInRow = 0;
-    [SerializeField] public int minForwardTilesBeforeTurn = 2;
-    [SerializeField]
-    GameObject badguyGO;
+    [SerializeField] public int minForwardTilesBeforeTurn = 3;
+
 
     void Awake()
     {

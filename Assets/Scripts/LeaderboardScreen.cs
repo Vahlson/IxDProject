@@ -40,36 +40,28 @@ public class LeaderboardScreen : MonoBehaviour
     public void CreateLeaderboardEntries()
     {
         List<LeaderboardScore> items = GameManager.Instance.getScores();
-        // foreach (var item in _children)
-        // {
-        //     Destroy(item);
-        // }
-        // _children.Clear();
         items.Sort();
         items.Reverse();
         for (int i = 0; i < items.Count; i++)
         {
             _placements[i].SetActive(true);
-            // GameObject g = Instantiate(_entryPrefab, Vector3.zero, Quaternion.identity);
+            LeaderboardEntry l = _placements[i].GetComponent<LeaderboardEntry>();
+            l.leaderboardScore = items[i];
+            print("Character is:" + items[i].character);
+            l.score.text = items[i].score.ToString() + " pts";
+            l.position.text = getPositionText(i + 1);
+
             if (GameManager.Instance.IsNewLeaderboardScore(items[i]))
             {
                 _newHighScore = _placements[i];
-                placement = getPositionText(i+1);
+                placement = getPositionText(i + 1);
                 OnPlacementFound?.Invoke(placement);
             }
-            // g.transform.SetParent(_entries.transform);
-            // g.transform.localScale = Vector3.one;
-            // g.transform.localPosition = Vector3.zero;
-            // g.transform.localRotation = Quaternion.identity;
-            LeaderboardEntry l = _placements[i].GetComponent<LeaderboardEntry>();
-            l.leaderboardScore = items[i];
             l.characterSelect.activateCharacter(items[i].character);
-            // l.characterSelect.transform.localPosition += new Vector3(0, -25, 0);
-            l.score.text = items[i].score.ToString() + " pts";
-            l.position.text = getPositionText(i+1);
-            // _children.Add(g);
+
         }
     }
+
     string getPositionText(int position)
     {
         string pos;

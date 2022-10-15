@@ -9,7 +9,7 @@ class ScoreScreen : MonoBehaviour
     private GameObject _leaderboardScreen;
     void Start()
     {
-        _scoreText.text = "Your score is: " + GameManager.Instance.latestScore;
+        _scoreText.text = "You earned " + GameManager.Instance.latestScore+ " pts!";
     }
 
 }

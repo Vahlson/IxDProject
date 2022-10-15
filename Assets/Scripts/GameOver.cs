@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
+    private ArduinoInputController arduinoInputController;
     public CharacterSelect characterSelect;
     public GameObject newHighScoreScreen;
     public GameObject scoreScreen;
     void Start()
     {
+        this.arduinoInputController = GetComponent<ArduinoInputController>();
 
         GameManager.Instance.CheckForHighScoreUpdates();
         if (GameManager.Instance.IsNewHighScore())
@@ -25,6 +27,33 @@ public class GameOver : MonoBehaviour
         characterSelect.activateCharacter(GameManager.Instance.selectedCharacter);
 
     }
+
+    public void Update()
+    {
+
+        if (arduinoInputController.getKeyDown(3))
+        {
+            //right
+            MainMenu();
+        }
+        if (arduinoInputController.getKeyDown(0))
+        {
+            //left
+            RestartGame();
+        }
+
+        if (Input.GetKeyUp("d"))
+        {
+            MainMenu();
+
+        }
+        if (Input.GetKeyUp("a"))
+        {
+            RestartGame();
+
+        }
+    }
+
     public void RestartGame()
     {
         SaveScore();
@@ -43,7 +72,7 @@ public class GameOver : MonoBehaviour
         if (GameManager.Instance.IsNewHighScore())
         {
             GameManager.Instance.SaveHighScore();
-
+            
         }
     }
 }
