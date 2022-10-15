@@ -19,6 +19,8 @@ public class MainMenu : MonoBehaviour
     private int currentSteps = 0;
     private float _endpos;
 
+    [SerializeField] private CharacterSelecting characterSelecting;
+
     void Start()
     {
         this.arduinoInputController = GetComponent<ArduinoInputController>();
@@ -36,14 +38,19 @@ public class MainMenu : MonoBehaviour
             steps.Enqueue(Time.realtimeSinceStartup);
             currentSteps++;
         }
-        if (arduinoInputController.getKeyDown(3))
-        {
-            //right
-        }
-        if (arduinoInputController.getKeyDown(0))
-        {
-            //left
 
+        if (characterSelecting != null)
+        {
+            if (arduinoInputController.getKeyDown(3))
+            {
+                //right
+                characterSelecting.nextCharacter();
+            }
+            if (arduinoInputController.getKeyDown(0))
+            {
+                //left
+                characterSelecting.prevCharacter();
+            }
         }
         // if (arduinoInputController.getKeyDown(6))
         // {
@@ -54,6 +61,18 @@ public class MainMenu : MonoBehaviour
         // if (arduinoInputController.getKeyDown(4))
         // {
         // }
+        if (characterSelecting != null)
+        {
+            if (Input.GetKeyUp("d"))
+            {
+                characterSelecting.nextCharacter();
+            }
+            if (Input.GetKeyUp("a"))
+            {
+                characterSelecting.prevCharacter();
+            }
+        }
+
         if (Input.GetKeyDown("h") || Input.GetKeyDown("j"))
         {
             steps.Enqueue(Time.realtimeSinceStartup);

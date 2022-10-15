@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
 
     private Queue<float> steps = new Queue<float>();
     private float bpmAcceleration = 0.0f;
-    public bool useArduinoInput = true;
+    
     private ArduinoInputController arduinoInputController;
 
     void Awake()
@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        if (!useArduinoInput)
+        if (!GameManager.Instance.useArduinoInput)
         {
             FindObjectOfType<SerialController>().enabled = false;
         }
@@ -140,7 +140,7 @@ public class Player : MonoBehaviour
             moveToWaypoint();
         }
 
-        if (GameManager.Instance.gameState == GameState.ongoing && useArduinoInput)
+        if (GameManager.Instance.gameState == GameState.ongoing && GameManager.Instance.useArduinoInput)
         {
 
 
@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
             }
 
         }
-        else if (GameManager.Instance.gameState == GameState.ongoing && !useArduinoInput)
+        else if (GameManager.Instance.gameState == GameState.ongoing && !GameManager.Instance.useArduinoInput)
         {
             if (Input.GetKeyUp("j") || Input.GetKeyUp("h"))
             {

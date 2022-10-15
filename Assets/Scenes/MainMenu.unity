@@ -3151,6 +3151,134 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4240161815777350, guid: ffa07e3583b855246941e709137f6eea, type: 3}
   m_PrefabInstance: {fileID: 89913258}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &91015303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 91015305}
+  - component: {fileID: 91015304}
+  m_Layer: 0
+  m_Name: John Bartmann - Back on the Wagon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &91015304
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91015303}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 6921ea0468b3abc489c69204017039a6, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &91015305
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91015303}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &92100019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3448,6 +3576,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4143052088534468, guid: b19f6af1b17b11143a19eaf24698a8b6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95632277690515818, guid: b19f6af1b17b11143a19eaf24698a8b6, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c92483d95cbab604e9655209e96121f6, type: 2}
+    - target: {fileID: 95632277690515818, guid: b19f6af1b17b11143a19eaf24698a8b6, type: 3}
+      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5833,6 +5969,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4520448698905574, guid: 3ba934deea010094180880ae05720f22, type: 3}
   m_PrefabInstance: {fileID: 179083609}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &182574919 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1214723647702548, guid: ec57583fbf793a94d93d970e9d036965, type: 3}
+  m_PrefabInstance: {fileID: 1915116229}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &183030269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6914,6 +7055,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4487920108721494, guid: 39752768db590ee4091a99714606bad3, type: 3}
   m_PrefabInstance: {fileID: 209442199}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &210517704 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1040643676778012, guid: 09965a1afcd990646be69ee0dc8d1b40, type: 3}
+  m_PrefabInstance: {fileID: 2096517515}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &213746875
 PrefabInstance:
@@ -34060,6 +34206,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95217205003396926, guid: bf02a1897ce85e8419f8c8d52e8a8d6e, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c92483d95cbab604e9655209e96121f6, type: 2}
+    - target: {fileID: 95217205003396926, guid: bf02a1897ce85e8419f8c8d52e8a8d6e, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf02a1897ce85e8419f8c8d52e8a8d6e, type: 3}
 --- !u!4 &1007824582 stripped
@@ -35862,6 +36016,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4240161815777350, guid: ffa07e3583b855246941e709137f6eea, type: 3}
   m_PrefabInstance: {fileID: 1055865170}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1057399236 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1800371080893130, guid: bf02a1897ce85e8419f8c8d52e8a8d6e, type: 3}
+  m_PrefabInstance: {fileID: 1007824581}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1057399238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057399236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1181d4827922ec346bf3558be79bdc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendMaxValue: 10
+  largestSmallActionValue: 0
+  minTimeBetweenSmallActions: 4
+  maxTimeBetweenSmallActions: 15
+  blendSpeed: 0.5
+  changeAnimationChance: 0.5
 --- !u!1001 &1058345500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44652,6 +44829,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4344472637887006, guid: 14c7e6be46ece4f45b8e7eb21032c206, type: 3}
   m_PrefabInstance: {fileID: 1325174233}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1325777953 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1876497922086962, guid: b19f6af1b17b11143a19eaf24698a8b6, type: 3}
+  m_PrefabInstance: {fileID: 92100019}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1325777955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325777953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1181d4827922ec346bf3558be79bdc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendMaxValue: 10
+  largestSmallActionValue: 0
+  minTimeBetweenSmallActions: 4
+  maxTimeBetweenSmallActions: 15
+  blendSpeed: 0.5
+  changeAnimationChance: 0.5
 --- !u!1001 &1326559929
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47381,6 +47581,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4535344246604004, guid: 6492c9c06de0b524d8010d3f0adb766a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95511887735396104, guid: 6492c9c06de0b524d8010d3f0adb766a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c92483d95cbab604e9655209e96121f6, type: 2}
+    - target: {fileID: 95511887735396104, guid: 6492c9c06de0b524d8010d3f0adb766a, type: 3}
+      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -53110,6 +53318,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95082879787689830, guid: 91ed680b78ec26c4596b242a724c624a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c92483d95cbab604e9655209e96121f6, type: 2}
+    - target: {fileID: 95082879787689830, guid: 91ed680b78ec26c4596b242a724c624a, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91ed680b78ec26c4596b242a724c624a, type: 3}
 --- !u!4 &1557139349 stripped
@@ -55703,6 +55919,7 @@ MonoBehaviour:
   _progressIndicator: {fileID: 1287699957}
   nSteps: 10
   nSeconds: 10
+  characterSelecting: {fileID: 918117691}
 --- !u!114 &1612707082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65252,6 +65469,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4099166277382448, guid: 1c8c6bed3438b9141b6c6e2eb548b815, type: 3}
   m_PrefabInstance: {fileID: 1835610211}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1837633280 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1964704263138806, guid: 91ed680b78ec26c4596b242a724c624a, type: 3}
+  m_PrefabInstance: {fileID: 1557139348}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1837633282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837633280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1181d4827922ec346bf3558be79bdc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendMaxValue: 10
+  largestSmallActionValue: 0
+  minTimeBetweenSmallActions: 4
+  maxTimeBetweenSmallActions: 15
+  blendSpeed: 0.5
+  changeAnimationChance: 0.5
 --- !u!1001 &1838339877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68551,6 +68791,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95060489484656484, guid: ec57583fbf793a94d93d970e9d036965, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c92483d95cbab604e9655209e96121f6, type: 2}
+    - target: {fileID: 95060489484656484, guid: ec57583fbf793a94d93d970e9d036965, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec57583fbf793a94d93d970e9d036965, type: 3}
 --- !u!4 &1915116230 stripped
@@ -68558,6 +68806,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4301369446033440, guid: ec57583fbf793a94d93d970e9d036965, type: 3}
   m_PrefabInstance: {fileID: 1915116229}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1915116232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182574919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1181d4827922ec346bf3558be79bdc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendMaxValue: 10
+  largestSmallActionValue: 0
+  minTimeBetweenSmallActions: 4
+  maxTimeBetweenSmallActions: 15
+  blendSpeed: 0.5
+  changeAnimationChance: 0.5
 --- !u!1001 &1915509121
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74184,6 +74450,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95474626191974340, guid: 09965a1afcd990646be69ee0dc8d1b40, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c92483d95cbab604e9655209e96121f6, type: 2}
+    - target: {fileID: 95474626191974340, guid: 09965a1afcd990646be69ee0dc8d1b40, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09965a1afcd990646be69ee0dc8d1b40, type: 3}
 --- !u!4 &2096517516 stripped
@@ -74191,6 +74465,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4457282994381246, guid: 09965a1afcd990646be69ee0dc8d1b40, type: 3}
   m_PrefabInstance: {fileID: 2096517515}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2096517518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210517704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1181d4827922ec346bf3558be79bdc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendMaxValue: 10
+  largestSmallActionValue: 0
+  minTimeBetweenSmallActions: 4
+  maxTimeBetweenSmallActions: 15
+  blendSpeed: 0.5
+  changeAnimationChance: 0.5
 --- !u!1001 &2098308909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74613,6 +74905,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4865822820858604, guid: bf59775796a7bc841bd1f268ef13c565, type: 3}
   m_PrefabInstance: {fileID: 2102934817}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2105199153 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1506550050545096, guid: 6492c9c06de0b524d8010d3f0adb766a, type: 3}
+  m_PrefabInstance: {fileID: 1395468766}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2105199155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105199153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1181d4827922ec346bf3558be79bdc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendMaxValue: 10
+  largestSmallActionValue: 0
+  minTimeBetweenSmallActions: 4
+  maxTimeBetweenSmallActions: 15
+  blendSpeed: 0.5
+  changeAnimationChance: 0.5
 --- !u!1001 &2108646359
 PrefabInstance:
   m_ObjectHideFlags: 0

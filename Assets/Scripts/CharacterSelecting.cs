@@ -11,14 +11,14 @@ public class CharacterSelecting : MonoBehaviour
     void Start()
     {
         hideAllPlayers();
-        GameManager.Instance.selectedCharacter= 0;
+        GameManager.Instance.selectedCharacter = 0;
         characters[GameManager.Instance.selectedCharacter].SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     private void hideAllPlayers()

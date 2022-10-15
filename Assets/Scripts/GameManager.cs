@@ -19,6 +19,8 @@ class GameManager : MonoBehaviour
     private Leaderboard _leaderboard;
     private LeaderboardScore newLeaderboardScore;
 
+    public bool useArduinoInput = false;
+
     private int nSpawnedTiles = 0;
 
     //origin point For generating perlin noise.
