@@ -9,14 +9,17 @@ public class MainMenu : MonoBehaviour
 
     private ArduinoInputController arduinoInputController;
     private int currentSteps = 0;
-    private float smoothCurrentStep;
-    [SerializeField] private float currentStepDecreaseSpeed = 0.1f;
+
+
 
     [SerializeField] Transform progressBar;
     [SerializeField] RectTransform progressBarImage;
     [SerializeField] Transform runningIcon;
 
     [SerializeField] private CharacterSelecting characterSelecting;
+
+    /* 
+        [SerializeField] private float targetBPM = 100f; */
 
     void Start()
     {
@@ -27,13 +30,14 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        smoothCurrentStep -= Time.deltaTime * currentStepDecreaseSpeed;
-        smoothCurrentStep = Mathf.Clamp(smoothCurrentStep, 0f, 1f);
+
+
+
 
         if (arduinoInputController.getKeyDown(1) || arduinoInputController.getKeyDown(2))
         {
+            step();
 
-            smoothCurrentStep += 0.1f;
         }
 
         if (characterSelecting != null)
@@ -75,16 +79,23 @@ public class MainMenu : MonoBehaviour
         if (Input.GetKeyDown("h") || Input.GetKeyDown("j"))
         {
 
-
-            smoothCurrentStep += 0.1f;
+            step();
+            //tramplingSpeed += GameManager.Instance.stepSpeedIncrease;
         }
 
-        progressBar.localScale = new Vector3(smoothCurrentStep, progressBar.localScale.y, progressBar.localScale.z);
+        /* float bpmOfTarget = getBPM() / targetBPM;
+        print(bpmOfTarget); */
+        float tramplingFactor = GameManager.Instance.tramplingSpeed / GameManager.Instance.maxTramplingSpeed;
+
+        progressBar.localScale = new Vector3(tramplingFactor, progressBar.localScale.y, progressBar.localScale.z);
         runningIcon.localPosition = new Vector3(progressBar.localScale.x * progressBarImage.rect.width + 100, runningIcon.localPosition.y, runningIcon.localPosition.z);
-        if (smoothCurrentStep >= 1)
+
+        if (tramplingFactor >= 1)
         {
             startGame();
         }
+
+        //smoothCurrentStep = Mathf.Clamp(smoothCurrentStep,0,GameManager.Instance.maxTramplingSpeed);
 
         /* while (steps.Count > 0 && Time.realtimeSinceStartup - steps.Peek() >= nSeconds)
         {
@@ -97,10 +108,17 @@ public class MainMenu : MonoBehaviour
         {
             startGame();
         } */
+
+        //recountBPM();
     }
+
+
 
     public void startGame()
     {
+        //GameManager.Instance.mainMenuAchievedSteps = GameManager.Instance.steps;
+        /* GameManager.Instance.timeBeforeSceneSwitch = Time.realtimeSinceStartup;
+        GameManager.Instance.shouldDequeSteps = Time.realtimeSinceStartup; */
         SceneManager.LoadScene(firstLevel);
     }
 
@@ -109,4 +127,20 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
         Debug.Log("Quitting");
     }
+
+
+    void step()
+    {
+        GameManager.Instance.step();
+    }
+    /* void recountBPM()
+    {
+        //print(steps.Count);
+        GameManager.Instance.recountBPM();
+
+    }
+    public int getBPM()
+    {
+        return GameManager.Instance.getBPM();
+    } */
 }

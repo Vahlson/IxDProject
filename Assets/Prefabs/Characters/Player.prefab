@@ -604,10 +604,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerContainer: {fileID: 0}
   velocity: 3
-  onDamageVelocityMultiplier: 0.8
-  onOnDamageBPMAccelerationMultiplier: 1
-  baseAcceleration: 0.005
-  bpmFactor: 0.0005
+  onDamageVelocityMultiplier: 0.5
+  baseVelocitIncrease: 0.5
+  bpmFactor: 0.01
   _background: {fileID: 3172620930691633816}
   targetWayPoint: {fileID: 0}
   maxHealth: 3

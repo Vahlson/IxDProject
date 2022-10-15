@@ -19,6 +19,25 @@ class GameManager : MonoBehaviour
     private Leaderboard _leaderboard;
     private LeaderboardScore newLeaderboardScore;
 
+
+    //public float mainMenuSteps = 0f;
+    //public Queue<float> steps = new Queue<float>();
+    //[SerializeField] private float keepBpmTime = 1f;
+
+    [HideInInspector] public Queue<float> mainMenuAchievedSteps;
+
+    [HideInInspector] public float timeBeforeSceneSwitch;
+    [HideInInspector] public bool shouldDequeSteps = true;
+
+    [SerializeField] private float currentStepDecreaseSpeed = 20f;
+    public float maxTramplingSpeed = 125f;
+    public float stepSpeedIncrease = 10f;
+    public float mainMenuTramplingSpeed;
+    public float tramplingSpeed = 0f;
+    public float onOnDamageBPMAccelerationMultiplier = 0.5f;
+    [Range(0f, 1f)] public float increaseSpeedFromTramplingThreshold = 0.8f;
+
+
     public bool useArduinoInput = false;
 
     private int nSpawnedTiles = 0;
@@ -27,6 +46,14 @@ class GameManager : MonoBehaviour
     private float perlinXOrg;
     private float perlinYOrg;
     public GameState gameState = GameState.menu;
+
+
+    void Update()
+    {
+        print(tramplingSpeed);
+        tramplingSpeed -= Time.deltaTime * currentStepDecreaseSpeed;
+        tramplingSpeed = Mathf.Clamp(tramplingSpeed, 0f, maxTramplingSpeed);
+    }
 
     void Awake()
     {
@@ -54,6 +81,7 @@ class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
     }
+
 
     void Start()
     {
@@ -146,6 +174,33 @@ class GameManager : MonoBehaviour
         // print("index: " + latestPlacement);
 
     }
+
+    public void slowDownTrampling()
+    {
+        tramplingSpeed *= onOnDamageBPMAccelerationMultiplier;
+    }
+
+
+    public void step()
+    {
+        tramplingSpeed += stepSpeedIncrease;
+        print(tramplingSpeed);
+        //steps.Enqueue(Time.realtimeSinceStartup);
+    }/* 
+    public void recountBPM()
+    {
+        print(getBPM());
+
+        while (steps.Count > 0 && shouldDequeSteps && Time.realtimeSinceStartup - steps.Peek() >= keepBpmTime)
+        {
+            steps.Dequeue();
+        }
+        //bpmAcceleration = getBPM() * bpmFactor;
+    } */
+    /* public int getBPM()
+    {
+        return steps.Count * (int)(60 / keepBpmTime);
+    } */
 }
 enum GameState
 {

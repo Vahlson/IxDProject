@@ -44,3 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4499029e7dd8eeb45bdd67f38670aaa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedCharacter: 0
+  latestScore: 0
+  timeBeforeSceneSwitch: 0
+  shouldDequeSteps: 1
+  currentStepDecreaseSpeed: 40
+  maxTramplingSpeed: 125
+  stepSpeedIncrease: 10
+  mainMenuTramplingSpeed: 0
+  tramplingSpeed: 0
+  onOnDamageBPMAccelerationMultiplier: 0.5
+  increaseSpeedFromTramplingThreshold: 0.7
+  useArduinoInput: 0
+  gameState: 2

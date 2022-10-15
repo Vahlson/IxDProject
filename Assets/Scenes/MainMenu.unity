@@ -55965,9 +55965,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstLevel: RunningScene
-  nSteps: 10
-  nSeconds: 10
-  currentStepDecreaseSpeed: 0.1
   progressBar: {fileID: 1672175073}
   progressBarImage: {fileID: 1329321796}
   runningIcon: {fileID: 375869581}

@@ -7,14 +7,25 @@ using Cinemachine;
 public class Player : MonoBehaviour
 {
     public PlayerContainer playerContainer;
+    private ArduinoInputController arduinoInputController;
     private Animator _animator;
-    public float velocity = 2.0f;
-    public float onDamageVelocityMultiplier = 0.8f;
-    public float onOnDamageBPMAccelerationMultiplier = 1f;
 
-    public float baseAcceleration = .02f;
+    //Movement speed -------------------------------------
+    public float velocity = 20.0f;
+    public float onDamageVelocityMultiplier = 0.5f;
+
+
+    public float baseVelocitIncrease = 0.5f;
+
     [SerializeField]
-    private float bpmFactor = 0.001f;
+    private float bpmFactor = 0.01f;
+
+    //private Queue<float> steps = new Queue<float>();
+    //private float bpmAcceleration = 0.0f;
+
+    //[SerializeField] private float keepBpmTime = 5f;
+
+    //Game Data ----------------------------------------------------
     [SerializeField]
     private GameObject _background;
     private Quaternion _backgroundRotation;
@@ -25,12 +36,16 @@ public class Player : MonoBehaviour
     [HideInInspector] public float score;
     [SerializeField] private int pointsForObstacle = 50;
 
-    //Lane Switching
+    private Vector3 previousLocation;
+
+    //Lane Switching -----------------------------------------------------------------------
     private float targetLaneTargetOffset = 0;
     private float targetLaneOffset = 0;
     [SerializeField] private float laneSwitchTime = 1f;
     private float laneSwitchTimeElapse;
     private Vector3 moveToPosition;
+
+    //Camera follow -------------------------------------------------------------
     public Transform cameraFollowTransform;
     [Range(0f, 5f)] public float cameraMoveWithLaneSwitch = 2f;
     private float cameraFollowTargetOffset = 0f;
@@ -40,11 +55,10 @@ public class Player : MonoBehaviour
     private float cameraFollowOffset = 0f;
     private float cameraLerpTime = 0f;
     public float cameraLerpSpeed = 0.5f;
-
     private float cameraFollowLerpStart = 0f;
     //public float cameraTargetOffset = 1f;
 
-
+    //Obstacles and dodging --------------------------------------------------------------------------
     Obstacles lastObstacle = null;
 
     bool jump;
@@ -55,6 +69,7 @@ public class Player : MonoBehaviour
     public event Action<String> OnLaneSwitched;
     public event Action<float> OnObstacleDodged;
 
+    //Animation and sound ------------------------------------------------------------------------
     private string jumpAnimation;
     private PlayerStance _playerStance = PlayerStance.idle;
     private int _animationMultiplierHash;
@@ -70,10 +85,7 @@ public class Player : MonoBehaviour
 
     private AudioSource _audioSource;
 
-    private Queue<float> steps = new Queue<float>();
-    private float bpmAcceleration = 0.0f;
 
-    private ArduinoInputController arduinoInputController;
 
     void Awake()
     {
@@ -98,28 +110,26 @@ public class Player : MonoBehaviour
 
         startCameraLerpBetweenLanes(0);
         damage = true;
-        // initSteps();
+
+        //initSteps();
     }
-    void initSteps()
-    {
-        for (int i = 0; i < 60; i++)
-        {
-            steps.Enqueue(Time.realtimeSinceStartup);
-        }
-    }
+
+
+
     void step()
     {
-        steps.Enqueue(Time.realtimeSinceStartup);
+        GameManager.Instance.step();
     }
-    void recountBPM()
+    /* void recountBPM()
     {
-
-        while (steps.Count > 0 && Time.realtimeSinceStartup - steps.Peek() >= 60)
-        {
-            steps.Dequeue();
-        }
-        bpmAcceleration = steps.Count * bpmFactor;
+        //print(steps.Count);
+        GameManager.Instance.recountBPM();
+        bpmAcceleration = getBPM() * bpmFactor;
     }
+    public int getBPM()
+    {
+        return GameManager.Instance.getBPM();
+    } */
     void Update()
     {
         if (_playerStance != PlayerStance.idle)
@@ -132,7 +142,7 @@ public class Player : MonoBehaviour
         }
         _animator.SetFloat(velocityHash, velocity);
         _animator.SetFloat(_animationMultiplierHash, velocity / 6);
-        recountBPM();
+        //recountBPM();
 
 
 
@@ -205,15 +215,19 @@ public class Player : MonoBehaviour
         if (GameManager.Instance.gameState == GameState.ongoing)
         {
             totalDistanceTravelled += Time.deltaTime * velocity;
-            score += Time.deltaTime;
-            velocity += Time.deltaTime * baseAcceleration + Time.deltaTime * bpmAcceleration;
+            //Score is based on distance, so higher speeds is rewarded.
+            score += Vector3.Distance(transform.position, previousLocation);
+            previousLocation = transform.position;
+
+            velocity += Time.deltaTime * (baseVelocitIncrease * (GameManager.Instance.tramplingSpeed / GameManager.Instance.maxTramplingSpeed - GameManager.Instance.increaseSpeedFromTramplingThreshold));
+            //velocity *= ;
         }
 
         if (cameraLerpTime < (1 - 0.01f))
         {
             cameraLerpTime += Time.deltaTime * cameraLerpSpeed;
             cameraFollowOffset = Mathf.Lerp(cameraFollowLerpStart, cameraFollowTargetOffset, cameraLerpTime);
-            print("Camera Offset" + cameraFollowOffset);
+            //print("Camera Offset" + cameraFollowOffset);
 
             cameraFollowTransform.localPosition = new Vector3(cameraFollowOffset, cameraFollowTransform.localPosition.y, cameraFollowTransform.localPosition.z);
         }
@@ -221,19 +235,8 @@ public class Player : MonoBehaviour
         {
             oldCameraFollowTargetOffset = cameraFollowTargetOffset;
         }
-    }
-    void setStance(PlayerStance playerStance)
-    {
-        keepRunning();
-        this._playerStance = playerStance;
-        OnStanceChanged?.Invoke(_playerStance);
-        currentStanceDuration = stanceDuration;
 
 
-    }
-
-    void FixedUpdate()
-    {
         if (jump)
         {
             jump = false;
@@ -248,6 +251,20 @@ public class Player : MonoBehaviour
         {
             kick = false;
         }
+    }
+    void setStance(PlayerStance playerStance)
+    {
+        keepRunning();
+        this._playerStance = playerStance;
+        OnStanceChanged?.Invoke(_playerStance);
+        currentStanceDuration = stanceDuration;
+
+
+    }
+
+    void FixedUpdate()
+    {
+
     }
 
     void LateUpdate()
@@ -429,7 +446,7 @@ public class Player : MonoBehaviour
         else
         {
             velocity *= onDamageVelocityMultiplier;
-            bpmAcceleration *= onOnDamageBPMAccelerationMultiplier;
+            GameManager.Instance.slowDownTrampling();
             currentHealth -= 1;
             _audioSource.clip = damageSound;
             _audioSource.Play();
@@ -514,11 +531,12 @@ public class Player : MonoBehaviour
     public void gotCaught()
     {
         keepRunning();
-        steps.Clear();
+        //GameManager.Instance.steps.Clear();
         currentHealth = 0;
-        this.bpmAcceleration = 0;
+        GameManager.Instance.tramplingSpeed = 0;
+        //this.bpmAcceleration = 0;
         this.velocity = 0;
-        this.baseAcceleration = 0;
+        this.baseVelocitIncrease = 0;
         CinemachineVirtualCamera cm = GameObject.FindGameObjectWithTag("FollowCam").GetComponent<CinemachineVirtualCamera>();
         cm.Follow = null;
         cm.LookAt = null;
@@ -530,10 +548,7 @@ public class Player : MonoBehaviour
 
 
     }
-    public int getBPM()
-    {
-        return steps.Count;
-    }
+
 }
 public enum PlayerStance
 {

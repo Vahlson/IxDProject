@@ -20,7 +20,7 @@ class Badguy : MonoBehaviour
     void Start()
     {
         mesh.enabled = false;
-        acceleration = _target.baseAcceleration * badGuyAccelerationFactor;
+        acceleration = _target.baseVelocitIncrease * badGuyAccelerationFactor;
         totalDistanceTravelled = -Vector3.Distance(transform.position, _target.transform.position);
         velocity = _target.velocity;
         _animator = GetComponent<Animator>();
