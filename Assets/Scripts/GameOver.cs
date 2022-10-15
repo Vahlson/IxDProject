@@ -44,12 +44,13 @@ public class GameOver : MonoBehaviour
 
         if (Input.GetKeyUp("d"))
         {
-            RestartGame();
-            print("HEJ");
+
+            MainMenu();
         }
         if (Input.GetKeyUp("a"))
         {
-            MainMenu();
+            RestartGame();
+
         }
     }
 
