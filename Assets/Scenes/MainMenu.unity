@@ -35960,6 +35960,10 @@ MonoBehaviour:
   maxTimeBetweenSmallActions: 15
   blendSpeed: 0.5
   changeAnimationChance: 0.5
+  gotKickedSound: {fileID: 0}
+  gotHurtSound: {fileID: 0}
+  gotHurtSound2: {fileID: 0}
+  saySomethingProbability: 0.5
 --- !u!1001 &1058345500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44897,6 +44901,10 @@ MonoBehaviour:
   maxTimeBetweenSmallActions: 15
   blendSpeed: 0.5
   changeAnimationChance: 0.5
+  gotKickedSound: {fileID: 0}
+  gotHurtSound: {fileID: 0}
+  gotHurtSound2: {fileID: 0}
+  saySomethingProbability: 0.5
 --- !u!1001 &1326559929
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65547,6 +65555,10 @@ MonoBehaviour:
   maxTimeBetweenSmallActions: 15
   blendSpeed: 0.5
   changeAnimationChance: 0.5
+  gotKickedSound: {fileID: 0}
+  gotHurtSound: {fileID: 0}
+  gotHurtSound2: {fileID: 0}
+  saySomethingProbability: 0.5
 --- !u!1001 &1838339877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68879,6 +68891,10 @@ MonoBehaviour:
   maxTimeBetweenSmallActions: 15
   blendSpeed: 0.5
   changeAnimationChance: 0.5
+  gotKickedSound: {fileID: 0}
+  gotHurtSound: {fileID: 0}
+  gotHurtSound2: {fileID: 0}
+  saySomethingProbability: 0.5
 --- !u!1001 &1915509121
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74538,6 +74554,10 @@ MonoBehaviour:
   maxTimeBetweenSmallActions: 15
   blendSpeed: 0.5
   changeAnimationChance: 0.5
+  gotKickedSound: {fileID: 0}
+  gotHurtSound: {fileID: 0}
+  gotHurtSound2: {fileID: 0}
+  saySomethingProbability: 0.5
 --- !u!1001 &2098308909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74983,6 +75003,10 @@ MonoBehaviour:
   maxTimeBetweenSmallActions: 15
   blendSpeed: 0.5
   changeAnimationChance: 0.5
+  gotKickedSound: {fileID: 0}
+  gotHurtSound: {fileID: 0}
+  gotHurtSound2: {fileID: 0}
+  saySomethingProbability: 0.5
 --- !u!1001 &2108646359
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16,9 +16,13 @@ class Badguy : MonoBehaviour
     [SerializeField]
     private SkinnedMeshRenderer mesh;
 
+    [SerializeField] private AudioClip kickSound;
+    private AudioSource audioSource;
+
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         mesh.enabled = false;
         acceleration = _target.baseVelocitIncrease * badGuyAccelerationFactor;
         totalDistanceTravelled = -Vector3.Distance(transform.position, _target.transform.position);
@@ -36,6 +40,9 @@ class Badguy : MonoBehaviour
         {
             if (!targetCaught)
             {
+                audioSource.clip = kickSound;
+                audioSource.Play();
+
                 mesh.enabled = true;
                 transform.position = _target.transform.position - _target.transform.forward * 5;
                 _target.gotCaught();

@@ -21,9 +21,21 @@ public class ObstacleAnimationBlender : MonoBehaviour
     private float t = 0.0f;
     [SerializeField] private float blendSpeed = 0.5f;
     [SerializeField] private float changeAnimationChance = 0.5f;
+
+    //Sound Effects
+    [SerializeField] private AudioClip gotKickedSound;
+    [SerializeField] private AudioClip gotHurtSound;
+    [SerializeField] private AudioClip gotHurtSound2;
+    private AudioSource audioSource;
+
+    [SerializeField] private float saySomethingProbability = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
+        if (TryGetComponent(out AudioSource aSource))
+        {
+            audioSource = aSource;
+        }
         animator = GetComponent<Animator>();
         targetTimeUntilAction = Random.Range(minTimeBetweenSmallActions, maxTimeBetweenSmallActions);
     }
@@ -78,6 +90,37 @@ public class ObstacleAnimationBlender : MonoBehaviour
 
     public void playDeathAnimation()
     {
+        if (audioSource != null)
+        {
+            List<AudioClip> clipsToPlay = new List<AudioClip>();
+
+            clipsToPlay.Add(gotKickedSound);
+            //audioSource.clip = gotKickedSound;
+            //audioSource.Play();
+
+
+            float shouldSaySomething = Random.Range(0f, 1f);
+
+            print("say prob: " + shouldSaySomething);
+            if (shouldSaySomething < saySomethingProbability)
+            {
+                float whatToSay = Random.Range(0f, 1f);
+                if (whatToSay < 0.1f)
+                {
+                    clipsToPlay.Add(gotHurtSound);
+                }
+                else
+                {
+                    clipsToPlay.Add(gotHurtSound2);
+                }
+
+
+            }
+            StartCoroutine(GameManager.Instance.playAudioSequentially(audioSource, clipsToPlay));
+
+        }
         animator.SetBool("IsDead", true);
     }
+
+
 }

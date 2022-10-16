@@ -82,8 +82,14 @@ public class Player : MonoBehaviour
     // public AudioClip slideSound;
     public AudioClip scoreSound;
     public AudioClip damageSound;
+    public AudioClip kickSound;
+
+    [SerializeField] private AudioClip gotKickedSound;
+    [SerializeField] private AudioClip painSound;
 
     private AudioSource _audioSource;
+
+    [SerializeField] ParticleSystem dustTrail;
 
 
 
@@ -479,6 +485,10 @@ public class Player : MonoBehaviour
             _animator.SetBool("Slide", true);
             DodgedObstacle();
 
+            //Play sound effect
+            /* _audioSource.clip = kickSound;
+            _audioSource.Play(); */
+
         }
 
         else if (obstacle.blockadeType == Obstacles.BlockadeType.Low && _playerStance == PlayerStance.low)
@@ -487,6 +497,10 @@ public class Player : MonoBehaviour
             jump = true;
             _animator.SetBool("Jump", true);
             DodgedObstacle();
+
+            //Play sound effect
+            /* _audioSource.clip = kickSound;
+            _audioSource.Play(); */
 
 
         }
@@ -497,6 +511,11 @@ public class Player : MonoBehaviour
             _animator.SetBool("Kick", true);
             DodgedObstacle();
             ObstacleAnimationBlender ob = obstacle.gameObject.GetComponentInChildren<ObstacleAnimationBlender>();
+
+            //Play sound effect
+            _audioSource.clip = kickSound;
+            _audioSource.Play();
+
             //try to play the death animation if existing
             if (ob != null)
             {
@@ -511,9 +530,10 @@ public class Player : MonoBehaviour
     }
     private void DodgedObstacle()
     {
-        _audioSource.clip = scoreSound;
-        print("playing scoresound");
-        _audioSource.Play();
+        //_audioSource.clip = scoreSound;
+        //print("playing scoresound");
+        StartCoroutine(GameManager.Instance.playAudioOnGameManager(scoreSound));
+        //_audioSource.Play();
         score += pointsForObstacle;
         OnObstacleDodged?.Invoke(pointsForObstacle);
     }
@@ -546,6 +566,11 @@ public class Player : MonoBehaviour
         _animator.SetBool("Death", true);
         Invoke("GameOver", 3.0f);
 
+        List<AudioClip> defeatSounds = new List<AudioClip>();
+        defeatSounds.Add(gotKickedSound);
+        defeatSounds.Add(painSound);
+
+        StartCoroutine(GameManager.Instance.playAudioSequentially(_audioSource, defeatSounds, delayBefore: 1.2f));
 
     }
 

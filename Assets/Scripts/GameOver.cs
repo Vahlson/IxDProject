@@ -9,6 +9,10 @@ public class GameOver : MonoBehaviour
     public CharacterSelect characterSelect;
     public GameObject newHighScoreScreen;
     public GameObject scoreScreen;
+
+    [SerializeField] private AudioClip regularMusic;
+    [SerializeField] private AudioClip victoryMusic;
+
     void Start()
     {
         this.arduinoInputController = GetComponent<ArduinoInputController>();
@@ -18,11 +22,30 @@ public class GameOver : MonoBehaviour
         {
             newHighScoreScreen.SetActive(true);
             scoreScreen.SetActive(false);
+
+
+            if (TryGetComponent(out AudioSource audioSource))
+            {
+
+                audioSource.clip = victoryMusic;
+                audioSource.Play();
+
+            }
+
         }
         else
         {
             newHighScoreScreen.SetActive(false);
             scoreScreen.SetActive(true);
+
+
+            if (TryGetComponent(out AudioSource audioSource))
+            {
+
+                audioSource.clip = regularMusic;
+                audioSource.Play();
+
+            }
         }
         characterSelect.activateCharacter(GameManager.Instance.selectedCharacter);
 

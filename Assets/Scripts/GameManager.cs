@@ -47,16 +47,22 @@ class GameManager : MonoBehaviour
     private float perlinYOrg;
     public GameState gameState = GameState.menu;
 
+    private AudioSource audioSource;
+
 
     void Update()
     {
-        print(tramplingSpeed);
+        //print(tramplingSpeed);
         tramplingSpeed -= Time.deltaTime * currentStepDecreaseSpeed;
         tramplingSpeed = Mathf.Clamp(tramplingSpeed, 0f, maxTramplingSpeed);
     }
 
     void Awake()
     {
+        if (TryGetComponent(out AudioSource aSource))
+        {
+            audioSource = aSource;
+        }
         //We need to generate new center for perlin noise between each game.
 
         perlinXOrg = Random.Range(float.MinValue, float.MaxValue);
@@ -169,7 +175,7 @@ class GameManager : MonoBehaviour
     public void step()
     {
         tramplingSpeed += stepSpeedIncrease;
-        print(tramplingSpeed);
+        //print(tramplingSpeed);
         //steps.Enqueue(Time.realtimeSinceStartup);
     }/* 
     public void recountBPM()
@@ -186,6 +192,59 @@ class GameManager : MonoBehaviour
     {
         return steps.Count * (int)(60 / keepBpmTime);
     } */
+
+
+    //Just a helper function for playing sounds sequentially. https://stackoverflow.com/questions/43715482/play-several-audio-clips-sequentially 
+    public IEnumerator playAudioSequentially(AudioSource adSource, List<AudioClip> adClips, float delayAfter = 0f, float delayBefore = 0f)
+    {
+
+        //yield return null;
+
+        yield return new WaitForSeconds(delayBefore);
+        //1.Loop through each AudioClip
+        for (int i = 0; i < adClips.Count; i++)
+        {
+
+
+            //2.Assign current AudioClip to audiosource
+            adSource.clip = adClips[i];
+
+
+            //3.Play Audio
+            adSource.Play();
+
+            //4.Wait for it to finish playing
+            while (adSource.isPlaying)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(delayAfter);
+
+            //5. Go back to #2 and play the next audio in the adClips array
+        }
+    }
+
+    public IEnumerator playAudioOnGameManager(AudioClip adClip)
+    {
+        yield return null;
+
+        if (audioSource != null)
+        {
+            audioSource.clip = adClip;
+            audioSource.Play();
+        }
+
+    }
+
+    public IEnumerator playAudioWithDelay(AudioSource adSource, AudioClip adClip, float waitTimeSeconds)
+    {
+        print("YOOOOOOOOO");
+        yield return new WaitForSeconds(waitTimeSeconds);
+        adSource.clip = adClip;
+        adSource.Play();
+
+    }
 }
 enum GameState
 {
