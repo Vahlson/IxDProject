@@ -56,7 +56,8 @@ public class npcWatcherScript : MonoBehaviour
         animator = GetComponent<Animator>();
         objTarget = GameObject.FindWithTag("Player").transform;
 
-        if(isWoman){
+        if (isWoman)
+        {
 
         }
     }
@@ -80,7 +81,7 @@ public class npcWatcherScript : MonoBehaviour
             //print("Angle: " + Vector3.Angle(transform.forward, objTarget.position - transform.position));
             float angleBetween = Vector3.Angle(transform.forward, objTarget.position - transform.position);
             float distBetween = Vector3.Distance(transform.forward, objTarget.position);
-            print("Angle: " + angleBetween);
+            //print("Angle: " + angleBetween);
             if (angleBetween <= lookAtIKMaxBodyAngle && distBetween < lookAtIKMaxDist)
             {
                 baseLookWeight = Mathf.Lerp(baseLookWeight, baseLookWeightMAX, Time.deltaTime * bodySnapSpeed);
@@ -131,7 +132,7 @@ public class npcWatcherScript : MonoBehaviour
                 // Set the look target position, if one has been assigned
                 if (objTarget != null)
                 {
-                    print("IK");
+                    //print("IK");
 
                     //animator.SetLookAtWeight(headLookWeight);
                     animator.SetLookAtWeight(baseLookWeight, bodyLookWeight, headLookWeight, 0f, globalLookIKClamp);

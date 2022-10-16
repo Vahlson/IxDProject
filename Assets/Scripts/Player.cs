@@ -83,6 +83,7 @@ public class Player : MonoBehaviour
     public AudioClip scoreSound;
     public AudioClip damageSound;
     public AudioClip kickSound;
+    public AudioClip jumpSound;
 
     [SerializeField] private AudioClip gotKickedSound;
     [SerializeField] private AudioClip painSound;
@@ -497,6 +498,9 @@ public class Player : MonoBehaviour
             jump = true;
             _animator.SetBool("Jump", true);
             DodgedObstacle();
+
+            _audioSource.clip = jumpSound;
+            _audioSource.Play();
 
             //Play sound effect
             /* _audioSource.clip = kickSound;
