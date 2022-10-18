@@ -625,6 +625,9 @@ MonoBehaviour:
   scoreSound: {fileID: 8300000, guid: c45dfc7d6e6f8d64a92f03e635fbf3df, type: 3}
   damageSound: {fileID: 8300000, guid: e5ecc98ff40556543b77c8c2aa090822, type: 3}
   kickSound: {fileID: 0}
+  jumpSound: {fileID: 0}
+  gotKickedSound: {fileID: 0}
+  painSound: {fileID: 0}
   dustTrail: {fileID: 0}
 --- !u!136 &1707702538956366869
 CapsuleCollider:
@@ -2938,7 +2941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198640660634256096, guid: 6b2d1d33fdbf1a340a25ad352c47f593, type: 3}
       propertyPath: VelocityModule.y.scalar
-      value: 0.87
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 198640660634256096, guid: 6b2d1d33fdbf1a340a25ad352c47f593, type: 3}
       propertyPath: EmissionModule.m_BurstCount
@@ -2954,7 +2957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198640660634256096, guid: 6b2d1d33fdbf1a340a25ad352c47f593, type: 3}
       propertyPath: InitialModule.startSize.minScalar
-      value: 0
+      value: 1.33
       objectReference: {fileID: 0}
     - target: {fileID: 198640660634256096, guid: 6b2d1d33fdbf1a340a25ad352c47f593, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.size
@@ -2970,11 +2973,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198640660634256096, guid: 6b2d1d33fdbf1a340a25ad352c47f593, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: 0.07
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 198640660634256096, guid: 6b2d1d33fdbf1a340a25ad352c47f593, type: 3}
       propertyPath: EmissionModule.rateOverDistance.scalar
-      value: 100
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 198640660634256096, guid: 6b2d1d33fdbf1a340a25ad352c47f593, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key0.a
