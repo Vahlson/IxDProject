@@ -11,6 +11,7 @@ public class Obstacles : MonoBehaviour
         High,
         Low,
         Full,
+        Ramp,
         None
     }
 

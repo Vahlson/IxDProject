@@ -363,13 +363,13 @@ public class Player : MonoBehaviour
 
         //cameraFollowTransform.localPosition = new Vector3(cameraFollowStartOffset, cameraFollowTransform.localPosition.y, cameraFollowTransform.localPosition.z);
 
-        print("Start Offset: " + cameraFollowStartOffset);
+        //print("Start Offset: " + cameraFollowStartOffset);
         //baseOffsetToCenter - oldCameraFollowTargetOffset
         cameraFollowStartOffset += baseOffsetToCenter;
         cameraFollowLerpStart = cameraFollowStartOffset - oldCameraFollowStartOffset + oldCameraFollowTargetOffset;
 
 
-        print("Lerp start " + cameraFollowLerpStart);
+        //print("Lerp start " + cameraFollowLerpStart);
         //Move from middle a little bit.
         float followOffset = cameraFollowStartOffset == 0 ? 0 : cameraMoveWithLaneSwitch * Math.Sign(baseOffsetToCenter);
         cameraFollowTargetOffset = cameraFollowStartOffset - followOffset;
@@ -446,7 +446,8 @@ public class Player : MonoBehaviour
     {
         if ((blockadeType == Obstacles.BlockadeType.High && _playerStance == PlayerStance.high) ||
         (blockadeType == Obstacles.BlockadeType.Full && _playerStance == PlayerStance.medium) ||
-        (blockadeType == Obstacles.BlockadeType.Low && _playerStance == PlayerStance.low))
+        (blockadeType == Obstacles.BlockadeType.Low && _playerStance == PlayerStance.low) ||
+        (blockadeType == Obstacles.BlockadeType.Ramp && _playerStance == PlayerStance.low))
         {
             return;
         }
@@ -457,6 +458,13 @@ public class Player : MonoBehaviour
             currentHealth -= 1;
             _audioSource.clip = damageSound;
             _audioSource.Play();
+
+            //The player looses entirely if he/she cant dodge the train
+            if (blockadeType == Obstacles.BlockadeType.Ramp)
+            {
+                currentHealth = 0;
+            }
+
             if (currentHealth <= 0)
             {
                 GameManager.Instance.gameState = GameState.over;
@@ -502,6 +510,8 @@ public class Player : MonoBehaviour
             _audioSource.clip = jumpSound;
             _audioSource.Play();
 
+            print("YO WE JUMPING");
+
             //Play sound effect
             /* _audioSource.clip = kickSound;
             _audioSource.Play(); */
@@ -529,6 +539,18 @@ public class Player : MonoBehaviour
             {
                 print("No human found");
             }
+
+        }
+        else if (obstacle.blockadeType == Obstacles.BlockadeType.Ramp && _playerStance == PlayerStance.low)
+        {
+            damage = false;
+            //jump = true;
+            _animator.SetBool("JumpHigh", true);
+            DodgedObstacle();
+            print("RAMP");
+            _audioSource.clip = jumpSound;
+            _audioSource.Play();
+
         }
 
     }
@@ -547,6 +569,7 @@ public class Player : MonoBehaviour
         _animator.SetBool("Slide", false);
         _animator.SetBool("Jump", false);
         _animator.SetBool("Kick", false);
+        _animator.SetBool("JumpHigh", false);
         jump = false;
         slide = false;
         kick = false;

@@ -11,6 +11,7 @@ TagManager:
   - Center
   - Obstacle
   - FollowCam
+  - Ramp
   layers:
   - Default
   - TransparentFX

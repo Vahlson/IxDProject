@@ -10,6 +10,11 @@ public class BoardManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> forwardTiles;
     [SerializeField]
+    private List<GameObject> specialForwardTiles;
+
+    [Range(0f, 1f)] public float probOfSPecialTile = 0.2f;
+
+    [SerializeField]
     private GameObject _start;
     private List<GameObject> _platforms = new List<GameObject>();
     private Player player;
@@ -121,6 +126,8 @@ public class BoardManager : MonoBehaviour
         else if (tileThreshold > 0.2)
         {
             tag = TileTypes.Forward.ToString();
+
+
             nForwardTilesInRow++;
 
         }
@@ -173,7 +180,19 @@ public class BoardManager : MonoBehaviour
             case "Forward":
                 //print("Forward");
                 transform.position += transform.forward * 15;
-                prefab = forwardTiles[Random.Range(0, forwardTiles.Count)];
+
+
+                //Spawn a special tile if randomness says so.
+                float specialThreshold = Random.value;
+                if (specialThreshold < probOfSPecialTile && specialForwardTiles != null)
+                {
+                    prefab = specialForwardTiles[Random.Range(0, specialForwardTiles.Count)];
+                }
+                else
+                {
+                    prefab = forwardTiles[Random.Range(0, forwardTiles.Count)];
+                }
+
                 /* if (prefab.TryGetComponent(out Tile forwardTile))
                 {
                     float offsetFromNew = getTileOffset(forwardTile);

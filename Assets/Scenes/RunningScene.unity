@@ -2577,7 +2577,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   IgnoreTag: 
-  CameraRadius: 0.2
+  CameraRadius: 0.451
   DampingIntoCollision: 0
   DampingFromCollision: 2
 --- !u!114 &622449881
@@ -3722,6 +3722,10 @@ PrefabInstance:
       propertyPath: mediumSprite
       value: 
       objectReference: {fileID: 21300000, guid: 6d96db8e04098cb408eca609f95df03f, type: 3}
+    - target: {fileID: 4846958886020318570, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -23.99414
+      objectReference: {fileID: 0}
     - target: {fileID: 5169632653828630620, guid: 70cb430c1934d2f4baa0f960e9153ed7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -4029,8 +4033,11 @@ MonoBehaviour:
   - {fileID: 4963814754868165353, guid: 28e8fc5ed76958a47ad3843b43e562aa, type: 3}
   - {fileID: 4963814754868165353, guid: 94b6d15996a59f24b8c794820c5edb95, type: 3}
   - {fileID: 4963814754868165353, guid: 5736ffbdef1f6d2439d6690f6516eb16, type: 3}
+  specialForwardTiles:
+  - {fileID: 4963814754868165353, guid: 740604f64d80c7142ae23c68939f78d1, type: 3}
+  probOfSPecialTile: 0.064
   _start: {fileID: 4963814754868165353, guid: fd1907385b53e834ca811deab132cd39, type: 3}
-  minForwardTilesBeforeTurn: 2
+  minForwardTilesBeforeTurn: 4
 --- !u!4 &843813232
 Transform:
   m_ObjectHideFlags: 0
