@@ -41,6 +41,8 @@ public class ObstacleAnimationBlender : MonoBehaviour
         }
         animator = GetComponent<Animator>();
         targetTimeUntilAction = Random.Range(minTimeBetweenSmallActions, maxTimeBetweenSmallActions);
+        //Perform an action right away pretty much.
+        timeSinceLastAction = targetTimeUntilAction * 0.7f;
     }
 
     // Update is called once per frame

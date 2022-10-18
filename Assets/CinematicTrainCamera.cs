@@ -52,6 +52,8 @@ public class CinematicTrainCamera : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
+
+            print("NOW");
             if (other is BoxCollider)
             {
                 if (cinematicCamera != null && cinematicCamera.TryGetComponent(out CinemachineVirtualCamera virtualCam))
