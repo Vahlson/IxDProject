@@ -29,6 +29,9 @@ public class ObstacleAnimationBlender : MonoBehaviour
     private AudioSource audioSource;
 
     [SerializeField] private float saySomethingProbability = 0.5f;
+
+    public Animator theAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -120,6 +123,21 @@ public class ObstacleAnimationBlender : MonoBehaviour
 
         }
         animator.SetBool("IsDead", true);
+    }
+
+    public void setIsHappy(bool value)
+    {
+        print(theAnimator);
+        if (isActiveAndEnabled)
+        {
+            theAnimator?.SetBool("IsHappy", value);
+        }
+        else
+        {
+            print("NOT ACTIVE AND ENABLED");
+        }
+
+
     }
 
 

@@ -47,7 +47,7 @@ public class LeaderboardScreen : MonoBehaviour
             _placements[i].SetActive(true);
             LeaderboardEntry l = _placements[i].GetComponent<LeaderboardEntry>();
             l.leaderboardScore = items[i];
-            print("Character is:" + items[i].character);
+            //print("Character is:" + items[i].character);
             l.score.text = items[i].score.ToString() + " pts";
             l.position.text = getPositionText(i + 1);
 
@@ -57,7 +57,7 @@ public class LeaderboardScreen : MonoBehaviour
                 placement = getPositionText(i + 1);
                 OnPlacementFound?.Invoke(placement);
             }
-            l.characterSelect.activateCharacter(items[i].character);
+            l.characterSelect.activateCharacter(items[i].character, true);
 
         }
     }

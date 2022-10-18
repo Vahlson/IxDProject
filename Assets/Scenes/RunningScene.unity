@@ -9396,12 +9396,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6526962471342919411, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6526962471342919411, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: lengthInSec
+      value: 32.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6526962471342919411, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6526962471342919411, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6526962471342919411, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key0.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6526962471342919411, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: startDelay.maxCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6526962471342919411, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: startDelay.maxCurve.m_Curve.Array.data[1].value
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6974954045741939889, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
       propertyPath: m_Name

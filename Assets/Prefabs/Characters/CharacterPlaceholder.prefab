@@ -122,7 +122,7 @@ RectTransform:
   m_GameObject: {fileID: 1304792012861659317}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -24.2}
-  m_LocalScale: {x: 1.5224171, y: 1.5224171, z: 1.5224171}
+  m_LocalScale: {x: 2.5834, y: 2.5834, z: 2.5834}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1304792012334020124}
@@ -591,6 +591,16 @@ MonoBehaviour:
   maxTimeBetweenSmallActions: 15
   blendSpeed: 0.5
   changeAnimationChance: 0.5
+  gotKickedSound: {fileID: 0}
+  gotHurtSound: {fileID: 0}
+  gotHurtSound2: {fileID: 0}
+  saySomethingProbability: 0.5
+  theAnimator: {fileID: 1389981085710465898}
+--- !u!95 &1389981085710465898 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95060489484656484, guid: ec57583fbf793a94d93d970e9d036965, type: 3}
+  m_PrefabInstance: {fileID: 1304792012748284942}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1304792012998995641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -928,6 +938,16 @@ MonoBehaviour:
   maxTimeBetweenSmallActions: 15
   blendSpeed: 0.5
   changeAnimationChance: 0.5
+  gotKickedSound: {fileID: 0}
+  gotHurtSound: {fileID: 0}
+  gotHurtSound2: {fileID: 0}
+  saySomethingProbability: 0.5
+  theAnimator: {fileID: 1389568046111011197}
+--- !u!95 &1389568046111011197 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95474626191974340, guid: 09965a1afcd990646be69ee0dc8d1b40, type: 3}
+  m_PrefabInstance: {fileID: 1304792012998995641}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1304792013056433119
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1265,6 +1285,16 @@ MonoBehaviour:
   maxTimeBetweenSmallActions: 15
   blendSpeed: 0.5
   changeAnimationChance: 0.5
+  gotKickedSound: {fileID: 0}
+  gotHurtSound: {fileID: 0}
+  gotHurtSound2: {fileID: 0}
+  saySomethingProbability: 0.5
+  theAnimator: {fileID: 1389865053964303585}
+--- !u!95 &1389865053964303585 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95217205003396926, guid: bf02a1897ce85e8419f8c8d52e8a8d6e, type: 3}
+  m_PrefabInstance: {fileID: 1304792013056433119}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1304792013709900090
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1602,6 +1632,16 @@ MonoBehaviour:
   maxTimeBetweenSmallActions: 15
   blendSpeed: 0.5
   changeAnimationChance: 0.5
+  gotKickedSound: {fileID: 0}
+  gotHurtSound: {fileID: 0}
+  gotHurtSound2: {fileID: 0}
+  saySomethingProbability: 0.5
+  theAnimator: {fileID: 1389444463033579600}
+--- !u!95 &1389444463033579600 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95632277690515818, guid: b19f6af1b17b11143a19eaf24698a8b6, type: 3}
+  m_PrefabInstance: {fileID: 1304792013709900090}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1304792013761988507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1939,6 +1979,16 @@ MonoBehaviour:
   maxTimeBetweenSmallActions: 15
   blendSpeed: 0.5
   changeAnimationChance: 0.5
+  gotKickedSound: {fileID: 0}
+  gotHurtSound: {fileID: 0}
+  gotHurtSound2: {fileID: 0}
+  saySomethingProbability: 0.5
+  theAnimator: {fileID: 1389993857428201725}
+--- !u!95 &1389993857428201725 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95082879787689830, guid: 91ed680b78ec26c4596b242a724c624a, type: 3}
+  m_PrefabInstance: {fileID: 1304792013761988507}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1304792013915926170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2276,3 +2326,13 @@ MonoBehaviour:
   maxTimeBetweenSmallActions: 15
   blendSpeed: 0.5
   changeAnimationChance: 0.5
+  gotKickedSound: {fileID: 0}
+  gotHurtSound: {fileID: 0}
+  gotHurtSound2: {fileID: 0}
+  saySomethingProbability: 0.5
+  theAnimator: {fileID: 1389605547882461586}
+--- !u!95 &1389605547882461586 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95511887735396104, guid: 6492c9c06de0b524d8010d3f0adb766a, type: 3}
+  m_PrefabInstance: {fileID: 1304792013915926170}
+  m_PrefabAsset: {fileID: 0}

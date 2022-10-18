@@ -13,6 +13,8 @@ public class GameOver : MonoBehaviour
     [SerializeField] private AudioClip regularMusic;
     [SerializeField] private AudioClip victoryMusic;
 
+    private bool victory = false;
+
     void Start()
     {
         this.arduinoInputController = GetComponent<ArduinoInputController>();
@@ -23,6 +25,9 @@ public class GameOver : MonoBehaviour
             newHighScoreScreen.SetActive(true);
             scoreScreen.SetActive(false);
 
+
+
+            victory = true;
 
             if (TryGetComponent(out AudioSource audioSource))
             {
@@ -39,6 +44,8 @@ public class GameOver : MonoBehaviour
             scoreScreen.SetActive(true);
 
 
+            victory = false;
+
             if (TryGetComponent(out AudioSource audioSource))
             {
 
@@ -47,7 +54,10 @@ public class GameOver : MonoBehaviour
 
             }
         }
-        characterSelect.activateCharacter(GameManager.Instance.selectedCharacter);
+        characterSelect.activateCharacter(GameManager.Instance.selectedCharacter, victory);
+
+        //Make character happy or sad
+        //characterSelect.setCharactersIsHappy(true);
 
     }
 

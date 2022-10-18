@@ -26,7 +26,7 @@ public class FootstepSoundPlayer : MonoBehaviour
         {
             if (FootstepAudioClips.Length > 0)
             {
-                print("Play footstep");
+                //print("Play footstep");
                 var index = Random.Range(0, FootstepAudioClips.Length);
                 aSource.clip = FootstepAudioClips[index];
                 aSource.Play();

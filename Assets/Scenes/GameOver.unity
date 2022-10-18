@@ -1611,7 +1611,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1767,7 +1767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3193318057574368766, guid: 10a62e22aba6dd74e8329176671d0c4a, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3193318057574368766, guid: 10a62e22aba6dd74e8329176671d0c4a, type: 3}
       propertyPath: m_AnchorMax.x
@@ -74757,18 +74757,6 @@ PrefabInstance:
     - target: {fileID: 1304792012861659318, guid: fbfec6d7ed62e194583294556d396461, type: 3}
       propertyPath: m_SizeDelta.y
       value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 1304792012861659318, guid: fbfec6d7ed62e194583294556d396461, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.5834
-      objectReference: {fileID: 0}
-    - target: {fileID: 1304792012861659318, guid: fbfec6d7ed62e194583294556d396461, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.5834
-      objectReference: {fileID: 0}
-    - target: {fileID: 1304792012861659318, guid: fbfec6d7ed62e194583294556d396461, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.5834
       objectReference: {fileID: 0}
     - target: {fileID: 1304792012861659318, guid: fbfec6d7ed62e194583294556d396461, type: 3}
       propertyPath: m_LocalPosition.x
