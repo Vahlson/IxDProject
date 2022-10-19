@@ -121,6 +121,8 @@ public class ArduinoInputController : MonoBehaviour
         // bit 0 is a stopbit. REMOVE IT
         charList.RemoveAt(0);
 
+        if (charList.Count.Equals(0)) return new bool[32];
+
         string word = charList.Select(i => i.ToString()).Aggregate((i, j) => i + j);
         //print("The numberrrrrr: " + word);
         int messageBit = int.Parse(word);

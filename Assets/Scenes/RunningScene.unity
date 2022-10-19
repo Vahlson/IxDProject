@@ -4094,7 +4094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
       propertyPath: portName
-      value: COM7
+      value: COM12
       objectReference: {fileID: 0}
     - target: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
       propertyPath: messageListener
@@ -8256,6 +8256,10 @@ PrefabInstance:
     - target: {fileID: 7803436385570023081, guid: 7d5c2a0d857f65b4ca8b5f06172b0b1d, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7803436385570023082, guid: 7d5c2a0d857f65b4ca8b5f06172b0b1d, type: 3}
+      propertyPath: useArduinoInput
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7803436385570023083, guid: 7d5c2a0d857f65b4ca8b5f06172b0b1d, type: 3}
       propertyPath: m_RootOrder
