@@ -1420,7 +1420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 0
-  badGuyAccelerationFactor: 0.1
+  badGuyAccelerationFactor: 0
   totalDistanceTravelled: 0
   _target: {fileID: 7005620314944752063}
   acceleration: 0
@@ -9658,6 +9658,10 @@ PrefabInstance:
       propertyPath: kickSound
       value: 
       objectReference: {fileID: 8300000, guid: 0e9bca6dd55d7e541a865752da6415f5, type: 3}
+    - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
+      propertyPath: maxHealth
+      value: 10000
+      objectReference: {fileID: 0}
     - target: {fileID: 7242440276238495428, guid: 1b2ab5d6004127c45bd67cb12e6a80d1, type: 3}
       propertyPath: painSound
       value: 

@@ -36,7 +36,7 @@ public class ArduinoInputController : MonoBehaviour
 
     void OnMessageArrived(string message)
     {
-        //print("damessage: " + message);
+        print("damessage: " + message);
         //Parse the message.
         input = parseArduinoMessage(message);
 
