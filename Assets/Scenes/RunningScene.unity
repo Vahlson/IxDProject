@@ -1419,8 +1419,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51f33c70783d668409324b6dde81a309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 0
-  badGuyAccelerationFactor: 0
+  velocity: 2
+  badGuyAccelerationFactor: 0.1
   totalDistanceTravelled: 0
   _target: {fileID: 7005620314944752063}
   acceleration: 0

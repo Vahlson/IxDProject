@@ -226,7 +226,8 @@ public class Player : MonoBehaviour
             score += Vector3.Distance(transform.position, previousLocation);
             previousLocation = transform.position;
 
-            velocity += Time.deltaTime * (baseVelocitIncrease * (GameManager.Instance.tramplingSpeed / GameManager.Instance.maxTramplingSpeed - GameManager.Instance.increaseSpeedFromTramplingThreshold));
+            velocity += Time.deltaTime * (baseVelocitIncrease * (GameManager.Instance.tramplingSpeed / GameManager.Instance.maxTramplingSpeed - GameManager.Instance.increaseSpeedFromTramplingThreshold) * 2f);
+            velocity = Mathf.Clamp(velocity, 1f, float.MaxValue);
             //velocity *= ;
         }
 
