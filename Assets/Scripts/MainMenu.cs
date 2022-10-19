@@ -41,12 +41,12 @@ public class MainMenu : MonoBehaviour
 
         if (characterSelecting != null)
         {
-            if (arduinoInputController.getKeyDown(3))
+            if (arduinoInputController.getKeyDown(0))
             {
                 //right
                 characterSelecting.nextCharacter();
             }
-            if (arduinoInputController.getKeyDown(0))
+            if (arduinoInputController.getKeyDown(3))
             {
                 //left
                 characterSelecting.prevCharacter();

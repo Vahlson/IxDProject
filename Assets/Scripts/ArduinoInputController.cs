@@ -26,7 +26,7 @@ public class ArduinoInputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        generateInputEvents();
     }
 
     void OnConnectionEvent(bool connected)
@@ -40,7 +40,7 @@ public class ArduinoInputController : MonoBehaviour
         //Parse the message.
         input = parseArduinoMessage(message);
 
-        generateInputEvents();
+        //generateInputEvents();
 
         /* if (input[0] == true)
         {
@@ -84,6 +84,8 @@ public class ArduinoInputController : MonoBehaviour
         //Resetting event lists
         keyDownInput = new bool[32];
 
+        if (input == null) return;
+
         //Generate events for each input if needed.
         for (int i = 0; i < input.Length; i++)
         {
@@ -113,13 +115,13 @@ public class ArduinoInputController : MonoBehaviour
         {
             int number = int.TryParse(c.ToString(), out int i) ? i : -1;
             charList.Add(number);
-            //print("char: " + c);
+            print("char: " + c);
         }
 
         if (charList.Count.Equals(0)) return new bool[32];
 
         // bit 0 is a stopbit. REMOVE IT
-        charList.RemoveAt(0);
+        //charList.RemoveAt(0);
 
         if (charList.Count.Equals(0)) return new bool[32];
 

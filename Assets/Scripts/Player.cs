@@ -168,11 +168,11 @@ public class Player : MonoBehaviour
             {
                 step();
             }
-            if (arduinoInputController.getKeyDown(3))
+            if (arduinoInputController.getKeyDown(0))
             {
                 moveRight();
             }
-            if (arduinoInputController.getKeyDown(0))
+            if (arduinoInputController.getKeyDown(3))
             {
                 moveLeft();
             }
@@ -190,7 +190,8 @@ public class Player : MonoBehaviour
             }
 
         }
-        else if (GameManager.Instance.gameState == GameState.ongoing && !GameManager.Instance.useArduinoInput)
+
+        if (GameManager.Instance.gameState == GameState.ongoing)
         {
             if (Input.GetKeyUp("j") || Input.GetKeyUp("h"))
             {
@@ -207,6 +208,7 @@ public class Player : MonoBehaviour
             if (Input.GetKeyUp("i"))
             {
                 setStance(PlayerStance.low);
+                print("LOW");
             }
             if (Input.GetKeyUp("o"))
             {
