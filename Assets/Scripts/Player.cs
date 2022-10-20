@@ -464,6 +464,10 @@ public class Player : MonoBehaviour
             currentHealth -= 1;
             _audioSource.clip = damageSound;
             _audioSource.Play();
+            print("GOT HIT");
+            _animator.SetBool("GotHit", true);
+            //_animator.SetBool("GotHit", false);
+
 
             //The player looses entirely if he/she cant dodge the train
             if (blockadeType == Obstacles.BlockadeType.Ramp)
@@ -576,6 +580,7 @@ public class Player : MonoBehaviour
         _animator.SetBool("Jump", false);
         _animator.SetBool("Kick", false);
         _animator.SetBool("JumpHigh", false);
+        _animator.SetBool("GotHit", false);
         jump = false;
         slide = false;
         kick = false;
