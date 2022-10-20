@@ -55,7 +55,7 @@ MonoBehaviour:
   mainMenuTramplingSpeed: 0
   tramplingSpeed: 0
   onDamageTramplingSpeedMultiplier: 0.7
-  tramplingSpeedFactor: 0.12
+  tramplingSpeedFactor: 0.06
   increaseSpeedFromTramplingThreshold: 0.6
   useArduinoInput: 1
   gameState: 1

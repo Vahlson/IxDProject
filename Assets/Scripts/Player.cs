@@ -231,8 +231,8 @@ public class Player : MonoBehaviour
 
             GameManager gm = GameManager.Instance;
             //velocity += Time.deltaTime * ((gm.tramplingSpeed / gm.maxTramplingSpeed - gm.increaseSpeedFromTramplingThreshold) * gm.tramplingSpeedFactor);
-            velocity = gm.tramplingSpeed * gm.tramplingSpeedFactor;
-            velocity = Mathf.Clamp(velocity, gm.increasingMinVelocity, float.MaxValue);
+            velocity = gm.increasingMinVelocity + gm.tramplingSpeed * gm.tramplingSpeedFactor;
+            //velocity = Mathf.Clamp(velocity, gm.increasingMinVelocity, float.MaxValue);
             //velocity *= ;
         }
 
