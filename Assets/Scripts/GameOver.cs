@@ -80,11 +80,11 @@ public class GameOver : MonoBehaviour
 
             MainMenu();
         }
-        if (Input.GetKeyUp("a"))
+        /* if (Input.GetKeyUp("a"))
         {
             RestartGame();
 
-        }
+        } */
     }
 
     public void RestartGame()

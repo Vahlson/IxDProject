@@ -25,6 +25,8 @@ public class BadGuyDistance : MonoBehaviour
     private float _xStep = 0.0f;
     private float _end = 0.0f;
 
+    private float maxDistanceShown = 200;
+
 
     void Start()
     {
@@ -33,7 +35,7 @@ public class BadGuyDistance : MonoBehaviour
         _end = _playerIndicator.transform.localPosition.x - _playerIndicatorRectTransform.rect.width;
         _lastDistance = Mathf.Abs(_player.totalDistanceTravelled - _badguy.totalDistanceTravelled);
         _xDistance = Mathf.Abs(_badguy.transform.localPosition.x - _end);
-        _xStep = _xDistance / 100;
+        _xStep = _xDistance / maxDistanceShown;
     }
 
     void Update()
@@ -54,7 +56,7 @@ public class BadGuyDistance : MonoBehaviour
         float currentDistance = Mathf.Abs(_player.totalDistanceTravelled - _badguy.totalDistanceTravelled);
         _playerVelocityText.text = ((int)currentDistance).ToString();
 
-        if (currentDistance > 100)
+        if (currentDistance > maxDistanceShown)
         {
             _badGuyIndicator.transform.localPosition = new Vector3(0, _badGuyIndicator.transform.localPosition.y, _badGuyIndicator.transform.localPosition.z);
             _progressBar.transform.localScale = new Vector3(0, _progressBar.transform.localScale.y, _progressBar.transform.localScale.z);
@@ -62,7 +64,7 @@ public class BadGuyDistance : MonoBehaviour
         else
         {
 
-            _badGuyIndicator.transform.localPosition = new Vector3(_xStep * (100 - currentDistance), _badGuyIndicator.transform.localPosition.y, _badGuyIndicator.transform.localPosition.z);
+            _badGuyIndicator.transform.localPosition = new Vector3(_xStep * (maxDistanceShown - currentDistance), _badGuyIndicator.transform.localPosition.y, _badGuyIndicator.transform.localPosition.z);
 
             if (_badGuyIndicator.transform.localPosition.x >= _end)
             {

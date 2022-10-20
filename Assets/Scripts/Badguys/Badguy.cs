@@ -3,8 +3,8 @@ using UnityEngine;
 class Badguy : MonoBehaviour
 {
     private Animator _animator;
-    public float velocity = 0;
-    public float badGuyAccelerationFactor = 1.3f;
+    [HideInInspector] public float velocity = 0;
+    //public float badGuyAccelerationFactor = 1.3f;
     [SerializeField]
     public float totalDistanceTravelled = 0.0f;
     private int _velocityHash;
@@ -24,7 +24,7 @@ class Badguy : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         mesh.enabled = false;
-        acceleration = _target.baseVelocitIncrease * badGuyAccelerationFactor;
+        //acceleration = _target.increasingMaxVelocity * badGuyAccelerationFactor;
         totalDistanceTravelled = -Vector3.Distance(transform.position, _target.transform.position);
         //velocity = _target.velocity;
         _animator = GetComponent<Animator>();
@@ -59,7 +59,9 @@ class Badguy : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, endPosition, 3 * Time.deltaTime);
             }
         }
-        velocity += Time.deltaTime * acceleration;
+        //velocity += Time.deltaTime * acceleration;
+        velocity = GameManager.Instance.increasingMinVelocity + acceleration;
+        //velocity += Time.deltaTime * acceleration;
     }
     void OnTriggerEnter(Collider other)
     {

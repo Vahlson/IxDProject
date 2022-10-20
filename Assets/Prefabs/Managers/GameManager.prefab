@@ -49,15 +49,19 @@ MonoBehaviour:
   latestScore: 0
   timeBeforeSceneSwitch: 0
   shouldDequeSteps: 1
-  currentStepDecreaseSpeed: 40
-  maxTramplingSpeed: 125
-  stepSpeedIncrease: 10
+  currentStepDecreaseSpeed: 10
+  maxTramplingSpeed: 80
+  stepSpeedIncrease: 3
   mainMenuTramplingSpeed: 0
   tramplingSpeed: 0
-  onOnDamageBPMAccelerationMultiplier: 0.5
-  increaseSpeedFromTramplingThreshold: 0.7
-  useArduinoInput: 0
-  gameState: 2
+  onDamageTramplingSpeedMultiplier: 0.7
+  tramplingSpeedFactor: 0.12
+  increaseSpeedFromTramplingThreshold: 0.6
+  useArduinoInput: 1
+  gameState: 1
+  minimalDecreaseFactor: 0.3
+  increasingMinVelocity: 0
+  increasingMinVelocityStepIncrease: 0.08
 --- !u!82 &2979900327313469334
 AudioSource:
   m_ObjectHideFlags: 0

@@ -50645,14 +50645,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 7803436385570023082, guid: 7d5c2a0d857f65b4ca8b5f06172b0b1d, type: 3}
-      propertyPath: useArduinoInput
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7803436385570023082, guid: 7d5c2a0d857f65b4ca8b5f06172b0b1d, type: 3}
-      propertyPath: maxTramplingSpeed
-      value: 60
-      objectReference: {fileID: 0}
     - target: {fileID: 7803436385570023083, guid: 7d5c2a0d857f65b4ca8b5f06172b0b1d, type: 3}
       propertyPath: m_RootOrder
       value: 2

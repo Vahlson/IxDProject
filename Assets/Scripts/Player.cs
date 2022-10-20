@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     public float onDamageVelocityMultiplier = 0.8f;
 
 
-    public float baseVelocitIncrease = 0.5f;
+
 
     [SerializeField]
     private float bpmFactor = 0.01f;
@@ -118,6 +118,7 @@ public class Player : MonoBehaviour
         startCameraLerpBetweenLanes(0);
         damage = true;
 
+        GameManager.Instance.increasingMinVelocity = 2f;
         //initSteps();
     }
 
@@ -228,8 +229,10 @@ public class Player : MonoBehaviour
             score += Vector3.Distance(transform.position, previousLocation);
             previousLocation = transform.position;
 
-            velocity += Time.deltaTime * (baseVelocitIncrease * (GameManager.Instance.tramplingSpeed / GameManager.Instance.maxTramplingSpeed - GameManager.Instance.increaseSpeedFromTramplingThreshold) * 2f);
-            velocity = Mathf.Clamp(velocity, 1f, float.MaxValue);
+            GameManager gm = GameManager.Instance;
+            //velocity += Time.deltaTime * ((gm.tramplingSpeed / gm.maxTramplingSpeed - gm.increaseSpeedFromTramplingThreshold) * gm.tramplingSpeedFactor);
+            velocity = gm.tramplingSpeed * gm.tramplingSpeedFactor;
+            velocity = Mathf.Clamp(velocity, gm.increasingMinVelocity, float.MaxValue);
             //velocity *= ;
         }
 
@@ -456,7 +459,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            velocity *= onDamageVelocityMultiplier;
+            //velocity *= onDamageVelocityMultiplier;
             GameManager.Instance.slowDownTrampling();
             currentHealth -= 1;
             _audioSource.clip = damageSound;
@@ -586,7 +589,7 @@ public class Player : MonoBehaviour
         GameManager.Instance.tramplingSpeed = 0;
         //this.bpmAcceleration = 0;
         this.velocity = 0;
-        this.baseVelocitIncrease = 0;
+        GameManager.Instance.increasingMinVelocity = 0;
         CinemachineVirtualCamera cm = GameObject.FindGameObjectWithTag("FollowCam").GetComponent<CinemachineVirtualCamera>();
         cm.Follow = null;
         cm.LookAt = null;
