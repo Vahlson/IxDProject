@@ -29,7 +29,11 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown("joystick button 0"))
+        {
+            print("joystick");
 
+        }
 
 
 

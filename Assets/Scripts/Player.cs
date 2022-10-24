@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System;
 using Cinemachine;
+using UnityEngine.InputSystem;
+
 public class Player : MonoBehaviour
 {
     public PlayerContainer playerContainer;
@@ -91,7 +93,6 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
 
     [SerializeField] ParticleSystem dustTrail;
-
 
 
     void Awake()
@@ -209,7 +210,6 @@ public class Player : MonoBehaviour
             if (Input.GetKeyUp("i"))
             {
                 setStance(PlayerStance.low);
-                print("LOW");
             }
             if (Input.GetKeyUp("o"))
             {
@@ -611,8 +611,25 @@ public class Player : MonoBehaviour
         StartCoroutine(GameManager.Instance.playAudioSequentially(_audioSource, defeatSounds, delayBefore: 1.2f));
 
     }
+    private void OnJump()
+    {
+        setStance(PlayerStance.low);
+
+    }
+    private void OnKick()
+    {
+        setStance(PlayerStance.medium);
+
+    }
+    private void OnSlide()
+    {
+        setStance(PlayerStance.high);
+
+    }
+
 
 }
+
 public enum PlayerStance
 {
     low, medium, high, idle
