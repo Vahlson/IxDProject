@@ -64,16 +64,16 @@ public class GameOver : MonoBehaviour
     public void Update()
     {
 
-        if (arduinoInputController.getKeyDown(0))
+        if (arduinoInputController.getKeyDown(3))
         {
             //right
             MainMenu();
         }
-        if (arduinoInputController.getKeyDown(3))
+        /* if (arduinoInputController.getKeyDown(3))
         {
             //left
             RestartGame();
-        }
+        } */
 
         if (Input.GetKeyUp("d"))
         {
