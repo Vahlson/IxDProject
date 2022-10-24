@@ -165,27 +165,27 @@ public class Player : MonoBehaviour
         {
 
 
-            if (arduinoInputController.getKeyDown(1) || arduinoInputController.getKeyDown(2))
+            if (arduinoInputController.getKeyDown(5) || arduinoInputController.getKeyDown(4))
             {
                 step();
             }
-            if (arduinoInputController.getKeyDown(0))
+            if (arduinoInputController.getKeyDown(3))
             {
                 moveRight();
             }
-            if (arduinoInputController.getKeyDown(3))
+            if (arduinoInputController.getKeyDown(6))
             {
                 moveLeft();
             }
-            if (arduinoInputController.getKeyDown(6))
+            if (arduinoInputController.getKeyDown(0))
             {
                 setStance(PlayerStance.low);
             }
-            if (arduinoInputController.getKeyDown(5))
+            if (arduinoInputController.getKeyDown(1))
             {
                 setStance(PlayerStance.medium);
             }
-            if (arduinoInputController.getKeyDown(4))
+            if (arduinoInputController.getKeyDown(2))
             {
                 setStance(PlayerStance.high);
             }

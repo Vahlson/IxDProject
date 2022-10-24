@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour
 
 
 
-        if (arduinoInputController.getKeyDown(1) || arduinoInputController.getKeyDown(2))
+        if (arduinoInputController.getKeyDown(5) || arduinoInputController.getKeyDown(4))
         {
             step();
 
@@ -41,7 +41,7 @@ public class MainMenu : MonoBehaviour
 
         if (characterSelecting != null)
         {
-            if (arduinoInputController.getKeyDown(0))
+            if (arduinoInputController.getKeyDown(6))
             {
                 //right
                 characterSelecting.nextCharacter();
