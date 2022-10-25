@@ -49,8 +49,8 @@ MonoBehaviour:
   latestScore: 0
   timeBeforeSceneSwitch: 0
   shouldDequeSteps: 1
-  currentStepDecreaseSpeed: 10
-  maxTramplingSpeed: 70
+  currentStepDecreaseSpeed: 12
+  maxTramplingSpeed: 60
   stepSpeedIncrease: 3
   mainMenuTramplingSpeed: 0
   tramplingSpeed: 0

@@ -7,13 +7,13 @@
 #endif
 
 #define NUM_LEDS 30  //total number of LEDs on strip
-#define PIN8 8
+#define PIN8 2
 #define PIN6 6
 #define PIN4 4
 
 //GLOBAL
 double timePressed[] = {0, 0, 0};
-const double lightUpTime = 200;
+const double lightUpTime = 6000;
 
 int inByte = 0;
 int buttonInPorts[] = {3, 5, 7, 9, 10, 11, 12 };  //testing
@@ -55,10 +55,10 @@ void setup() {
 }
 
 void loop() {
-  //   if(Serial.available() > 0) //Check when serial command comes thru serial line
-  //   {
-  //     inByte = Serial.read();  // Puls off first byte in line
-  //   }
+     if(Serial.available() > 0) //Check when serial command comes thru serial line
+     {
+       inByte = Serial.read();  // Puls off first byte in line
+     }
 
   ///// switch states for initiating switches for LED strips 6 and 4
   //bool buttonLED3 = false; //reading switch state.   //////just need 0 or 1, delete later
@@ -71,11 +71,12 @@ void loop() {
     int buttonStateCopy = buttonState;
 
 
+
     if (i == 0) {
       if (buttonStateCopy != 0) {
         // buttonLED3 = true;
         timePressed[0] = millis();
-        strip4.fill(strip4.Color(0, 255, 0), 0);  //what other colors are built into the library?
+        strip4.fill(strip4.Color(0, 255, 0), 0);  
         strip4.show();
       } else {
         //buttonLED3 = false;
@@ -85,7 +86,7 @@ void loop() {
       if (buttonStateCopy != 0) {
         //buttonLED5 = true;
         timePressed[1] = millis();
-        strip6.fill(strip6.Color(255, 0, 0), 0);  //what other colors are built into the library?
+        strip6.fill(strip6.Color(255, 0, 0), 0);  
         strip6.show();
       } else {
         //buttonLED5 = false;
@@ -114,7 +115,7 @@ void loop() {
   }
 
   Serial.println(combinedButtonState);
-  delay(20);
+  delay(10);
   //switchState2 = digitalRead(switch2); //reading switch state
   //delay(100);
 

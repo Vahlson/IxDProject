@@ -84,7 +84,7 @@ public class MainMenu : MonoBehaviour
 
         /* float bpmOfTarget = getBPM() / targetBPM;
         print(bpmOfTarget); */
-        float tramplingFactor = (GameManager.Instance.tramplingSpeed / GameManager.Instance.maxTramplingSpeed) * 2;
+        float tramplingFactor = (GameManager.Instance.tramplingSpeed / GameManager.Instance.maxTramplingSpeed) * 3;
 
         progressBar.localScale = new Vector3(tramplingFactor, progressBar.localScale.y, progressBar.localScale.z);
         runningIcon.localPosition = new Vector3(progressBar.localScale.x * progressBarImage.rect.width + 100, runningIcon.localPosition.y, runningIcon.localPosition.z);
