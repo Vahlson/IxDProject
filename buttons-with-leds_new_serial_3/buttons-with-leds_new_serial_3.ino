@@ -78,6 +78,14 @@ void loop() {
         timePressed[0] = millis();
         strip4.fill(strip4.Color(0, 255, 0), 0);  
         strip4.show();
+        
+        strip6.fill(strip6.Color(0, 0, 0), 0);  //set led6 to black
+        strip6.show();
+        timePressed[1] = -1;
+        
+        strip8.fill(strip8.Color(0,0,0), 0); //set led8 to black
+        strip8.show();
+        timePressed[2] = -1;
       } else {
         //buttonLED3 = false;
       }
@@ -88,6 +96,14 @@ void loop() {
         timePressed[1] = millis();
         strip6.fill(strip6.Color(255, 0, 0), 0);  
         strip6.show();
+
+        strip8.fill(strip8.Color(0,0,0), 0); //set led8 to black
+        strip8.show();
+        timePressed[2] = -1;
+
+        strip4.fill(strip4.Color(0, 0, 0), 0);  //set led4 to black
+        strip4.show();
+        timePressed[0] = -1;
       } else {
         //buttonLED5 = false;
       }
@@ -98,6 +114,14 @@ void loop() {
         timePressed[2] = millis();
         strip8.fill(strip8.Color(0, 0, 255), 0);  //what other colors are built into the library?
         strip8.show();
+
+        strip6.fill(strip6.Color(0, 0, 0), 0);  //set led6 to black
+        strip6.show();
+        timePressed[1] = -1;
+
+        strip4.fill(strip4.Color(0, 0, 0), 0);  //set led4 to black
+        strip4.show();
+        timePressed[0] = -1;
       } else {
         //buttonLED5 = false;
       }

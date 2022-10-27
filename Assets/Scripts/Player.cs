@@ -177,11 +177,11 @@ public class Player : MonoBehaviour
             {
                 moveLeft();
             }
-            if (arduinoInputController.getKeyDown(0))
+            if (arduinoInputController.getKeyDown(1))
             {
                 setStance(PlayerStance.low);
             }
-            if (arduinoInputController.getKeyDown(1))
+            if (arduinoInputController.getKeyDown(0))
             {
                 setStance(PlayerStance.medium);
             }
