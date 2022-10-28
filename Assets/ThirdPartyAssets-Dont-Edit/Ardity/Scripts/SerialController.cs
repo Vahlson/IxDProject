@@ -25,8 +25,8 @@ using System.Threading;
  */
 public class SerialController : MonoBehaviour
 {
-    [Tooltip("Port name with which the SerialPort object will be created.")]
-    public string portName = "COM7";
+    /*  [Tooltip("Port name with which the SerialPort object will be created.")]
+     public string portName = "COM7"; */
 
     [Tooltip("Baud rate that the serial device is using to transmit data.")]
     public int baudRate = 9600;
@@ -42,6 +42,8 @@ public class SerialController : MonoBehaviour
     [Tooltip("Maximum number of unread data messages in the queue. " +
              "New messages will be discarded.")]
     public int maxUnreadMessages = 1;
+
+    private string comPortName;
 
     // Constants used to mark the start and end of a connection. There is no
     // way you can generate clashing messages from your serial device, as I
@@ -63,12 +65,15 @@ public class SerialController : MonoBehaviour
     // ------------------------------------------------------------------------
     void OnEnable()
     {
-        serialThread = new SerialThreadLines(portName,
-                                             baudRate,
-                                             reconnectionDelay,
-                                             maxUnreadMessages);
-        thread = new Thread(new ThreadStart(serialThread.RunForever));
-        thread.Start();
+        buildUp();
+    }
+
+    public void changeArduinoPort(string newPortName)
+    {
+        tearDown();
+        GameManager.Instance.portName = newPortName;
+        buildUp();
+
     }
 
     // ------------------------------------------------------------------------
@@ -76,6 +81,25 @@ public class SerialController : MonoBehaviour
     // It stops and destroys the thread that was reading from the serial device.
     // ------------------------------------------------------------------------
     void OnDisable()
+    {
+        tearDown();
+    }
+
+    private void buildUp()
+    {
+
+        //Set com port
+        comPortName = GameManager.Instance.portName;
+
+        serialThread = new SerialThreadLines(GameManager.Instance.portName,
+                                             baudRate,
+                                             reconnectionDelay,
+                                             maxUnreadMessages);
+        thread = new Thread(new ThreadStart(serialThread.RunForever));
+        thread.Start();
+    }
+
+    private void tearDown()
     {
         // If there is a user-defined tear-down function, execute it before
         // closing the underlying COM port.
@@ -114,7 +138,7 @@ public class SerialController : MonoBehaviour
 
         // Read the next message from the queue
         string message = (string)serialThread.ReadMessage();
-        
+
         if (message == null)
             return;
         print(message);
@@ -122,10 +146,12 @@ public class SerialController : MonoBehaviour
         if (ReferenceEquals(message, SERIAL_DEVICE_CONNECTED))
         {
             messageListener.SendMessage("OnConnectionEvent", true);
+            GameManager.Instance.isArduinoConnected = true;
         }
         else if (ReferenceEquals(message, SERIAL_DEVICE_DISCONNECTED))
         {
             messageListener.SendMessage("OnConnectionEvent", false);
+            GameManager.Instance.isArduinoConnected = false;
         }
         else
         {

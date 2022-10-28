@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,7 +11,8 @@ public class MainMenu : MonoBehaviour
     private ArduinoInputController arduinoInputController;
     private int currentSteps = 0;
 
-
+    public TMP_Text arduinoStatus;
+    public TMP_InputField arduinoTextEntryText;
 
     [SerializeField] Transform progressBar;
     [SerializeField] RectTransform progressBarImage;
@@ -24,13 +26,23 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         this.arduinoInputController = GetComponent<ArduinoInputController>();
+        arduinoTextEntryText.SetTextWithoutNotify(GameManager.Instance.portName);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-
+        if (GameManager.Instance.isArduinoConnected)
+        {
+            arduinoStatus.SetText("Arduino Connected on:");
+            arduinoStatus.color = Color.white;
+        }
+        else
+        {
+            arduinoStatus.SetText("No Arduino found on:");
+            arduinoStatus.color = Color.red;
+        }
 
 
         if (arduinoInputController.getKeyDown(5) || arduinoInputController.getKeyDown(4))

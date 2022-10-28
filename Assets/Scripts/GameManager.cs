@@ -19,6 +19,10 @@ class GameManager : MonoBehaviour
     private Leaderboard _leaderboard;
     private LeaderboardScore newLeaderboardScore;
 
+    [Tooltip("Port name with which the SerialPort object will be created.")]
+    public string portName = "COM7";
+    public bool isArduinoConnected = false;
+
 
     //public float mainMenuSteps = 0f;
     //public Queue<float> steps = new Queue<float>();
